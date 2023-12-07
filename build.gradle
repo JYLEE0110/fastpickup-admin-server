@@ -34,6 +34,9 @@ dependencies {
 	//test lombok
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
+
+	//thumbnail
+	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.19'
 }
 
 tasks.named('test') {
