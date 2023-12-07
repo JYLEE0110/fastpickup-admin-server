@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ProductMapper Xml -->
+<mapper namespace="org.fktm.fastpickup.product.mappers.ProductMapper">
+
+    <!-- 상품 등록 -->
+    <insert id ="registProduct">
+        insert into tbl_product(productName, productPrice, productContent) values(#{productName}, #{productPrice}, #{productContent})
+        
+        <selectKey resultType="int" keyProperty="cno" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+</mapper>
