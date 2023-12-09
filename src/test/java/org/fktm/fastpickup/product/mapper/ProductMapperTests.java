@@ -1,0 +1,160 @@
+package org.fktm.fastpickup.product.mapper;
+
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+
+import org.fktm.fastpickup.product.dto.ProductListDTO;
+import org.fktm.fastpickup.product.dto.ProductReadDTO;
+import org.fktm.fastpickup.product.dto.ProductRegistDTO;
+import org.fktm.fastpickup.product.mappers.ProductImgMapper;
+import org.fktm.fastpickup.product.mappers.ProductMapper;
+import org.fktm.fastpickup.util.page.PageRequestDTO;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
+import lombok.extern.log4j.Log4j2;
+
+@SpringBootTest
+@Log4j2
+public class ProductMapperTests {
+    
+    @Autowired(required = false)
+    private ProductMapper productMapper;
+
+    @Autowired(required = false)
+    private ProductImgMapper productImgMapper;
+
+    private static final Long TEST_PNO = 15L;
+    private static final int TEST_CNO = 1;
+    private static final int TEST_PRODUCT_PRICE = 1000;
+    private static final String TEST_PRODUCT_NAME = "핫 라떼";
+    private static final String TEST_PRODUCT_CONTENT = "맛있고 용암같이 뜨거운 라떼";
+    private static final String TEST_IMG_UUID = "51c48e7d-e85a-4704-b47a-942e240ef675";
+    private static final String TEST_IMG_NAME = "postMan.jpg";
+    private static final String TEST_PRODUCT_TYPE = "p";
+    private static final String TEST_PRODUCT_KEYWORD = "핫";
+
+    private ProductRegistDTO productRegistDTO;
+    private ProductReadDTO productReadDTO;
+    private List<ProductListDTO> productList;
+
+    // 이미지
+    private List<String> imgsNameList = new ArrayList<>();
+    
+    private PageRequestDTO pageRequestDTO;
+    
+    @BeforeEach
+    public void init(){
+        
+        imgsNameList.add(TEST_IMG_UUID + "_" + TEST_IMG_NAME);
+        
+        productRegistDTO = ProductRegistDTO.builder()
+        .cno(TEST_CNO)
+        .productName(TEST_PRODUCT_NAME)
+        .productPrice(TEST_PRODUCT_PRICE)
+        .productContent(TEST_PRODUCT_CONTENT)
+        .imgsName(imgsNameList)
+        .build();
+
+        pageRequestDTO = PageRequestDTO.builder()
+        .type(TEST_PRODUCT_TYPE)
+        .keyword(TEST_PRODUCT_KEYWORD)
+        .build();
+
+    }
+
+    @DisplayName("상품 등록 매퍼 테스트")
+    @Transactional
+    @Test
+    public void registProduct(){
+
+        // GIVEN
+        log.info("===== Start Regist Product Mapper Test=====");
+
+        // WHEN
+        productMapper.registProduct(productRegistDTO);
+        Long pno = productRegistDTO.getPno();
+        
+        // 이미지 업로드 후 프론트 측에서 useState에 imgsName을 보관하고 있을 것
+        // registProductDTO에서 imgsName을 뽑아온다.
+        List<String> imgsName = productRegistDTO.getImgsName();
+
+        if(imgsName != null && !imgsName.isEmpty()){
+
+            AtomicInteger index = new AtomicInteger();
+
+             // List형식(이미지가 여러개)으로 imgName, UUID, pno, ord등 을 Map 형식(key : value)로 받아온다. 
+            List<Map<String, String>> imgList = imgsName.stream().map(str -> {
+                String uuid = str.substring(0, 36);
+                String imgName = str.substring(37);
+    
+                return Map.of("uuid", uuid, "imgName", imgName, "pno", "" + pno, "imgOrd", "" + index.getAndIncrement());
+            }).collect(Collectors.toList());
+            log.info(imgList);
+
+            // 이미지 등록
+            productImgMapper.registProductImg(imgList);
+        }
+
+        // 이미지 확인
+        log.info("===== productRegistDTO ImgsName =====");
+        log.info(imgsName);
+
+        // 상품 등록 DTO 확인
+        log.info("===== productRegistDTO =====");
+        log.info(productRegistDTO);
+
+        //THEN
+        Assertions.assertNotNull(pno,"등록에 실패 하였습니다.");
+        log.info("===== End Regist Product Mapper Test=====");
+
+    }
+
+    @DisplayName("상품 상세 매퍼 테스트")
+    @Transactional
+    @Test
+    public void readProduct(){
+
+        // GIVEN
+        log.info("===== Start Read Product Mapper Test=====");
+
+        // WHEN
+        productReadDTO = productMapper.readProduct(TEST_PNO);
+        log.info("===== productReadDTO =====");
+        log.info(productReadDTO);
+
+        //THEN
+        Assertions.assertNotNull(productReadDTO,"등록된 데이터가 없습니다.");
+        log.info("===== End Read Product Mapper Test=====");
+
+    }
+
+    @DisplayName("상품 리스트 매퍼 테스트")
+    @Transactional
+    @Test
+    public void getProductList(){
+
+        // GIVEN
+        log.info("===== Start Get Product List Mapper Test=====");
+
+        // WHEN
+        productList = productMapper.getProductList(pageRequestDTO);
+        log.info("===== productListDTO =====");
+        log.info(productList);
+
+        //THEN
+        Assertions.assertNotNull(productList,"등록된 데이터가 없습니다.");
+        log.info("===== End Get Product List Mapper Test=====");
+
+    }
+}
