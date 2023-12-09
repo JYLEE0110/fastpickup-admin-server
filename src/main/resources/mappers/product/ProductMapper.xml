@@ -8,11 +8,62 @@
 
     <!-- 상품 등록 -->
     <insert id ="registProduct">
-        insert into tbl_product(productName, productPrice, productContent) values(#{productName}, #{productPrice}, #{productContent})
+        insert into tbl_product(productName, productPrice, productContent, cno) values(#{productName}, #{productPrice}, #{productContent}, #{cno})
         
-        <selectKey resultType="int" keyProperty="cno" order="AFTER">
+        <selectKey resultType="long" keyProperty="pno" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
     </insert>
+
+    <!-- 상품 상세 보기 -->
+
+      <resultMap id="productMap" type="org.fktm.fastpickup.product.dto.ProductReadDTO">
+        <id property="pno" column="pno"/>
+        <result property="categoryName" column="categoryName"/>
+        <result property="productName" column="productName"/>
+        <result property="productPrice" column="productPrice"/>
+        <result property="productContent" column="productContent"/>
+        <result property="registDate" column="registDate"/>
+        <result property="modifyDate" column="modifyDate"/>
+        <result property="viewCnt" column="viewCnt"/>
+        <result property="reviewTitle" column="reviewTitle"/>
+        <result property="isDeleted" column="isDeleted"/>
+        <collection property="imgsName" resultMap="imgsNameMap"/>
+    </resultMap>
+
+    <resultMap type="string" id="imgsNameMap">
+        <result column="imgsName"/>
+    </resultMap>
+
+    <select id = "readProduct" resultMap ="productMap">
+        select tp.pno, tc.categoryName, productName, productPrice, productContent, concat(tpi.uuid,'_',tpi.imgName) as imgsName
+                    ,registDate, modifyDate, viewCnt, tp.isDeleted
+        from 
+        tbl_category tc left outer join tbl_product tp on tc.cno = tp.cno
+                        left outer join tbl_product_img tpi on tp.pno = tpi.pno 
+        where tp.pno = #{pno} and tp.isDeleted = false;
+    </select>
+    <!-- 상품 상세 보기 -->
+
+    <!-- 상품 리스트 -->
+    <select id ="getProductList" resultType="org.fktm.fastpickup.product.dto.ProductListDTO">
+        select tp.pno, tc.categoryName, productName, productPrice, productContent, concat(tpi.uuid,'_',tpi.imgName) as imgName, registDate, modifyDate, viewCnt, tp.isDeleted
+        from tbl_category tc left outer join tbl_product tp on tc.cno = tp.cno
+                             left outer join tbl_product_img tpi on tp.pno = tpi.pno
+        where tp.isDeleted = false and tpi.imgOrd = 0
+
+         <if test="keyword != null and types != null">
+              <trim prefix="and (" prefixOverrides="or" suffix=")">
+                <foreach collection="types" item="type" separator=" or ">
+                  <if test='type == "p"'>
+                    tp.productName like concat('%', #{keyword}, '%')
+                  </if>
+                </foreach>
+              </trim>
+            </if>
+
+        limit #{skip}, #{size};
+    </select>
+
 
 </mapper>

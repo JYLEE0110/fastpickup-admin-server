@@ -32,7 +32,10 @@ public class PageResponseDTO<E> {
 
     //끝 페이지 번호 계산
     this.endNum = this.startNum + 9;
+
     //끝 페이지가 last보다 크면 last로 끝페이지 수정
+    // last가 실제 끝 번호
+    // 그외는 현재 페이지에 대한 끝 번호
     int last = (int)(Math.ceil((total/(double)size)));
     this.endNum = endNum > last ? last : endNum;
     
