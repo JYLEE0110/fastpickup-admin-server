@@ -6,6 +6,7 @@
 <!-- ProductMapper Xml -->
 <mapper namespace="org.fktm.fastpickup.product.mappers.ProductImgMapper">
 
+    <!-- 상품 이미지 등록 매퍼 -->
     <insert id ="registProductImg">
         insert into tbl_product_img(uuid, imgName, pno, imgOrd) values
 
@@ -14,5 +15,10 @@
             ( #{item.uuid}, #{item.imgName}, #{item.pno}, #{item.imgOrd})
         </foreach>
     </insert>
+
+    <!-- 상품 이미지 삭제 매퍼 -->
+    <delete id = "removeProductImg">
+        delete from tbl_product_img where pno = #{pno}
+    </delete>
 
 </mapper>

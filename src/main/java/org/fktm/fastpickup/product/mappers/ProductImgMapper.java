@@ -12,5 +12,6 @@ public interface ProductImgMapper {
     int registProductImg(List<Map<String, String>> imgList);
 
     // int removeImg()
+    int removeProductImg(Long pno);
 
 }

@@ -17,7 +17,7 @@
 
     <!-- 상품 상세 보기 -->
 
-      <resultMap id="productMap" type="org.fktm.fastpickup.product.dto.ProductReadDTO">
+    <resultMap id="productMap" type="org.fktm.fastpickup.product.dto.ProductReadDTO">
         <id property="pno" column="pno"/>
         <result property="categoryName" column="categoryName"/>
         <result property="productName" column="productName"/>
@@ -62,8 +62,22 @@
               </trim>
             </if>
 
-        limit #{skip}, #{size};
+        limit #{skip}, #{size}
     </select>
+
+    <!-- 상품 삭제 매퍼 -->
+    <update id ="removeProduct">
+      update tbl_product 
+      set isDeleted = true
+      where pno = #{pno}
+    </update>
+
+    <!-- 상품 수정 매퍼 -->
+    <update id = "modifyProduct">
+      update tbl_product 
+      set productName = #{productName}, productPrice = #{productPrice}, productContent = #{productContent}
+      where pno = #{pno}
+    </update>
 
 
 </mapper>
