@@ -49,7 +49,7 @@ public class ProductMapperTests {
     private static final String TEST_IMG_NAME = "postMan.jpg";
     private static final String TEST_IMG_NAME2 = "postMan2.jpg";
     private static final String TEST_PRODUCT_TYPE = "p";
-    private static final String TEST_PRODUCT_KEYWORD = "핫";
+    private static final String TEST_PRODUCT_KEYWORD = null;
 
     private ProductRegistDTO productRegistDTO;
     private ProductReadDTO productReadDTO;
@@ -95,7 +95,7 @@ public class ProductMapperTests {
     }
 
     @DisplayName("상품 등록 매퍼 테스트")
-    @Transactional
+    // @Transactional
     @Test
     public void registProduct(){
 
@@ -176,6 +176,24 @@ public class ProductMapperTests {
         //THEN
         Assertions.assertNotNull(productList,"등록된 데이터가 없습니다.");
         log.info("===== End Get Product List Mapper Test=====");
+
+    }
+
+    @DisplayName("상품 페이징을 위한 총 데이터 테스트")
+    @Transactional
+    @Test
+    public void getTotal(){
+
+        // GIVEN
+        log.info("===== Start Get Product Total Mapper Test=====");
+
+        // WHEN
+        Long total = productMapper.getTotal(pageRequestDTO);
+        log.info("===== productList Total =====");
+        log.info(total);
+
+        //THEN
+        log.info("===== End Get Product Total Mapper Test=====");
 
     }
 

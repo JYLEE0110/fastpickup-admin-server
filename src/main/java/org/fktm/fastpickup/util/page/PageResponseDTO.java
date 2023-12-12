@@ -10,7 +10,7 @@ import lombok.Data;
 public class PageResponseDTO<E> {
 
     private List<E> list; // 출력할 List
-    private long total; //
+    private Long total; //
     private int page; // 현재 page
     private int size; // 몇 개의 목록을 보여줄지에 대한 size
     private int startNum; // 현재 page 시작 번호 ex) 15일때 11 / 24일때 21...
@@ -20,7 +20,7 @@ public class PageResponseDTO<E> {
     private List<Integer> pageNums; // startNum과 endNum 사이 숫자 반환
 
     @Builder(builderMethodName = "withAll")
-    public PageResponseDTO(List<E> list, long total, PageRequestDTO pageRequestDTO){
+    public PageResponseDTO(List<E> list, Long total, PageRequestDTO pageRequestDTO){
         this.list = list;
         this.total = total;
         this.page = pageRequestDTO.getPage();

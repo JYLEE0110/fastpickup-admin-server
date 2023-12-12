@@ -13,13 +13,15 @@ import org.fktm.fastpickup.util.page.PageRequestDTO;
 public interface ProductMapper {
     
     // 상품 등록
-    int registProduct(ProductRegistDTO productRegistDTO);
+    Long registProduct(ProductRegistDTO productRegistDTO);
 
     // 상품 상세
     ProductReadDTO readProduct(Long pno);
 
     // 상품 리스트
     List<ProductListDTO> getProductList(PageRequestDTO pageRequestDTO);
+    // 페이징을 위한 실제 데이터 총 개수
+    Long getTotal(PageRequestDTO pageRequestDTO);
 
     // 상품 삭제
     int removeProduct(Long pno);

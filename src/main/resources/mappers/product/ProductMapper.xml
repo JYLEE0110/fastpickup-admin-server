@@ -10,7 +10,7 @@
     <insert id ="registProduct">
         insert into tbl_product(productName, productPrice, productContent, cno) values(#{productName}, #{productPrice}, #{productContent}, #{cno})
         
-        <selectKey resultType="long" keyProperty="pno" order="AFTER">
+        <selectKey resultType="Long" keyProperty="pno" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
     </insert>
@@ -63,6 +63,29 @@
             </if>
 
         limit #{skip}, #{size}
+    </select>
+    <!-- 페이징을 위한 실제 상품 개수 -->
+    <select id = "getTotal" resultType = "Long">
+      select count(*)
+      from(select tp.pno, tc.categoryName, productName, productPrice, productContent, concat(tpi.uuid,'_',tpi.imgName) as imgName, registDate, modifyDate, viewCnt, tp.isDeleted
+        from tbl_category tc left outer join tbl_product tp on tc.cno = tp.cno
+                             left outer join tbl_product_img tpi on tp.pno = tpi.pno
+        where tp.isDeleted = false and tpi.imgOrd = 0
+
+        <!-- keyword와 types 둘다 null 이 아닐시 and 동적쿼리생성 -->
+        <!-- 여러 types를 collection으로 받아 separator = or로 구분 후 sql문법에 맞게 or를 제거해준다.  -->
+         <if test="keyword != null and types != null">
+              <trim prefix="and (" prefixOverrides="or" suffix=")">
+                <foreach collection="types" item="type" separator=" or ">
+                  <if test='type == "p"'>
+                    tp.productName like concat('%', #{keyword}, '%')
+                  </if>
+                </foreach>
+              </trim>
+          </if>
+
+        limit #{countEnd}
+        ) product
     </select>
 
     <!-- 상품 삭제 매퍼 -->
