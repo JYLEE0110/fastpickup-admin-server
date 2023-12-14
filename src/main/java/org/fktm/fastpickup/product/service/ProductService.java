@@ -1,5 +1,6 @@
 package org.fktm.fastpickup.product.service;
 
+import java.sql.SQLException;
 import java.util.Map;
 
 import org.fktm.fastpickup.product.dto.ProductListDTO;
@@ -27,5 +28,5 @@ public interface ProductService {
 
     // 상품 수정
     void modifyProduct(ProductModifyDTO productModifyDTO);
-    
+ 
 }
