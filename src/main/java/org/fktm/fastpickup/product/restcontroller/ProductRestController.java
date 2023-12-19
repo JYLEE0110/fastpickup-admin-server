@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -29,7 +30,7 @@ public class ProductRestController {
     // 상품 등록
     @PostMapping("/regist")
     public ResponseEntity<Map<Long, String>> registProduct(
-        @RequestBody ProductRegistDTO productRegistDTO){
+        @Valid @RequestBody ProductRegistDTO productRegistDTO){
 
         log.info("===== /api/product/regist | Post =====");
         

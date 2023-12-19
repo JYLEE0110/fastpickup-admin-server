@@ -29,4 +29,5 @@ public interface ProductMapper {
     // 상품 수정
     int modifyProduct(ProductModifyDTO productModifyDTO);
     
+
 }

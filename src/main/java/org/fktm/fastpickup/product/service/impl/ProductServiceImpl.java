@@ -5,10 +5,13 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import org.fktm.fastpickup.exception.customexception.FastPickUpException;
+import org.fktm.fastpickup.exception.enumcode.ExceptionCode;
 import org.fktm.fastpickup.product.dto.ProductListDTO;
 import org.fktm.fastpickup.product.dto.ProductModifyDTO;
 import org.fktm.fastpickup.product.dto.ProductReadDTO;
 import org.fktm.fastpickup.product.dto.ProductRegistDTO;
+import org.fktm.fastpickup.product.exception.enumImpl.ProductExceptionCode;
 import org.fktm.fastpickup.product.mappers.ProductImgMapper;
 import org.fktm.fastpickup.product.mappers.ProductMapper;
 import org.fktm.fastpickup.product.service.ProductService;
@@ -32,6 +35,11 @@ public class ProductServiceImpl implements ProductService {
     public Long registProduct(ProductRegistDTO productRegistDTO) {
 
         log.info("===== registProduct Service =====");
+
+        // ProductName이 입력되지 않았을 시 예외처리
+        // if(productRegistDTO.getProductName() == null || productRegistDTO.getProductName().isEmpty()){
+        //     throw new FastPickUpException(ProductExceptionCode.NULL_PRODUCT_NAME);
+        // }
 
         // Mapper로 등록 후 selectKey로 pno 값 반환
         productMapper.registProduct(productRegistDTO);

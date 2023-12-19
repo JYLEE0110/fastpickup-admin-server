@@ -37,6 +37,9 @@ dependencies {
 
 	//thumbnail
 	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.19'
+
+	// validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
 tasks.named('test') {
