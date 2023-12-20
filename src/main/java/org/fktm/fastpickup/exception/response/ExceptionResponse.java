@@ -1,9 +1,8 @@
 package org.fktm.fastpickup.exception.response;
 
-import java.net.BindException;
-
 import org.fktm.fastpickup.exception.enumcode.ExceptionCode;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
@@ -19,6 +18,8 @@ public class ExceptionResponse {
     private final String code;
     private final String message;
 
+    // 커스텀 Exception 생성자
+    // 전달 받은 ExceptionCode는 enum의 상위 인터페이스이므로 모든 enum클래스를 받을 수 있다.
     public ExceptionResponse(ExceptionCode exceptionCode){
     
         this.httpStatus = exceptionCode.getHttpStatus();
@@ -27,11 +28,18 @@ public class ExceptionResponse {
     
     }
 
+    // Validation API 생성자
     public ExceptionResponse(FieldError error){
         
         this.httpStatus = HttpStatus.BAD_REQUEST;
         this.code = error.getCode() + "_"+ error.getField();
         this.message = error.getDefaultMessage();
+    }
+
+    public ExceptionResponse(BindException bindException){
+        this.httpStatus = HttpStatus.BAD_REQUEST;
+        this.code = bindException.getFieldError().getCode() + "_" + bindException.getFieldError().getField();
+        this.message = bindException.getFieldError().getDefaultMessage();
     }
 
 }

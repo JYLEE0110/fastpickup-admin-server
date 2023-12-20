@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.fktm.fastpickup.exception.response.ExceptionResponse;
+import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 
 public class ValidationResult {
@@ -11,6 +12,7 @@ public class ValidationResult {
     private final List<ExceptionResponse> errors;
 
     public ValidationResult(Errors errors){
+        // bindException.getFieldError().getCode();
 
         this.errors = errors.getFieldErrors()
                             .stream()

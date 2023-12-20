@@ -30,8 +30,9 @@ public class RestControllerAdvice {
     @ExceptionHandler({BindException.class})
     public ResponseEntity<ExceptionResponse> handlerBindException(BindException e) {
         
-        ValidationResult validationResult = new ValidationResult(e);
-        ExceptionResponse exceptionResponse = validationResult.getErrors().get(0);
+        // ValidationResult validationResult = new ValidationResult(e);
+        // ExceptionResponse exceptionResponse = validationResult.getErrors().get(0);
+        ExceptionResponse exceptionResponse = new ExceptionResponse(e);
 
         return ResponseEntity.status(exceptionResponse.getHttpStatus())
                              .body(exceptionResponse);
