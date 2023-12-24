@@ -37,9 +37,9 @@ public class ProductServiceImpl implements ProductService {
         log.info("===== registProduct Service =====");
 
         // ProductName이 입력되지 않았을 시 예외처리
-        // if(productRegistDTO.getProductName() == null || productRegistDTO.getProductName().isEmpty()){
-        //     throw new FastPickUpException(ProductExceptionCode.NULL_PRODUCT_NAME);
-        // }
+        if(productRegistDTO.getProductName() == null || productRegistDTO.getProductName().isEmpty()){
+            throw new FastPickUpException(ProductExceptionCode.NULL_PRODUCT_NAME);
+        }
 
         // Mapper로 등록 후 selectKey로 pno 값 반환
         productMapper.registProduct(productRegistDTO);

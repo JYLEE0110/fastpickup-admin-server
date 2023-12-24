@@ -20,6 +20,7 @@ public class RestControllerAdvice {
 
     public ResponseEntity<ExceptionResponse> handlerFastPickUpException(FastPickUpException e) {
         
+        // e.getExceptionCode() 에는 enum에 관한 정보들을 담고 있다.
         ExceptionResponse exceptionResponse = new ExceptionResponse(e.getExceptionCode()) ;
 
         return ResponseEntity.status(e.getExceptionCode().getHttpStatus())

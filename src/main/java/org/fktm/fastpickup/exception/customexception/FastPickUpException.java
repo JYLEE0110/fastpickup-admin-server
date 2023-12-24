@@ -12,6 +12,7 @@ public class FastPickUpException extends RuntimeException {
 
     private final ExceptionCode exceptionCode;
 
+    // 비지니스 로직에서 예외를 던질때 매개변수로 enum을 받음(ExceptionCode)
     public FastPickUpException(ExceptionCode exceptionCode) {
         super(exceptionCode.getMessage());
         this.exceptionCode = exceptionCode;
