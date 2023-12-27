@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ProductMapper Xml -->
+<mapper namespace="org.fktm.fastpickup.member.mappers.MemberMapper">
+
+    <!-- 회원가입 -->
+    <!-- selectKey는 기본적으로 int형이므로 ID(String) 을 뽑아오려면 아래와같이 작성한다. -->
+    <insert id = "registMember" useGeneratedKeys="true" keyProperty="memberID" keyColumn="memberID">
+        insert into tbl_member (memberID, memberPW, memberName, memberAddr, memberPhoneNum)
+        values(#{memberID}, #{memberPW}, #{memberName}, #{memberAddr}, #{memberPhoneNum})
+    </insert>
+
+  <!-- 회원 상세보기 -->
+    <select id ="readMember">
+      select memberID, memberName, memberAddr, memberPhoneNum, joinDate
+      from tbl_member
+      where memberID = #{memberID}
+    </select>
+
+  <!-- 회원 리스트 검색 -->
+    <select id = "getMemberList">
+      select memberID, memberName, memberAddr, memberPhoneNum, joinDate
+      from tbl_member
+      where withDrawalStatus = false
+
+        <if test="keyword != null and types != null">
+            <trim prefix="and (" prefixOverrides="or" suffix=")">
+              <foreach collection="types" item="type" separator=" or ">
+                <if test='type == "m"'>
+                  memberID like concat('%', #{keyword}, '%')
+                </if>
+              </foreach>
+            </trim>
+        </if>
+
+      limit #{skip}, #{size}
+      order by joinDate desc
+    </select>
+
+    <select id ="getTotalMember">
+      
+    </select>
+
+</mapper>

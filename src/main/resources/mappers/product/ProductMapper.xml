@@ -60,7 +60,7 @@
                   </if>
                 </foreach>
               </trim>
-            </if>
+          </if>
 
         limit #{skip}, #{size}
     </select>
