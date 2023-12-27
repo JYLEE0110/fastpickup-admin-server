@@ -49,7 +49,7 @@ public class ProductMapperTests {
     private static final String TEST_IMG_NAME = "postMan.jpg";
     private static final String TEST_IMG_NAME2 = "postMan2.jpg";
     private static final String TEST_PRODUCT_TYPE = "p";
-    private static final String TEST_PRODUCT_KEYWORD = null;
+    private static final String TEST_PRODUCT_KEYWORD = "수정";
 
     private ProductRegistDTO productRegistDTO;
     private ProductReadDTO productReadDTO;

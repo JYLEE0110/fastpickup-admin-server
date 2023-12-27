@@ -17,7 +17,7 @@
     <select id ="readMember">
       select memberID, memberName, memberAddr, memberPhoneNum, joinDate
       from tbl_member
-      where memberID = #{memberID}
+      where memberID = #{memberID} and withDrawalStatus = false
     </select>
 
   <!-- 회원 리스트 검색 -->
@@ -29,19 +29,52 @@
         <if test="keyword != null and types != null">
             <trim prefix="and (" prefixOverrides="or" suffix=")">
               <foreach collection="types" item="type" separator=" or ">
-                <if test='type == "m"'>
+                <if test='type == "i"'>
                   memberID like concat('%', #{keyword}, '%')
                 </if>
               </foreach>
             </trim>
         </if>
-
-      limit #{skip}, #{size}
+      
       order by joinDate desc
-    </select>
-
-    <select id ="getTotalMember">
+      limit #{skip}, #{size}
       
     </select>
+
+    <!-- 현재 페이지에 대한 회원 수 -->
+    <select id ="getTotalMember">
+      select count(*)
+      from (select memberID, memberName, memberAddr, memberPhoneNum, joinDate
+            from tbl_member
+            where withDrawalStatus = false
+
+              <if test="keyword != null and types != null">
+                <trim prefix="and (" prefixOverrides="or" suffix=")">
+                  <foreach collection="types" item="type" separator=" or ">
+                    <if test='type == "i"'>
+                      memberID like concat('%', #{keyword}, '%')
+                    </if>
+                  </foreach>
+                </trim>
+              </if>
+
+      limit #{countEnd}
+      ) member
+    </select>
+  <!-- 회원 리스트 검색 END -->
+
+  <!-- 회원 탈퇴 -->
+  <update id ="withdrawMember">
+    update tbl_member 
+    set withDrawalStatus = true, withDrawalDate = current_timestamp()
+    where memberID = #{memberID}
+  </update>
+
+  <!-- 회원 수정 -->
+  <update id ="updateMember">
+    update tbl_member
+    set memberPW = #{memberPW}, memberAddr = #{memberAddr}, memberPhoneNum = #{memberPhoneNum}
+    where memberID = #{memberID}
+  </update>
 
 </mapper>

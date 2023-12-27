@@ -1,8 +1,14 @@
 package org.fktm.fastpickup.member.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.javassist.compiler.ast.Member;
+import org.fktm.fastpickup.member.dto.MemberListDTO;
 import org.fktm.fastpickup.member.dto.MemberReadDTO;
 import org.fktm.fastpickup.member.dto.MemberRegistDTO;
+import org.fktm.fastpickup.member.dto.MemberUpdateDTO;
 import org.fktm.fastpickup.member.mappers.MemberMapper;
+import org.fktm.fastpickup.util.page.PageRequestDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,16 +27,36 @@ public class MemberMapperTests {
     @Autowired(required = false)
     MemberMapper memberMapper;
 
-    private static final String TEST_MEMBER_ID = "admin";
+    private static final String TEST_MEMBER_ID = "adminz";
     private static final String TEST_MEMBER_PW = "1234";
     private static final String TEST_MEMBER_NAME = "이주용";
     private static final String TEST_MEMBER_ADDR = "경기도 성남시 분당구 청구블루빌";
     private static final String TEST_MEMBER_PHONE_NUM = "010-5420-xxxx";
 
+    private static final String TEST_UPDATE_MEMBER_PW = "수정된 비밀번호";
+    private static final String TEST_UPDATE_MEMBER_ADDR = "수정된 주소";
+    private static final String TEST_UPDATE_MEMBER_PHONE_NUM = "수정된 번호";
+
+
+    private static final String TEST_MEMBER_TYPE = "i";
+    private static final String TEST_MEMBER_KEYWORD = "z";
+
+
     private MemberRegistDTO memberRegistDTO;
+    private MemberReadDTO memberReadDTO;
+    private List<MemberListDTO> memberListDTO;
+    private MemberUpdateDTO memberUpdateDTO;
+    
+    private PageRequestDTO pageRequestDTO;
 
     @BeforeEach
     public void init(){
+
+        pageRequestDTO = PageRequestDTO.builder()
+                        .type(TEST_MEMBER_TYPE)
+                        .keyword(TEST_MEMBER_KEYWORD)
+                        .build();
+
         memberRegistDTO = MemberRegistDTO.builder()
                         .memberID(TEST_MEMBER_ID)
                         .memberPW(TEST_MEMBER_PW)
@@ -38,6 +64,14 @@ public class MemberMapperTests {
                         .memberAddr(TEST_MEMBER_ADDR)
                         .memberPhoneNum(TEST_MEMBER_PHONE_NUM)
                         .build();
+        
+        memberUpdateDTO = MemberUpdateDTO.builder()
+                        .memberID(TEST_MEMBER_ID)
+                        .memberPW(TEST_UPDATE_MEMBER_PW)
+                        .memberAddr(TEST_UPDATE_MEMBER_ADDR)
+                        .memberPhoneNum(TEST_UPDATE_MEMBER_PHONE_NUM)
+                        .build();
+        
     }
 
     @DisplayName("회원가입 매퍼 테스트")
@@ -70,14 +104,80 @@ public class MemberMapperTests {
         log.info("===== Start ReadMember Test =====");
 
         // WHEN
-        MemberReadDTO dto = memberMapper.readMember(TEST_MEMBER_ID);
+        memberReadDTO = memberMapper.readMember(TEST_MEMBER_ID);
 
         // THEN
         log.info("===== memberReadDTO =====");
-        log.info(dto);
-        Assertions.assertNotNull(dto, "등록되지 않은 회원 입니다.");
+        log.info(memberReadDTO);
+        Assertions.assertNotNull(memberReadDTO, "등록되지 않은 회원 입니다.");
         log.info("===== END ReadMemeber Test =====");
 
+    }
+
+    @DisplayName("회원 리스트 테스트")
+    @Test
+    @Transactional
+    public void getMemberList(){
+
+        // GIVEN
+        log.info("===== Start getMemberList Test =====");
+
+        // WHEN
+        memberListDTO = memberMapper.getMemberList(pageRequestDTO);
+
+        // THEN
+        log.info("===== memberListDTO =====");
+        log.info(memberListDTO);
+        log.info("===== END getMemberList Test =====");
+
+    }
+
+    @DisplayName("현재 페이지에 대한 회원 수 매퍼 테스트")
+    @Test
+    @Transactional
+    public void getMemberTotal(){
+
+        // GIVEN
+        log.info("===== Start getMemberTotal Test =====");
+
+        // WHEN
+        Long memberTotal = memberMapper.getTotalMember(pageRequestDTO);
+
+        // THEN
+        log.info("===== getMemberTotal =====");
+        log.info(memberTotal);
+        log.info("===== END getMemberTotal Test =====");
+
+    }
+
+    @DisplayName("회원 탈퇴 매퍼 테스트")
+    @Test
+    // @Transactional
+    public void withdrawMember(){
+
+        // GIVEN
+        log.info("===== Start withdrawMember Test =====");
+
+        // WHEN
+        int result = memberMapper.withdrawMember(TEST_MEMBER_ID);
+        // THEN
+        Assertions.assertEquals(1, result, "회원 탈퇴가 이뤄지지 않았습니다.");
+        log.info("===== END withdrawMember Test =====");
+    }
+
+    @DisplayName("회원 수정 매퍼 테스트")
+    @Test
+    // @Transactional
+    public void updateMapper(){
+
+        // GIVEN
+        log.info("===== Start updateMapper Test =====");
+
+        // WHEN
+        int result = memberMapper.updateMember(memberUpdateDTO);
+        // THEN
+        Assertions.assertEquals(1, result, "회원 수정이 이뤄지지 않았습니다.");
+        log.info("===== END updateMapper Test =====");
     }
     
 }
