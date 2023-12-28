@@ -1,18 +1,23 @@
-package org.fktm.fastpickup.product.exception.enumImpl;
+package org.fktm.fastpickup.exception.enumcode.impl.member;
 
 import org.fktm.fastpickup.exception.enumcode.ExceptionCode;
 import org.springframework.http.HttpStatus;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
 @RequiredArgsConstructor
-public enum ProductExceptionCode implements ExceptionCode {
+public enum MemberExceptionCode implements ExceptionCode {
+    
+    // ID 중복 예외 enum 
+    DUPLICATED_MEMBER_ID(HttpStatus.BAD_REQUEST, "이미 사용중인 ID입니다."),
 
-    NULL_PRODUCT_NAME(HttpStatus.BAD_REQUEST, "상품명 입력은 필수 입니다."),
-    NULL_PRODUCT_PRICE(HttpStatus.BAD_REQUEST, "상품 가격입력은 필수 입니다."),
-    NULL_PRODUCT_CONTENT(HttpStatus.BAD_REQUEST, "상품 설명 입력은 필수 입니다.");
+    // 비밀번호 검증 실패
+    MISMATCH_PASSWORD(HttpStatus.BAD_REQUEST, "입력한 비밀번호와 일치하지않습니다."),
+
+    // 회원탈퇴 시 존재하지않는 회원일 때
+    // NOT_EXCISTMEMBER
+    
+    ;
 
     private final HttpStatus httpStatus;
     private final String message;
@@ -21,7 +26,7 @@ public enum ProductExceptionCode implements ExceptionCode {
     public HttpStatus getHttpStatus() {
         return httpStatus;
     }
-    // 정의한 enum명
+
     @Override
     public String getCode() {
         return name();
@@ -31,5 +36,5 @@ public enum ProductExceptionCode implements ExceptionCode {
     public String getMessage() {
         return message;
     }
-
+    
 }
