@@ -6,7 +6,7 @@ import org.fktm.fastpickup.exception.customexception.FastPickUpException;
 import org.fktm.fastpickup.member.dto.MemberListDTO;
 import org.fktm.fastpickup.member.dto.MemberReadDTO;
 import org.fktm.fastpickup.member.dto.MemberRegistDTO;
-import org.fktm.fastpickup.member.dto.MemberUpdateDTO;
+import org.fktm.fastpickup.member.dto.MemberModifyDTO;
 import org.fktm.fastpickup.member.exception.enumcode.MemberExceptionCode;
 import org.fktm.fastpickup.member.mappers.MemberMapper;
 import org.fktm.fastpickup.member.service.MemberService;
@@ -116,21 +116,21 @@ public class MemberServiceImpl implements MemberService{
 
     // 회원 수정 서비스
     @Override
-    public void updateMember(MemberUpdateDTO memberUpdateDTO) {
+    public void modifyMember(MemberModifyDTO memberModifyDTO) {
 
         log.info("===== updateMember Service =====");
 
         // 입력한 PW 추출
-        String memberPW = memberUpdateDTO.getMemberPW();
+        String memberPW = memberModifyDTO.getMemberPW();
         // PW 2차 검증
-        String comfirmMemberPW = memberUpdateDTO.getComfirmMemberPW();
+        String comfirmMemberPW = memberModifyDTO.getComfirmMemberPW();
 
         // 비밀번호 검증에 실패 했을 시
         if(!memberPW.equals(comfirmMemberPW)){
             throw new FastPickUpException(MemberExceptionCode.MISMATCH_PASSWORD);
         }
 
-        memberMapper.updateMember(memberUpdateDTO);
+        memberMapper.modifyMember(memberModifyDTO);
 
         log.info("===== updateMember Service =====");
 

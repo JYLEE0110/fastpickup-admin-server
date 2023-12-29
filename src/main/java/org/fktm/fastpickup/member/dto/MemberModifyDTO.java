@@ -14,7 +14,7 @@ import lombok.ToString;
 @Data
 @ToString
 @Builder
-public class MemberUpdateDTO {
+public class MemberModifyDTO {
 
     private String memberID;
 

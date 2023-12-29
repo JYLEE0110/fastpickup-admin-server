@@ -17,7 +17,6 @@ import lombok.ToString;
 public class ProductReadDTO {
 
     private Long pno;                 // 상품 번호
-    private int cno;                  // 카테고리 번호
     private String categoryName;      // 카테고리 명
     private String productName;       // 상품명
     private int productPrice;         // 상품 가격

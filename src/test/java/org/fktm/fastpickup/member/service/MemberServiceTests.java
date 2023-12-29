@@ -3,7 +3,7 @@ package org.fktm.fastpickup.member.service;
 import org.fktm.fastpickup.member.dto.MemberListDTO;
 import org.fktm.fastpickup.member.dto.MemberReadDTO;
 import org.fktm.fastpickup.member.dto.MemberRegistDTO;
-import org.fktm.fastpickup.member.dto.MemberUpdateDTO;
+import org.fktm.fastpickup.member.dto.MemberModifyDTO;
 import org.fktm.fastpickup.util.page.PageRequestDTO;
 import org.fktm.fastpickup.util.page.PageResponseDTO;
 import org.junit.jupiter.api.Assertions;
@@ -40,7 +40,7 @@ public class MemberServiceTests {
 
     private MemberRegistDTO memberRegistDTO;
     private MemberReadDTO memberReadDTO;
-    private MemberUpdateDTO memberUpdateDTO;
+    private MemberModifyDTO memberUpdateDTO;
     private PageRequestDTO pageRequestDTO;
     private PageResponseDTO<MemberListDTO> memberList;
 
@@ -61,7 +61,7 @@ public class MemberServiceTests {
                         .memberPhoneNum(TEST_MEMBER_PHONE_NUM)
                         .build();
 
-        memberUpdateDTO = MemberUpdateDTO.builder()
+        memberUpdateDTO = MemberModifyDTO.builder()
                         .memberID(TEST_MEMBER_ID)
                         .memberPW(TEST_UPDATE_MEMBER_PW)
                         .comfirmMemberPW(TEST_UPDATE_MEMBER_PW_CHECK)
@@ -151,7 +151,7 @@ public class MemberServiceTests {
         log.info("===== Start updateMember Service Test =====");
 
         //WHEN
-        memberService.updateMember(memberUpdateDTO);
+        memberService.modifyMember(memberUpdateDTO);
 
         //THEN
         log.info("===== END updateMember Service Test =====");

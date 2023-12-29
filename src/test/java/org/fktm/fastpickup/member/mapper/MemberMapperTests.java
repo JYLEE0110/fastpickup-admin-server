@@ -6,7 +6,7 @@ import org.apache.ibatis.javassist.compiler.ast.Member;
 import org.fktm.fastpickup.member.dto.MemberListDTO;
 import org.fktm.fastpickup.member.dto.MemberReadDTO;
 import org.fktm.fastpickup.member.dto.MemberRegistDTO;
-import org.fktm.fastpickup.member.dto.MemberUpdateDTO;
+import org.fktm.fastpickup.member.dto.MemberModifyDTO;
 import org.fktm.fastpickup.member.mappers.MemberMapper;
 import org.fktm.fastpickup.util.page.PageRequestDTO;
 import org.junit.jupiter.api.Assertions;
@@ -45,7 +45,7 @@ public class MemberMapperTests {
     private MemberRegistDTO memberRegistDTO;
     private MemberReadDTO memberReadDTO;
     private List<MemberListDTO> memberListDTO;
-    private MemberUpdateDTO memberUpdateDTO;
+    private MemberModifyDTO memberModifyDTO;
     
     private PageRequestDTO pageRequestDTO;
 
@@ -65,7 +65,7 @@ public class MemberMapperTests {
                         .memberPhoneNum(TEST_MEMBER_PHONE_NUM)
                         .build();
         
-        memberUpdateDTO = MemberUpdateDTO.builder()
+        memberModifyDTO = MemberModifyDTO.builder()
                         .memberID(TEST_MEMBER_ID)
                         .memberPW(TEST_UPDATE_MEMBER_PW)
                         .memberAddr(TEST_UPDATE_MEMBER_ADDR)
@@ -174,7 +174,7 @@ public class MemberMapperTests {
         log.info("===== Start updateMapper Test =====");
 
         // WHEN
-        int result = memberMapper.updateMember(memberUpdateDTO);
+        int result = memberMapper.modifyMember(memberModifyDTO);
         // THEN
         Assertions.assertEquals(1, result, "회원 수정이 이뤄지지 않았습니다.");
         log.info("===== END updateMapper Test =====");

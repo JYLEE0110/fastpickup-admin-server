@@ -16,7 +16,7 @@ import lombok.ToString;
 @Builder
 public class ProductListDTO {
     private Long pno; // 상품 번호
-    private int cno; // 카테고리 번호
+    private String categoryName;
     private String productName; // 상품명
     private int productPrice; // 상품 가격
     private String productContent; // 상품 설명

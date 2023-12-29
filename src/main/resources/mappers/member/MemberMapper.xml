@@ -24,7 +24,7 @@
     <select id = "getMemberList">
       select memberID, memberName, memberAddr, memberPhoneNum, joinDate
       from tbl_member
-      where withDrawalStatus = false
+      where joinDate > 0
 
         <if test="keyword != null and types != null">
             <trim prefix="and (" prefixOverrides="or" suffix=")">
@@ -71,7 +71,7 @@
   </update>
 
   <!-- 회원 수정 -->
-  <update id ="updateMember">
+  <update id ="modifyMember">
     update tbl_member
     set memberPW = #{memberPW}, memberAddr = #{memberAddr}, memberPhoneNum = #{memberPhoneNum}
     where memberID = #{memberID}

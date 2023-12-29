@@ -5,7 +5,7 @@ import java.util.List;
 import org.fktm.fastpickup.member.dto.MemberListDTO;
 import org.fktm.fastpickup.member.dto.MemberReadDTO;
 import org.fktm.fastpickup.member.dto.MemberRegistDTO;
-import org.fktm.fastpickup.member.dto.MemberUpdateDTO;
+import org.fktm.fastpickup.member.dto.MemberModifyDTO;
 import org.fktm.fastpickup.util.page.PageRequestDTO;
 
 public interface MemberMapper {
@@ -24,6 +24,6 @@ public interface MemberMapper {
     // 회원 탈퇴
     int withdrawMember(String memberID);
 
-    int updateMember(MemberUpdateDTO memberUpdateDTO);
+    int modifyMember(MemberModifyDTO memberUpdateDTO);
 
 }
