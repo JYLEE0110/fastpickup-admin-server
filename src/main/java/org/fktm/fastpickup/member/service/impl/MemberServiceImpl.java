@@ -6,6 +6,7 @@ import org.fktm.fastpickup.exception.customexception.FastPickUpException;
 import org.fktm.fastpickup.member.dto.MemberListDTO;
 import org.fktm.fastpickup.member.dto.MemberReadDTO;
 import org.fktm.fastpickup.member.dto.MemberRegistDTO;
+import org.fktm.fastpickup.member.dto.MemberUpdateDTO;
 import org.fktm.fastpickup.member.exception.enumcode.MemberExceptionCode;
 import org.fktm.fastpickup.member.mappers.MemberMapper;
 import org.fktm.fastpickup.member.service.MemberService;
@@ -38,7 +39,7 @@ public class MemberServiceImpl implements MemberService{
         // 입력한 PW 추출
         String memberPW = memberRegistDTO.getMemberPW();
         // PW 2차 검증
-        String memberCheckedPW = memberRegistDTO.getCheckedMemeberPw();
+        String confirmMemberPW = memberRegistDTO.getComfirmMemberPW();
 
         // 아이디 중복일 시 예외를 던짐
         // existingMember != null이 먼저와야한다. 아닐 시 비어있으면 예외발생
@@ -47,7 +48,7 @@ public class MemberServiceImpl implements MemberService{
         }
 
         // 비밀번호 검증에 실패 했을 시
-        if(!memberPW.equals(memberCheckedPW)){
+        if(!memberPW.equals(confirmMemberPW)){
             throw new FastPickUpException(MemberExceptionCode.MISMATCH_PASSWORD);
         }
 
@@ -110,6 +111,28 @@ public class MemberServiceImpl implements MemberService{
 
 
         log.info("===== withdrawalMember Service =====");
+
+    }
+
+    // 회원 수정 서비스
+    @Override
+    public void updateMember(MemberUpdateDTO memberUpdateDTO) {
+
+        log.info("===== updateMember Service =====");
+
+        // 입력한 PW 추출
+        String memberPW = memberUpdateDTO.getMemberPW();
+        // PW 2차 검증
+        String comfirmMemberPW = memberUpdateDTO.getComfirmMemberPW();
+
+        // 비밀번호 검증에 실패 했을 시
+        if(!memberPW.equals(comfirmMemberPW)){
+            throw new FastPickUpException(MemberExceptionCode.MISMATCH_PASSWORD);
+        }
+
+        memberMapper.updateMember(memberUpdateDTO);
+
+        log.info("===== updateMember Service =====");
 
     }
     

@@ -23,7 +23,7 @@ public class MemberUpdateDTO {
     private String memberPW;                // 회원 PassWrod
 
     @NotBlank(message = "PASSWORD 검증란 입력은 필수 입니다.")
-    private String checkedMemeberPw;        // 패스워드 검증
+    private String comfirmMemberPW;        // 패스워드 검증
 
     @NotBlank(message = "주소 입력은 필수 입니다.")
     private String memberAddr;              // 회원 주소

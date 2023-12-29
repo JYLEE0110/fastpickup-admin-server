@@ -28,7 +28,7 @@ public class MemberRegistDTO {
     private String memberPW;                // 회원 PassWrod
 
     @NotBlank(message = "PASSWORD 검증란 입력은 필수 입니다.")
-    private String checkedMemeberPw;        // 패스워드 검증
+    private String comfirmMemberPW;        // 패스워드 검증
 
     @NotBlank(message = "이름 입력은 필수 입니다.")
     private String memberName;              // 회원 이름

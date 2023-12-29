@@ -22,5 +22,6 @@ public class MemberReadDTO {
     private String memberAddr;              // 회원 주소
     private String memberPhoneNum;          // 회원 핸드폰 번호
     private LocalDateTime joinDate;         // 회원가입 일자
+    private boolean withDrawalStatus;       // 회원 탈퇴여부
 
 }

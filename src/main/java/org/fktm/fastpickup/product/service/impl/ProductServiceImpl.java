@@ -11,7 +11,7 @@ import org.fktm.fastpickup.product.dto.ProductListDTO;
 import org.fktm.fastpickup.product.dto.ProductModifyDTO;
 import org.fktm.fastpickup.product.dto.ProductReadDTO;
 import org.fktm.fastpickup.product.dto.ProductRegistDTO;
-import org.fktm.fastpickup.product.exception.enumImpl.ProductExceptionCode;
+import org.fktm.fastpickup.product.exception.enumcode.ProductExceptionCode;
 import org.fktm.fastpickup.product.mappers.ProductImgMapper;
 import org.fktm.fastpickup.product.mappers.ProductMapper;
 import org.fktm.fastpickup.product.service.ProductService;

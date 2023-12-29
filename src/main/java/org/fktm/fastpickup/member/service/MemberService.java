@@ -3,6 +3,7 @@ package org.fktm.fastpickup.member.service;
 import org.fktm.fastpickup.member.dto.MemberListDTO;
 import org.fktm.fastpickup.member.dto.MemberReadDTO;
 import org.fktm.fastpickup.member.dto.MemberRegistDTO;
+import org.fktm.fastpickup.member.dto.MemberUpdateDTO;
 import org.fktm.fastpickup.util.page.PageRequestDTO;
 import org.fktm.fastpickup.util.page.PageResponseDTO;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,8 @@ public interface MemberService {
 
     // 회원 탈퇴
     void withdrawalMember(String memberID);
+
+    // 회원 수정
+    void updateMember(MemberUpdateDTO memberUpdateDTO);
     
 }

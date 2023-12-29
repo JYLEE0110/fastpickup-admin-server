@@ -1,4 +1,4 @@
-package org.fktm.fastpickup.exception.enumcode.impl.member;
+package org.fktm.fastpickup.member.exception.enumcode;
 
 import org.fktm.fastpickup.exception.enumcode.ExceptionCode;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,7 @@ public enum MemberExceptionCode implements ExceptionCode {
     MISMATCH_PASSWORD(HttpStatus.BAD_REQUEST, "입력한 비밀번호와 일치하지않습니다."),
 
     // 회원탈퇴 시 존재하지않는 회원일 때
-    // NOT_EXCISTMEMBER
+    NOT_EXCIST_MEMBER(HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다.");
     
     ;
 
