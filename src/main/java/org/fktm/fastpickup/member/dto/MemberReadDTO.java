@@ -18,6 +18,7 @@ import lombok.ToString;
 public class MemberReadDTO {
     
     private String memberID;                // 회원 ID
+    private String memberPW;
     private String memberName;              // 회원 이름
     private String memberAddr;              // 회원 주소
     private String memberPhoneNum;          // 회원 핸드폰 번호

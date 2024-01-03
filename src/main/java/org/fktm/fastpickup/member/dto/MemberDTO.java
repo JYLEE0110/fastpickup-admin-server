@@ -20,7 +20,7 @@ public class MemberDTO extends User {
 
     public MemberDTO(String memberID, String memberPW, Collection<? extends GrantedAuthority> authorities
                     ,String comfirmMemberPW, String memberName, String memberAddr, String memberPhoneNum
-                    ,LocalDateTime joinDate){
+                    ,LocalDateTime joinDate, LocalDateTime withDrawalDate, boolean withDrawalStatus){
 
         super(memberID, memberPW, authorities);
 
@@ -31,6 +31,8 @@ public class MemberDTO extends User {
         this.memberAddr = memberAddr;
         this.memberPhoneNum = memberPhoneNum;
         this.joinDate = joinDate;
+        this.withDrawalDate = withDrawalDate;
+        this.withDrawalStatus = withDrawalStatus;
 
     }
 
