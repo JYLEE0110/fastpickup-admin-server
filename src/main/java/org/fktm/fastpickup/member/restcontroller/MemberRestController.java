@@ -53,6 +53,7 @@ public class MemberRestController {
 
     // 회원 상세
     @GetMapping("/read/{memberID}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<MemberReadDTO> readMember(
             @PathVariable("memberID") String memberID) {
         log.info("===== /api/member/read " + memberID + " | Post =====");
@@ -65,6 +66,7 @@ public class MemberRestController {
 
     // 회원 리스트
     @GetMapping("/list")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<PageResponseDTO<MemberListDTO>> getMemberList(
             PageRequestDTO pageRequestDTO) {
         log.info("===== /api/member/list/ | GET =====");
@@ -78,6 +80,7 @@ public class MemberRestController {
 
     // 회원 삭제
     @PutMapping("/remove/{memberID}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Map<String, String>> removeProduct(
             @PathVariable("memberID") String memberID) {
         log.info("===== /api/member/remove/" + memberID + "| PUT =====");
@@ -90,6 +93,7 @@ public class MemberRestController {
 
     // 회원 수정
     @PutMapping("/modify")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Map<String, String>> modifyMember(
             @Valid @RequestBody MemberModifyDTO memberModifyDTO) {
         log.info("===== /api/member/modify/ | PUT =====");

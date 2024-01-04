@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.fktm.fastpickup.security.handler.APILoginFailureHandler;
 import org.fktm.fastpickup.security.handler.APILoginSuccessHandler;
+import org.fktm.fastpickup.security.handler.CustomAccessDeniedHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -25,7 +26,8 @@ import lombok.extern.log4j.Log4j2;
 public class CustomSecurityConfig {
 
     private static final String[] WHITE_LIST = {
-            "/api/member/**"
+            "/api/product/read/**",
+            "/api/product/list",
     };
 
     // 패스워드 암호화
@@ -52,8 +54,10 @@ public class CustomSecurityConfig {
                         config.successHandler(new APILoginSuccessHandler());
                         config.failureHandler(new APILoginFailureHandler());
                 })
-                .authorizeHttpRequests(config -> 
-                        config.requestMatchers(WHITE_LIST).permitAll())
+                .exceptionHandling(config ->
+                        config.accessDeniedHandler(new CustomAccessDeniedHandler()))
+                // .authorizeHttpRequests(config -> 
+                //         config.requestMatchers(WHITE_LIST).permitAll())
                 .getOrBuild();
 
     }

@@ -1,4 +1,4 @@
-package org.fktm.fastpickup.security.handler.failurecode;
+/* package org.fktm.fastpickup.security.handler.failurecode;
 
 import org.fktm.fastpickup.exception.enumcode.ExceptionCode;
 import org.springframework.http.HttpStatus;
@@ -35,3 +35,4 @@ public enum LoginFailureCode implements ExceptionCode {
     }
     
 }
+ */

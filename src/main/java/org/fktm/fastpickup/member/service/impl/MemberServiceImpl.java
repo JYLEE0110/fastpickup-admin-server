@@ -147,6 +147,7 @@ public class MemberServiceImpl implements MemberService{
         if(!memberPW.equals(comfirmMemberPW)){
             throw new FastPickUpException(MemberExceptionCode.MISMATCH_PASSWORD);
         }
+        memberModifyDTO.setMemberPW(passwordEncoder.encode(memberPW));
 
         memberMapper.modifyMember(memberModifyDTO);
 

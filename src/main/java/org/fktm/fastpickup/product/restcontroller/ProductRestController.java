@@ -12,6 +12,7 @@ import org.fktm.fastpickup.util.page.PageResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +37,7 @@ public class ProductRestController {
 
     // 상품 등록
     @PostMapping("/regist")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Map<Long, String>> registProduct(
             @Valid @RequestBody ProductRegistDTO productRegistDTO) {
 
@@ -48,6 +50,7 @@ public class ProductRestController {
 
     // 상품 상세보기
     @GetMapping("/read/{pno}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<ProductReadDTO> readProduct(
             @PathVariable("pno") Long pno) {
         log.info("===== /api/product/read/" + pno + " | GET =====");
@@ -59,6 +62,7 @@ public class ProductRestController {
 
     // 상품 리스트
     @GetMapping("/list")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<PageResponseDTO<ProductListDTO>> getProductList(
         PageRequestDTO pageRequestDTO
     ){
@@ -71,6 +75,7 @@ public class ProductRestController {
 
     // 상품 삭제
     @PutMapping("/remove/{pno}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Map<String,String>> removeProduct(
         @PathVariable("pno") Long pno
     ){
@@ -84,6 +89,7 @@ public class ProductRestController {
 
     // 상품 수정
     @PutMapping("/modify")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Map<String, String>> modifyProduct(
         @Valid @RequestBody ProductModifyDTO productModifyDTO
     ){

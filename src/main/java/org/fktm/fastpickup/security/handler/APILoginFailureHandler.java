@@ -26,25 +26,24 @@ public class APILoginFailureHandler implements AuthenticationFailureHandler {
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException exception) throws IOException, ServletException {
 
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        Map<String, Object> data = new HashMap<>();
+        data.put("timestamp", Calendar.getInstance().getTime());
+
         if (exception instanceof InternalAuthenticationServiceException) {
             // 로그인 실패 및 인증 실패에 대한 예외 처리
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            Map<String, Object> data = new HashMap<>();
-            data.put("timestamp", Calendar.getInstance().getTime());
+
             data.put("exception", "NotFound_USER");
             data.put("message", "Diffrent ID or PassWord");
 
-            response.getOutputStream().println(objectMapper.writeValueAsString(data));
         } else if (exception instanceof BadCredentialsException) {
 
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            Map<String, Object> data = new HashMap<>();
-            data.put("timestamp", Calendar.getInstance().getTime());
-            data.put("exception", "NotFound_USER");
+            data.put("exception", "Not_Found_USER");
             data.put("message", "Diffrent ID or PassWord");
 
         }
 
+        response.getOutputStream().println(objectMapper.writeValueAsString(data));
     }
 
 }
