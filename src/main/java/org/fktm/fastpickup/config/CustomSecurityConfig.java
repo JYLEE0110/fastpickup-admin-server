@@ -2,6 +2,8 @@ package org.fktm.fastpickup.config;
 
 import java.util.Arrays;
 
+import org.fktm.fastpickup.security.handler.APILoginFailureHandler;
+import org.fktm.fastpickup.security.handler.APILoginSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -22,26 +24,37 @@ import lombok.extern.log4j.Log4j2;
 @EnableMethodSecurity
 public class CustomSecurityConfig {
 
+    private static final String[] WHITE_LIST = {
+            "/api/member/**"
+    };
+
     // 패스워드 암호화
     // 팩토리 메소드
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         log.info("===== Security =====");
 
-        //cors 설정
-        http.cors(config -> config.configurationSource(corsConfigurationSource()));
-
-        http.formLogin(config -> {
-            config.loginPage("/api/member/login");
-        });
-
-        return http.build();
+        // cors 설정
+        return 
+            http.
+                csrf(config -> 
+                        config.disable())
+                .cors(config -> 
+                        config.configurationSource(corsConfigurationSource()))
+                .formLogin(config -> {
+                        config.loginPage("/api/member/login");
+                        config.successHandler(new APILoginSuccessHandler());
+                        config.failureHandler(new APILoginFailureHandler());
+                })
+                .authorizeHttpRequests(config -> 
+                        config.requestMatchers(WHITE_LIST).permitAll())
+                .getOrBuild();
 
     }
 
@@ -61,5 +74,5 @@ public class CustomSecurityConfig {
 
         return source;
     }
-    
+
 }

@@ -1,6 +1,8 @@
 package org.fktm.fastpickup.member.dto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -36,6 +38,13 @@ public class MemberRegistDTO {
     @NotBlank(message = "주소 입력은 필수 입니다.")
     private String memberAddr;              // 회원 주소
 
-     @NotBlank(message = "핸드폰 번호 입력은 필수 입니다.")
+    @NotBlank(message = "핸드폰 번호 입력은 필수 입니다.")
     private String memberPhoneNum;          // 회원 핸드폰 넘버
+
+    @Builder.Default
+    private List<MemberRole> memberRoles = new ArrayList<>();  // 권한 이름
+
+    public void addMemberRoles(MemberRole memberRole){
+        memberRoles.add(memberRole);
+    }
 }

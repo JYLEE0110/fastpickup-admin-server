@@ -22,9 +22,9 @@ public class MemberServiceTests {
     @Autowired(required = false)
     private MemberService memberService;
 
-    private static final String TEST_MEMBER_ID = "adminc";
+    private static final String TEST_MEMBER_ID = "admin";
     private static final String TEST_MEMBER_PW = "1234";
-    private static final String TEST_MEMBER_PW_CHECK = "12341";
+    private static final String TEST_MEMBER_PW_CHECK = "1234";
     private static final String TEST_MEMBER_NAME = "이주용";
     private static final String TEST_MEMBER_ADDR = "경기도 성남시 분당구 청구블루빌";
     private static final String TEST_MEMBER_PHONE_NUM = "010-5420-xxxx";

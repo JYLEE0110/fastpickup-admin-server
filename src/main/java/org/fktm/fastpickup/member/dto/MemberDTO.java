@@ -2,9 +2,13 @@ package org.fktm.fastpickup.member.dto;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import org.apache.ibatis.javassist.Loader.Simple;
 import org.springframework.cglib.core.Local;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import jakarta.validation.constraints.Email;
@@ -18,23 +22,40 @@ import lombok.ToString;
 @Data
 public class MemberDTO extends User {
 
-    public MemberDTO(String memberID, String memberPW, Collection<? extends GrantedAuthority> authorities
-                    ,String comfirmMemberPW, String memberName, String memberAddr, String memberPhoneNum
-                    ,LocalDateTime joinDate, LocalDateTime withDrawalDate, boolean withDrawalStatus){
-
-        super(memberID, memberPW, authorities);
+    public MemberDTO(String memberID, String memberPW, List<String> authorities) {
+        super(memberID, memberPW, authorities.stream()
+                .map(str -> new SimpleGrantedAuthority(str))
+                .collect(Collectors.toList()));
 
         this.memberID = memberID;
         this.memberPW = memberPW;
-        this.comfirmMemberPW = comfirmMemberPW;
-        this.memberName = memberName;
-        this.memberAddr = memberAddr;
-        this.memberPhoneNum = memberPhoneNum;
-        this.joinDate = joinDate;
-        this.withDrawalDate = withDrawalDate;
-        this.withDrawalStatus = withDrawalStatus;
-
+        this.roleNames = authorities;
     }
+
+    // public MemberDTO(String memberID, String memberPW, Collection<? extends
+    // GrantedAuthority> authorities,
+    // String comfirmMemberPW, String memberName, String memberAddr, String
+    // memberPhoneNum, LocalDateTime joinDate,
+    // LocalDateTime withDrawalDate, boolean withDrawalStatus) {
+
+    // super(memberID, memberPW, authorities.stream()
+    // .map(Enum::name)
+    // .map(SimpleGrantedAuthority::new)
+    // .collect(Collectors.toList()));
+
+    // super(memberID, memberPW, authorities);
+
+    // // this.memberID = memberID;
+    // // this.memberPW = memberPW;
+    // // this.comfirmMemberPW = comfirmMemberPW;
+    // // this.memberName = memberName;
+    // // this.memberAddr = memberAddr;
+    // // this.memberPhoneNum = memberPhoneNum;
+    // // this.joinDate = joinDate;
+    // // this.withDrawalDate = withDrawalDate;
+    // // this.withDrawalStatus = withDrawalStatus;
+
+    // }
 
     @NotBlank(message = "ID 입력은 필수 입니다.")
     @Email(message = "이메일 형식이 아닙니다.")
@@ -42,6 +63,8 @@ public class MemberDTO extends User {
 
     @NotBlank(message = "PASSWORD 입력은 필수 입니다.")
     private String memberPW; // 회원 PassWrod
+
+    private List<String> roleNames;
 
     @NotBlank(message = "PASSWORD 검증란 입력은 필수 입니다.")
     private String comfirmMemberPW; // 패스워드 검증

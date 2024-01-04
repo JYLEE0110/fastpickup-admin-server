@@ -1,6 +1,8 @@
 package org.fktm.fastpickup.member.dto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -24,5 +26,8 @@ public class MemberReadDTO {
     private String memberPhoneNum;          // 회원 핸드폰 번호
     private LocalDateTime joinDate;         // 회원가입 일자
     private boolean withDrawalStatus;       // 회원 탈퇴여부
+
+    @Builder.Default
+    private List<String> memberRoles = new ArrayList<>();
 
 }

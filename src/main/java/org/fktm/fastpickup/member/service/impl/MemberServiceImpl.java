@@ -6,12 +6,16 @@ import org.fktm.fastpickup.exception.customexception.FastPickUpException;
 import org.fktm.fastpickup.member.dto.MemberListDTO;
 import org.fktm.fastpickup.member.dto.MemberReadDTO;
 import org.fktm.fastpickup.member.dto.MemberRegistDTO;
+import org.fktm.fastpickup.member.dto.MemberRole;
+import org.fktm.fastpickup.member.dto.MemberRoleDTO;
 import org.fktm.fastpickup.member.dto.MemberModifyDTO;
 import org.fktm.fastpickup.member.exception.enumcode.MemberExceptionCode;
 import org.fktm.fastpickup.member.mappers.MemberMapper;
+import org.fktm.fastpickup.member.mappers.MemberRoleMapper;
 import org.fktm.fastpickup.member.service.MemberService;
 import org.fktm.fastpickup.util.page.PageRequestDTO;
 import org.fktm.fastpickup.util.page.PageResponseDTO;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -24,6 +28,8 @@ public class MemberServiceImpl implements MemberService{
 
     // RequiredArgsConstructor 의존성 주입
     private final MemberMapper memberMapper;
+    private final MemberRoleMapper memberRoleMapper;
+    private final PasswordEncoder passwordEncoder;
 
     // 회원 가입 서비스
     @Override
@@ -52,7 +58,18 @@ public class MemberServiceImpl implements MemberService{
             throw new FastPickUpException(MemberExceptionCode.MISMATCH_PASSWORD);
         }
 
+        // db에 저장 시 암호화 해서 저장
+        memberRegistDTO.setMemberPW(passwordEncoder.encode(memberPW));
+
         memberMapper.registMember(memberRegistDTO);
+
+        // 기본적으로 권한은 USER로 부여한다.
+        MemberRoleDTO memberRoleDTO = MemberRoleDTO.builder()
+                                        .memberID(memberID)
+                                        .roleName(MemberRole.ROLE_USER.name())
+                                        .build();
+
+        memberRoleMapper.registMemberRole(memberRoleDTO);
 
         log.info("===== registMember Service =====");
 
@@ -64,6 +81,7 @@ public class MemberServiceImpl implements MemberService{
 
         log.info("===== ReadMember Service =====");
         MemberReadDTO memberReadDTO = memberMapper.readMember(memberID);
+        memberReadDTO.setMemberPW(null);
         log.info(memberReadDTO);
         log.info("===== ReadMember Service =====");
         

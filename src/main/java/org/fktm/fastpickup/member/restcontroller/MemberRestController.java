@@ -20,6 +20,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +38,7 @@ public class MemberRestController {
 
     // 회원 가입
     @PostMapping("/regist")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<Map<String, String>> registMember(
             @Valid @RequestBody MemberRegistDTO memberRegistDTO) {
 

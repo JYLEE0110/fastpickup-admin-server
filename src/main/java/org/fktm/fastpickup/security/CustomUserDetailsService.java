@@ -1,4 +1,4 @@
-package org.fktm.fastpickup.security.handler;
+package org.fktm.fastpickup.security;
 
 import org.fktm.fastpickup.exception.customexception.FastPickUpException;
 import org.fktm.fastpickup.member.dto.MemberDTO;
@@ -31,13 +31,15 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new FastPickUpException(MemberExceptionCode.NOT_EXCIST_MEMBER);
         }
         
-        // MemberDTO memberDTO = new MemberDTO(
-        //     member.getMemberID(),
-        //     member.getMemberPW(),
-            
-            
-        // )
+        MemberDTO memberDTO = new MemberDTO(
+            member.getMemberID(),
+            member.getMemberPW(),
+            member.getMemberRoles()
+        );
 
+        log.info(memberDTO);
+
+        return memberDTO;
     }
     
 }

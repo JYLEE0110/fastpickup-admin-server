@@ -14,11 +14,29 @@
     </insert>
 
   <!-- 회원 상세보기 -->
-    <select id ="readMember">
-      select memberID,memberPW ,memberName, memberAddr, memberPhoneNum, joinDate, withDrawalStatus
-      from tbl_member
-      where memberID = #{memberID}
+    <resultMap id ="memberMap" type="org.fktm.fastpickup.member.dto.MemberReadDTO">
+      <id property ="memberID" column ="memberID"/>
+      <result property ="memberRole" column="memberRole"/>
+      <result property ="memberPW" column="memberPW"/>
+      <result property ="memberName" column="memberName"/>
+      <result property ="memberAddr" column="memberAddr"/>
+      <result property ="memberPhoneNum" column="memberPhoneNum"/>
+      <result property ="joinDate" column="joinDate"/>
+      <result property ="withDrawalStatus" column="withDrawalStatus"/>
+      <collection property="memberRoles" resultMap="memberRolesNameMap"/>
+    </resultMap>
+
+    <resultMap type = "String" id ="memberRolesNameMap">
+      <result column = "roleName"/>
+    </resultMap>
+
+    <select id ="readMember" resultMap ="memberMap">
+      select tm.memberID, tmr.roleName, tm.memberPW ,tm.memberName, tm.memberAddr, tm.memberPhoneNum, tm.joinDate, tm.withDrawalStatus
+      from tbl_member tm left outer join tbl_member_role tmr on tm.memberID = tmr.memberID
+      where tm.memberID = #{memberID}
     </select>
+
+  <!-- 회원 상세보기 -->
 
   <!-- 회원 리스트 검색 -->
     <select id = "getMemberList">
