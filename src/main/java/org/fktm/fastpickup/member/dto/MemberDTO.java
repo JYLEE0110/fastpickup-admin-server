@@ -2,7 +2,9 @@ package org.fktm.fastpickup.member.dto;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.ibatis.javassist.Loader.Simple;
@@ -81,5 +83,18 @@ public class MemberDTO extends User {
     private LocalDateTime joinDate; // 회원가입 일자
     private LocalDateTime withDrawalDate; // 회원탈퇴 일자
     private boolean withDrawalStatus; // 회원 탈퇴 여부
+
+
+    // JWT토큰 생성을 위한 Clamis 작성
+    public Map<String, Object> getClamis(){
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("memberID", memberID);
+        map.put("memberPW", memberPW);
+        map.put("roleNames",roleNames);
+
+        return map;
+    }
 
 }

@@ -49,6 +49,8 @@ public class CustomSecurityConfig {
                         config.disable())
                 .cors(config -> 
                         config.configurationSource(corsConfigurationSource()))
+                .authorizeHttpRequests(config -> 
+                        config.requestMatchers(WHITE_LIST).permitAll())
                 .formLogin(config -> {
                         config.loginPage("/api/member/login");
                         config.successHandler(new APILoginSuccessHandler());
@@ -56,8 +58,6 @@ public class CustomSecurityConfig {
                 })
                 .exceptionHandling(config ->
                         config.accessDeniedHandler(new CustomAccessDeniedHandler()))
-                // .authorizeHttpRequests(config -> 
-                //         config.requestMatchers(WHITE_LIST).permitAll())
                 .getOrBuild();
 
     }

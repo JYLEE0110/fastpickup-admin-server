@@ -2,8 +2,10 @@ package org.fktm.fastpickup.security.handler;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 
 import org.fktm.fastpickup.member.dto.MemberDTO;
+import org.fktm.fastpickup.util.jwt.JWTUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -23,15 +25,21 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
 
             MemberDTO memberDTO = (MemberDTO)authentication.getPrincipal();
 
-            log.info(memberDTO);
+            Map<String, Object> claims = memberDTO.getClamis();
 
-            // Gson gson = new Gson();
+            String accessToken = JWTUtil.generateToken(claims, 10);
+            String refreshToken = JWTUtil.generateToken(claims, 60*24);
 
-            // String jsonStr = gson.toJson(memberDTO);
+            claims.put("accessToken", accessToken);
+            claims.put("refreshToken", refreshToken);
+
+            Gson gson = new Gson();
+
+            String jsonStr = gson.toJson(claims);
 
             response.setContentType("application/json");
             PrintWriter printWriter = response.getWriter();
-            printWriter.println(memberDTO);
+            printWriter.println(jsonStr);
             printWriter.close();
 
     }
