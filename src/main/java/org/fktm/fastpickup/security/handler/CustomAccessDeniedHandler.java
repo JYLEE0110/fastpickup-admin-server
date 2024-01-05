@@ -21,7 +21,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
             AccessDeniedException accessDeniedException) throws IOException, ServletException {
           // 예외 발생 시 => 접근권한이 없는 유저가 페이지에 들어왔을 시
         Gson gson = new Gson();
-        String msg = gson.toJson(Map.of("error", "ERROR_ACCESSDENIED"));
+        String msg = gson.toJson(Map.of("error", "ERROR_ACCESS_DENIED"));
 
         // 403에러 => 사용자가 페이지 접근 시 보여줌
         response.setContentType("application/json");

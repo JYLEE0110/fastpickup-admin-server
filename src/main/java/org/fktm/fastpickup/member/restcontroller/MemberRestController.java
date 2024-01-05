@@ -65,8 +65,8 @@ public class MemberRestController {
     }
 
     // 회원 리스트
-    @GetMapping("/list")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("/list")
     public ResponseEntity<PageResponseDTO<MemberListDTO>> getMemberList(
             PageRequestDTO pageRequestDTO) {
         log.info("===== /api/member/list/ | GET =====");

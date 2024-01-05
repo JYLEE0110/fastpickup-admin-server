@@ -6,7 +6,11 @@ import java.util.Map;
 
 import javax.crypto.SecretKey;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.InvalidClaimException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.log4j.Log4j2;
 
@@ -37,6 +41,35 @@ public class JWTUtil {
                 .compact();
         
                 return jwtStr;
+    }
+
+    // JWT Access토큰을 파싱하여 payload 정보들을 얻기위한 코드
+    public static Map<String, Object> validateToken(String token){
+
+        Map<String, Object> claim = null;
+        try{
+            // SecretKey를 암호화해서 얻음
+            SecretKey key = Keys.hmacShaKeyFor(JWTUtil.key.getBytes("UTF-8"));
+
+            // 암호화된 secretKey로 토큰을 파싱 하여 payload를 얻는다.
+            claim = Jwts.parserBuilder()
+                        .setSigningKey(key)
+                        .build()
+                        .parseClaimsJws(token)
+                        .getBody();
+        }catch(MalformedJwtException malformedJwtException){
+            throw new CustomJWTException("MalFormed");
+        }catch(ExpiredJwtException expiredJwtException){
+            throw new CustomJWTException("Expired");
+        }catch(InvalidClaimException invalidClaimException){
+            throw new CustomJWTException("Invalid");
+        }catch(JwtException jwtException){
+            throw new CustomJWTException("JWTError");
+        }catch(Exception e){
+            throw new CustomJWTException("Error");
+        }
+        return claim;
+
     }
 
 }
