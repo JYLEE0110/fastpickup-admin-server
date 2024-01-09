@@ -38,9 +38,9 @@ public class JWTCheckFilter extends OncePerRequestFilter {
             return true;
         }
 
-        if(path.equals("/api/product/list")){
-            return true;
-        }
+        // if(path.equals("/api/product/list")){
+        //     return true;
+        // }
 
         return false;
 

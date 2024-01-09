@@ -61,7 +61,7 @@ public class ProductRestController {
     }
 
     // 상품 리스트
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("permitAll")
     @GetMapping("/list")
     public ResponseEntity<PageResponseDTO<ProductListDTO>> getProductList(
         PageRequestDTO pageRequestDTO
