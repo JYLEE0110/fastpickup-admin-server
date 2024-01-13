@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ProductMapper Xml -->
+<mapper namespace="org.fktm.fastpickup.order.mappers.OrderMapper">
+
+    <!-- 주문 생성  -->
+    <insert id ="createOrder">
+        insert into tbl_order(memberID) values(#{memberID})
+        
+        <selectKey resultType="Long" keyProperty="ono" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+    <!-- 주문 상품 생성 -->
+    <insert id = "createOrderProduct">
+        insert into tbl_order_product(ono, pno, quantity)
+        values
+        <foreach collection = "orderProducts" item = "orderProduct" separator=",">
+            (#{ono}, #{orderProduct.pno}, #{orderProduct.quantity})
+        </foreach>
+    </insert>
+    <!-- 주문 생성 및 주문 상품 생성 -->
+
+</mapper>

@@ -54,7 +54,7 @@ public class CustomSecurityConfig {
                         config.configurationSource(corsConfigurationSource()))
                 // 세밀하게 지정할때 Admin 서버에서는 로그인전에 아무것도 할 수 없게 설계
                 .authorizeHttpRequests(config -> {
-                        config.requestMatchers(WHITE_LIST).permitAll();  
+                        config.requestMatchers(WHITE_LIST).permitAll();
                         // config.requestMatchers("/api/member/list").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER");
                         
                         })
@@ -66,9 +66,9 @@ public class CustomSecurityConfig {
                 .exceptionHandling(config ->
                         config.accessDeniedHandler(new CustomAccessDeniedHandler()))
                 // jwt 사용
-                // .sessionManagement(config -> 
-                //         config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // .addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement(config -> 
+                        config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class)
                 .getOrBuild();
 
     }
