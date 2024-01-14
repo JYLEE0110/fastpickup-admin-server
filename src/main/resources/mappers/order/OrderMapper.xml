@@ -22,6 +22,33 @@
             (#{ono}, #{orderProduct.pno}, #{orderProduct.quantity})
         </foreach>
     </insert>
-    <!-- 주문 생성 및 주문 상품 생성 -->
+    <!-- 주문 생성 및 주문 상품 생성 END -->
+    
+    <!-- 상품 상세 보기 -->
+    <resultMap id="orderMap" type="org.fktm.fastpickup.order.dto.ReadOrderDTO">
+        <id property="ono" column="ono"/>
+        <result property="orderDate" column="orderDate"/>
+        <result property="orderStatus" column="orderStatus"/>
+        <collection property="orderProduct" resultMap="orderProducts"/>
+    </resultMap>
+
+    <resultMap type="org.fktm.fastpickup.order.dto.ReadOrderProductDTO" id="orderProducts">
+        <result property = "productName" column="productName"/>
+        <result property = "quantity" column="quantity"/>
+    </resultMap>
+
+    <select id = "readOrder" resultMap = "orderMap">
+        select tod.ono, tod.orderDate, tod.orderStatus, tp.productName, top.quantity 
+            from tbl_order tod 
+		        left outer join tbl_order_product top on tod.ono = top.ono
+		        left outer join tbl_product tp on top.pno = tp.pno
+        where tod.ono = #{ono};
+    </select>
+
+    <update id ="modifyOrderStatus">
+        update tbl_order 
+            set orderStatus = #{orderStatus}
+        where ono = #{ono}
+    </update>
 
 </mapper>

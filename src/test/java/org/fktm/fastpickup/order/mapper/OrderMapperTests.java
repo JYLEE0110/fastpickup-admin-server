@@ -3,9 +3,11 @@ package org.fktm.fastpickup.order.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fktm.fastpickup.order.OrderStatus;
 import org.fktm.fastpickup.order.dto.CreateOrderDTO;
 import org.fktm.fastpickup.order.dto.CreateOrderProductDTO;
 import org.fktm.fastpickup.order.dto.OrderProductDTO;
+import org.fktm.fastpickup.order.dto.ReadOrderDTO;
 import org.fktm.fastpickup.order.mappers.OrderMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +28,8 @@ public class OrderMapperTests {
 
     private static final String TEST_MEMBER_ID = "admin";
     private static final int TEST_QUANTITY = 3;
+    private static final Long TEST_ONO = 7L;
+    private static final String TEST_ORDER_STATUS = "접수";
 
     private CreateOrderDTO createOrderDTO;
 
@@ -34,6 +38,8 @@ public class OrderMapperTests {
     private List<OrderProductDTO> orderProducts = new ArrayList<>();
 
     private CreateOrderProductDTO createOrderProductDTO;
+
+    private ReadOrderDTO readOrderDTO;
 
     @BeforeEach
     public void init() {
@@ -70,10 +76,10 @@ public class OrderMapperTests {
         orderProducts.add(orderProductDTO2);
 
         createOrderProductDTO = CreateOrderProductDTO.builder()
-                                    .ono(ono)
-                                    .orderProducts(orderProducts)
-                                    .build();
-        
+                .ono(ono)
+                .orderProducts(orderProducts)
+                .build();
+
         orderMapper.createOrderProduct(createOrderProductDTO);
 
         // THEN
@@ -81,20 +87,41 @@ public class OrderMapperTests {
         log.info("===== END createORder Test =====");
     }
 
-    // @DisplayName("주문 상품 생성 매퍼 테스트")
-    // @Test
-    // // @Transactional
-    // public void createOrderProduct() {
+    @DisplayName("주문 상세보기 매퍼 테스트")
+    @Test
+    @Transactional
+    public void readOrder() {
 
-    // // GIVEN
-    // log.info("===== Start createOrderProduct Test =====");
+        // GIVEN
+        log.info("===== Start readOrder Test =====");
 
-    // // WHEN
-    // orderMapper.createOrderProduct();
+        // WHEN
+        readOrderDTO = orderMapper.readOrder(TEST_ONO);
+        log.info(readOrderDTO);
 
-    // // THEN
-    // log.info("===== END createOrderProduct Test =====");
+        //THEN
+        Assertions.assertNotNull(readOrderDTO);
+        log.info("===== END readOrder Test =====");
 
-    // }
+    }
+
+    @DisplayName("주문 상태변경 매퍼 테스트")
+    @Test
+    // @Transactional
+    public void modifyOrderStatus() {
+
+        // GIVEN
+        log.info("===== Start modifyOrderStatus Test =====");
+
+        // WHEN
+        orderMapper.modifyOrderStatus(TEST_ONO, TEST_ORDER_STATUS);
+        readOrderDTO = orderMapper.readOrder(TEST_ONO);
+
+        log.info(readOrderDTO);
+
+        //THEN
+        log.info("===== END modifyOrderStatus Test =====");
+
+    }
 
 }

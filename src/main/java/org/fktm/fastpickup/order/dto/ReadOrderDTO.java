@@ -1,16 +1,23 @@
-// package org.fktm.fastpickup.order.dto;
+package org.fktm.fastpickup.order.dto;
 
-// import java.time.LocalDate;
-// import java.time.LocalDateTime;
+import java.time.LocalDateTime;
+import java.util.List;
 
-// @NoArgsConstructor
-// @AllArgsConstructor
-// @ToString
-// @Builder
-// @Data
-// public class ReadOrderDTO {
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-//     private LocalDateTime orderDate;
-//     private 
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Builder
+@Data
+public class ReadOrderDTO {
 
-// }
+    private Long ono;                   // 주문번호
+    private LocalDateTime orderDate;    // 주문 일자
+    private String orderStatus;         // 주문 상태
+    private List<ReadOrderProductDTO> orderProduct; // 주문 상품내역(상품 명과 수량 적시)
+}
