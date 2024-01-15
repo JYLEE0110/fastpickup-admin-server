@@ -2,13 +2,16 @@ package org.fktm.fastpickup.order.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.fktm.fastpickup.order.OrderStatus;
 import org.fktm.fastpickup.order.dto.CreateOrderDTO;
-import org.fktm.fastpickup.order.dto.CreateOrderProductDTO;
+import org.fktm.fastpickup.order.dto.ListOrderDTO;
 import org.fktm.fastpickup.order.dto.OrderProductDTO;
 import org.fktm.fastpickup.order.dto.ReadOrderDTO;
 import org.fktm.fastpickup.order.mappers.OrderMapper;
+import org.fktm.fastpickup.util.page.PageRequestDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -37,15 +40,32 @@ public class OrderMapperTests {
     private OrderProductDTO orderProductDTO2;
     private List<OrderProductDTO> orderProducts = new ArrayList<>();
 
-    private CreateOrderProductDTO createOrderProductDTO;
+    private List<ListOrderDTO> orderListDTO;
 
     private ReadOrderDTO readOrderDTO;
+    private PageRequestDTO pageRequestDTO;
 
     @BeforeEach
     public void init() {
 
+        pageRequestDTO = PageRequestDTO.builder().build();
+
+        orderProductDTO1 = OrderProductDTO.builder()
+                .pno(45L)
+                .quantity(TEST_QUANTITY)
+                .build();
+
+        orderProductDTO2 = OrderProductDTO.builder()
+                .pno(31L)
+                .quantity(TEST_QUANTITY)
+                .build();
+
+        orderProducts.add(orderProductDTO1);
+        orderProducts.add(orderProductDTO2);
+
         createOrderDTO = CreateOrderDTO.builder()
                 .memberID(TEST_MEMBER_ID)
+                .orderProducts(orderProducts)
                 .build();
 
     }
@@ -62,25 +82,15 @@ public class OrderMapperTests {
         int result = orderMapper.createOrder(createOrderDTO);
         Long ono = createOrderDTO.getOno();
 
-        orderProductDTO1 = OrderProductDTO.builder()
-                .pno(45L)
-                .quantity(TEST_QUANTITY)
-                .build();
+        List<OrderProductDTO> orderProduct = createOrderDTO.getOrderProducts();
 
-        orderProductDTO2 = OrderProductDTO.builder()
-                .pno(31L)
-                .quantity(TEST_QUANTITY)
-                .build();
-
-        orderProducts.add(orderProductDTO1);
-        orderProducts.add(orderProductDTO2);
-
-        createOrderProductDTO = CreateOrderProductDTO.builder()
-                .ono(ono)
-                .orderProducts(orderProducts)
-                .build();
-
-        orderMapper.createOrderProduct(createOrderProductDTO);
+        List<Map<String, String>> orderProducts = orderProduct.stream().map(dto -> {
+            Long pno = dto.getPno();
+            int quantity = dto.getQuantity();
+        
+            return Map.of("pno", String.valueOf(pno), "quantity", String.valueOf(quantity), "ono", String.valueOf(ono));
+        }).collect(Collectors.toList());
+        orderMapper.createOrderProduct(orderProducts);
 
         // THEN
         Assertions.assertEquals(result, 1, "주문 중에 예상치못한 오류가 발생하였습니다.");
@@ -99,7 +109,7 @@ public class OrderMapperTests {
         readOrderDTO = orderMapper.readOrder(TEST_ONO);
         log.info(readOrderDTO);
 
-        //THEN
+        // THEN
         Assertions.assertNotNull(readOrderDTO);
         log.info("===== END readOrder Test =====");
 
@@ -119,8 +129,25 @@ public class OrderMapperTests {
 
         log.info(readOrderDTO);
 
-        //THEN
+        // THEN
         log.info("===== END modifyOrderStatus Test =====");
+
+    }
+
+    @DisplayName("주문 목록 매퍼 테스트")
+    @Test
+    // @Transactional
+    public void getOrderList() {
+
+        // GIVEN
+        log.info("===== Start getOrderList Test =====");
+
+        // WHEN
+        orderListDTO = orderMapper.getOrderList(pageRequestDTO);
+        log.info(orderListDTO);
+
+        // THEN
+        log.info("===== END getOrderList Test =====");
 
     }
 

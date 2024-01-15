@@ -18,8 +18,8 @@
     <insert id = "createOrderProduct">
         insert into tbl_order_product(ono, pno, quantity)
         values
-        <foreach collection = "orderProducts" item = "orderProduct" separator=",">
-            (#{ono}, #{orderProduct.pno}, #{orderProduct.quantity})
+        <foreach collection = "list" item = "orderProduct" separator=",">
+            (#{orderProduct.ono}, #{orderProduct.pno}, #{orderProduct.quantity})
         </foreach>
     </insert>
     <!-- 주문 생성 및 주문 상품 생성 END -->
@@ -45,10 +45,38 @@
         where tod.ono = #{ono};
     </select>
 
+    <!-- 주문상태 변경 -->
     <update id ="modifyOrderStatus">
         update tbl_order 
             set orderStatus = #{orderStatus}
         where ono = #{ono}
     </update>
+
+    <!-- 주문 리스트 -->
+    <select id ="getOrderList">
+        select tod.ono, max(tod.memberID) as memberID, max(tod.orderDate) as orderDate,
+               max(tod.orderStatus) as orderStatus, max(tp.productName) as productName,
+               sum(top.quantity) as quantity
+        from tbl_order tod
+                left outer join tbl_order_product top on tod.ono = top.ono
+                left outer join tbl_product tp on top.pno =tp.pno
+        
+        <if test="keyword != null and types != null">
+            <where>
+              <trim prefix="and (" prefixOverrides="or" suffix=")">
+                <foreach collection="types" item="type" separator=" or ">
+                  <if test='type == "s"'>
+                    tod.orderStatus like concat('%', #{keyword}, '%')
+                  </if>
+                </foreach>
+              </trim>
+            </where>
+          </if>
+
+        group by tod.ono
+        order by tod.ono desc
+        limit #{skip}, #{size}
+    </select>
+
 
 </mapper>
