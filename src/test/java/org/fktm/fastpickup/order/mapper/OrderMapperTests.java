@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.fktm.fastpickup.order.OrderStatus;
 import org.fktm.fastpickup.order.dto.CreateOrderDTO;
 import org.fktm.fastpickup.order.dto.ListOrderDTO;
+import org.fktm.fastpickup.order.dto.ModifyOrderStatusDTO;
 import org.fktm.fastpickup.order.dto.OrderProductDTO;
 import org.fktm.fastpickup.order.dto.ReadOrderDTO;
 import org.fktm.fastpickup.order.mappers.OrderMapper;
@@ -43,6 +44,7 @@ public class OrderMapperTests {
     private List<ListOrderDTO> orderListDTO;
 
     private ReadOrderDTO readOrderDTO;
+    private ModifyOrderStatusDTO modifyOrderStatusDTO;
     private PageRequestDTO pageRequestDTO;
 
     @BeforeEach
@@ -67,6 +69,11 @@ public class OrderMapperTests {
                 .memberID(TEST_MEMBER_ID)
                 .orderProducts(orderProducts)
                 .build();
+
+        modifyOrderStatusDTO = ModifyOrderStatusDTO.builder()
+                                    .ono(TEST_ONO)
+                                    .orderStatus(TEST_ORDER_STATUS)
+                                    .build();
 
     }
 
@@ -124,7 +131,7 @@ public class OrderMapperTests {
         log.info("===== Start modifyOrderStatus Test =====");
 
         // WHEN
-        orderMapper.modifyOrderStatus(TEST_ONO, TEST_ORDER_STATUS);
+        orderMapper.modifyOrderStatus(modifyOrderStatusDTO);
         readOrderDTO = orderMapper.readOrder(TEST_ONO);
 
         log.info(readOrderDTO);

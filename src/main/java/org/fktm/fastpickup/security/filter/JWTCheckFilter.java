@@ -42,6 +42,10 @@ public class JWTCheckFilter extends OncePerRequestFilter {
             return true;
         }
 
+        if(path.equals("/api/order/create")){
+            return true;
+        }
+
         return false;
 
     }

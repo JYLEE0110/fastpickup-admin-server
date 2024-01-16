@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.fktm.fastpickup.order.dto.CreateOrderDTO;
 import org.fktm.fastpickup.order.dto.ListOrderDTO;
+import org.fktm.fastpickup.order.dto.ModifyOrderStatusDTO;
 import org.fktm.fastpickup.order.dto.OrderProductDTO;
 import org.fktm.fastpickup.order.dto.ReadOrderDTO;
 import org.fktm.fastpickup.order.mappers.OrderMapper;
@@ -60,11 +61,11 @@ public class OrderServiceImpl implements OrderService {
 
     // 주문 상태 변경
     @Override
-    public void modifyOrderStatus(Long ono, String orderStatus) {
+    public void modifyOrderStatus(ModifyOrderStatusDTO modifyOrderStatusDTO) {
 
         log.info("=== modifyOrderStatus Service ===");
 
-        orderMapper.modifyOrderStatus(ono, orderStatus);
+        orderMapper.modifyOrderStatus(modifyOrderStatusDTO);
 
     }
 

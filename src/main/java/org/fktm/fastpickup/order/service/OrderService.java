@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.fktm.fastpickup.order.dto.CreateOrderDTO;
 import org.fktm.fastpickup.order.dto.ListOrderDTO;
+import org.fktm.fastpickup.order.dto.ModifyOrderStatusDTO;
 import org.fktm.fastpickup.order.dto.ReadOrderDTO;
 import org.fktm.fastpickup.util.page.PageRequestDTO;
 import org.fktm.fastpickup.util.page.PageResponseDTO;
@@ -20,7 +21,7 @@ public interface OrderService {
     ReadOrderDTO readOrder(Long ono);
 
     // 주문 상태 변경
-    void modifyOrderStatus(@Param("ono")Long ono, @Param("orderStatus")String orderStatus);
+    void modifyOrderStatus(ModifyOrderStatusDTO modifyOrderStatusDTO);
 
     // 주문 리스트
     PageResponseDTO<ListOrderDTO> getOrderList(PageRequestDTO pageRequestDTO);

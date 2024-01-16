@@ -27,6 +27,7 @@
     <!-- 상품 상세 보기 -->
     <resultMap id="orderMap" type="org.fktm.fastpickup.order.dto.ReadOrderDTO">
         <id property="ono" column="ono"/>
+        <result property="memberID" column="memberID"/>
         <result property="orderDate" column="orderDate"/>
         <result property="orderStatus" column="orderStatus"/>
         <collection property="orderProduct" resultMap="orderProducts"/>
@@ -38,7 +39,7 @@
     </resultMap>
 
     <select id = "readOrder" resultMap = "orderMap">
-        select tod.ono, tod.orderDate, tod.orderStatus, tp.productName, top.quantity 
+        select tod.ono, tod.memberID, tod.orderDate, tod.orderStatus, tp.productName, top.quantity 
             from tbl_order tod 
 		        left outer join tbl_order_product top on tod.ono = top.ono
 		        left outer join tbl_product tp on top.pno = tp.pno
