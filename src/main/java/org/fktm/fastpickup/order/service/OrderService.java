@@ -7,6 +7,7 @@ import org.fktm.fastpickup.order.dto.CreateOrderDTO;
 import org.fktm.fastpickup.order.dto.ListOrderDTO;
 import org.fktm.fastpickup.order.dto.ReadOrderDTO;
 import org.fktm.fastpickup.util.page.PageRequestDTO;
+import org.fktm.fastpickup.util.page.PageResponseDTO;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -22,6 +23,6 @@ public interface OrderService {
     void modifyOrderStatus(@Param("ono")Long ono, @Param("orderStatus")String orderStatus);
 
     // 주문 리스트
-    // List<ListOrderDTO> getOrderList(PageRequestDTO pageRequestDTO);
+    PageResponseDTO<ListOrderDTO> getOrderList(PageRequestDTO pageRequestDTO);
 
 }

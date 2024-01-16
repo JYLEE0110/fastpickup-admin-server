@@ -5,10 +5,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.fktm.fastpickup.order.dto.CreateOrderDTO;
+import org.fktm.fastpickup.order.dto.ListOrderDTO;
 import org.fktm.fastpickup.order.dto.OrderProductDTO;
 import org.fktm.fastpickup.order.dto.ReadOrderDTO;
 import org.fktm.fastpickup.order.mappers.OrderMapper;
 import org.fktm.fastpickup.order.service.OrderService;
+import org.fktm.fastpickup.util.page.PageRequestDTO;
+import org.fktm.fastpickup.util.page.PageResponseDTO;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -45,16 +48,41 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+    // 주문 상세
     @Override
     public ReadOrderDTO readOrder(Long ono) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'readOrder'");
+
+        log.info("=== readOrder Service ===");
+
+        return orderMapper.readOrder(ono);
+
     }
 
+    // 주문 상태 변경
     @Override
     public void modifyOrderStatus(Long ono, String orderStatus) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'modifyOrderStatus'");
+
+        log.info("=== modifyOrderStatus Service ===");
+
+        orderMapper.modifyOrderStatus(ono, orderStatus);
+
+    }
+
+    // 주문목록
+    @Override
+    public PageResponseDTO<ListOrderDTO> getOrderList(PageRequestDTO pageRequestDTO) {
+
+        log.info("=== getOrderList Service ===");
+
+        List<ListOrderDTO> orderList = orderMapper.getOrderList(pageRequestDTO);
+        Long totalOrderList = orderMapper.getOrderTotal(pageRequestDTO);
+
+        return PageResponseDTO.<ListOrderDTO> withAll()
+                        .list(orderList)
+                        .total(totalOrderList)
+                        .pageRequestDTO(pageRequestDTO)
+                        .build();
+
     }
 
 }

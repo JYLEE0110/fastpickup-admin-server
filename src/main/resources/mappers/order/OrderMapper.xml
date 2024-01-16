@@ -77,6 +77,32 @@
         order by tod.ono desc
         limit #{skip}, #{size}
     </select>
+    <!-- 현재 페이지에서 주문 목록 총 개수 -->
+    <select id ="getOrderTotal">
+      select count(*)
+      from(select tod.ono, max(tod.memberID) as memberID, max(tod.orderDate) as orderDate,
+               max(tod.orderStatus) as orderStatus, max(tp.productName) as productName,
+               sum(top.quantity) as quantity
+          from tbl_order tod
+                left outer join tbl_order_product top on tod.ono = top.ono
+                left outer join tbl_product tp on top.pno =tp.pno
+        
+        <if test="keyword != null and types != null">
+            <where>
+              <trim prefix="and (" prefixOverrides="or" suffix=")">
+                <foreach collection="types" item="type" separator=" or ">
+                  <if test='type == "s"'>
+                    tod.orderStatus like concat('%', #{keyword}, '%')
+                  </if>
+                </foreach>
+              </trim>
+            </where>
+          </if>
+        group by tod.ono
+        order by tod.ono desc
+        limit #{countEnd}
+      ) as tbl_order
+    </select>
 
 
 </mapper>

@@ -14,7 +14,6 @@ public interface OrderMapper {
     
     // 주문 생성
     int createOrder(CreateOrderDTO createOrderDTO);
-
     // 주문 상품 생성
     int createOrderProduct(List<Map<String, String>> orderProducts);
 
@@ -26,5 +25,7 @@ public interface OrderMapper {
 
     // 주문 리스트
     List<ListOrderDTO> getOrderList(PageRequestDTO pageRequestDTO);
+    // 현재 페이지에 대한 주문목록 총 개수 
+    Long getOrderTotal(PageRequestDTO pageRequestDTO);
 
 }

@@ -151,4 +151,21 @@ public class OrderMapperTests {
 
     }
 
+    @DisplayName("주문 목록 총 개수 매퍼 테스트")
+    @Test
+    // @Transactional
+    public void getOrderListTotal() {
+
+        // GIVEN
+        log.info("===== Start getOrderListTotal Test =====");
+
+        // WHEN
+        Long total = orderMapper.getOrderTotal(pageRequestDTO);
+        log.info(total);
+
+        // THEN
+        log.info("===== END getOrderListTotal Test =====");
+
+    }
+
 }
