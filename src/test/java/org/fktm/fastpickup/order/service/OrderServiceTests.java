@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.fktm.fastpickup.order.dto.CreateOrderDTO;
 import org.fktm.fastpickup.order.dto.ListOrderDTO;
+import org.fktm.fastpickup.order.dto.ModifyOrderStatusDTO;
 import org.fktm.fastpickup.order.dto.OrderProductDTO;
 import org.fktm.fastpickup.order.dto.ReadOrderDTO;
 import org.fktm.fastpickup.util.page.PageRequestDTO;
@@ -36,6 +37,8 @@ public class OrderServiceTests {
     private OrderProductDTO orderProductDTO2;
     private List<OrderProductDTO> orderProducts = new ArrayList<>();
 
+    private ModifyOrderStatusDTO modifyOrderStatusDTO;
+
     private ReadOrderDTO readOrderDTO;
 
     private PageRequestDTO pageRequestDTO;
@@ -59,6 +62,11 @@ public class OrderServiceTests {
         createOrderDTO = CreateOrderDTO.builder()
                 .memberID(TEST_MEMBER_ID)
                 .orderProducts(orderProducts)
+                .build();
+
+        modifyOrderStatusDTO = ModifyOrderStatusDTO.builder()
+                .ono(TEST_ONO)
+                .orderStatus(TEST_ORDER_STATUS)
                 .build();
         
         pageRequestDTO = PageRequestDTO.builder().build();
@@ -109,7 +117,7 @@ public class OrderServiceTests {
         log.info("===== Start modifyOrderStatusService Test =====");
 
         // WHEN
-        orderService.modifyOrderStatus(TEST_ONO, TEST_ORDER_STATUS);
+        orderService.modifyOrderStatus(modifyOrderStatusDTO);
 
         // THEN
         log.info("===== END modifyOrderStatusService Test =====");

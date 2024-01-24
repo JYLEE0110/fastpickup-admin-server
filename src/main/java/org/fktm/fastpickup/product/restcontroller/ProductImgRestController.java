@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import org.fktm.fastpickup.util.img.ImgFileUploadDTO;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;

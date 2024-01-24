@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/category")
+@RequestMapping("/api/category")
 @Log4j2
 public class CategoryRestController {
 
@@ -58,7 +58,7 @@ public class CategoryRestController {
 
         List<CategoryDTO> list = categoryService.getCategoryList();
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("Categories", list));
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("categoryList", list));
 
     }
 
