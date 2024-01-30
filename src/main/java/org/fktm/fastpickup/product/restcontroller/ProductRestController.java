@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,14 +31,16 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 @RequestMapping("/api/product")
 @Log4j2
+@CrossOrigin
 public class ProductRestController {
 
     // DI 생성자(RequiredArgsConstructor로 의존성 주입
     private final ProductService productService;
 
     // 상품 등록
+    @PreAuthorize("permitAll")
     @PostMapping("/regist")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Map<Long, String>> registProduct(
             @Valid @RequestBody ProductRegistDTO productRegistDTO) {
 
@@ -49,8 +52,8 @@ public class ProductRestController {
     }
 
     // 상품 상세보기
+    @PreAuthorize("permitAll")
     @GetMapping("/read/{pno}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<ProductReadDTO> readProduct(
             @PathVariable("pno") Long pno) {
         log.info("===== /api/product/read/" + pno + " | GET =====");
@@ -75,7 +78,8 @@ public class ProductRestController {
 
     // 상품 삭제
     @PutMapping("/remove/{pno}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("permitAll")
     public ResponseEntity<Map<String,String>> removeProduct(
         @PathVariable("pno") Long pno
     ){
@@ -89,7 +93,8 @@ public class ProductRestController {
 
     // 상품 수정
     @PutMapping("/modify")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("permitAll")
+    // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Map<String, String>> modifyProduct(
         @Valid @RequestBody ProductModifyDTO productModifyDTO
     ){

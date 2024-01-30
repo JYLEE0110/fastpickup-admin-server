@@ -51,6 +51,7 @@
         from tbl_category tc left outer join tbl_product tp on tc.cno = tp.cno
                              left outer join tbl_product_img tpi on tp.pno = tpi.pno
         where tp.isDeleted = false and tpi.imgOrd = 0
+        
 
          <if test="keyword != null and types != null">
               <trim prefix="and (" prefixOverrides="or" suffix=")">
@@ -58,10 +59,13 @@
                   <if test='type == "p"'>
                     tp.productName like concat('%', #{keyword}, '%')
                   </if>
+                  <if test='type == "c"'>
+                    tc.categoryName like concat('%', #{keyword}, '%')
+                  </if>
                 </foreach>
               </trim>
           </if>
-
+        order by pno desc
         limit #{skip}, #{size}
     </select>
     <!-- 페이징을 위한 실제 상품 개수 -->
