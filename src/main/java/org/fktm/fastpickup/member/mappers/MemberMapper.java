@@ -5,6 +5,7 @@ import java.util.List;
 import org.fktm.fastpickup.member.dto.MemberListDTO;
 import org.fktm.fastpickup.member.dto.MemberReadDTO;
 import org.fktm.fastpickup.member.dto.MemberRegistDTO;
+import org.fktm.fastpickup.member.page.MemberPageRequestDTO;
 import org.fktm.fastpickup.member.dto.MemberModifyDTO;
 import org.fktm.fastpickup.util.page.PageRequestDTO;
 
@@ -17,9 +18,9 @@ public interface MemberMapper {
     MemberReadDTO readMember(String memberID);
 
     // 회원 리스트
-    List<MemberListDTO> getMemberList(PageRequestDTO pageRequestDTO);
+    List<MemberListDTO> getMemberList(MemberPageRequestDTO memberPageRequestDTO);
     // 페이징을 위한 현 페이지에 대한 회원 수
-    Long getTotalMember(PageRequestDTO pageRequestDTO);
+    Long getTotalMember(MemberPageRequestDTO memberPageRequestDTO);
 
     // 회원 탈퇴
     int withdrawMember(String memberID);

@@ -20,5 +20,7 @@ public class MemberListDTO {
     private String memberAddr;              // 회원 주소
     private String memberPhoneNum;          // 회원 핸드폰 번호
     private LocalDateTime joinDate;         // 회원가입 일자
+    private boolean withDrawalStatus;       // 탈퇴 여부
+    private LocalDateTime withDrawalDate;       // 탈퇴 날짜
     
 }

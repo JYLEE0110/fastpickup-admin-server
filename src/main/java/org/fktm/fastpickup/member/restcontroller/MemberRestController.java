@@ -6,6 +6,7 @@ import org.fktm.fastpickup.member.dto.MemberListDTO;
 import org.fktm.fastpickup.member.dto.MemberModifyDTO;
 import org.fktm.fastpickup.member.dto.MemberReadDTO;
 import org.fktm.fastpickup.member.dto.MemberRegistDTO;
+import org.fktm.fastpickup.member.page.MemberPageRequestDTO;
 import org.fktm.fastpickup.member.service.MemberService;
 import org.fktm.fastpickup.product.dto.ProductListDTO;
 import org.fktm.fastpickup.util.page.PageRequestDTO;
@@ -69,19 +70,20 @@ public class MemberRestController {
     @PreAuthorize("permitAll()")
     @GetMapping("/list")
     public ResponseEntity<PageResponseDTO<MemberListDTO>> getMemberList(
-            PageRequestDTO pageRequestDTO) {
+            MemberPageRequestDTO memberPageRequestDTO) {
         log.info("===== /api/member/list/ | GET =====");
 
-        PageResponseDTO<MemberListDTO> memberList = memberService.getMemberList(pageRequestDTO);
+        PageResponseDTO<MemberListDTO> memberList = memberService.getMemberList(memberPageRequestDTO);
 
         log.info("===== /api/member/list/ | GET =====");
+        log.info(memberPageRequestDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(memberList);
     }
 
     // 회원 삭제
     @PutMapping("/remove/{memberID}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Map<String, String>> removeProduct(
             @PathVariable("memberID") String memberID) {
         log.info("===== /api/member/remove/" + memberID + "| PUT =====");

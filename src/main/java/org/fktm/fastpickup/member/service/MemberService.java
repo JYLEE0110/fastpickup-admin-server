@@ -3,6 +3,7 @@ package org.fktm.fastpickup.member.service;
 import org.fktm.fastpickup.member.dto.MemberListDTO;
 import org.fktm.fastpickup.member.dto.MemberReadDTO;
 import org.fktm.fastpickup.member.dto.MemberRegistDTO;
+import org.fktm.fastpickup.member.page.MemberPageRequestDTO;
 import org.fktm.fastpickup.member.dto.MemberModifyDTO;
 import org.fktm.fastpickup.util.page.PageRequestDTO;
 import org.fktm.fastpickup.util.page.PageResponseDTO;
@@ -19,7 +20,7 @@ public interface MemberService {
     MemberReadDTO ReadMember(String memberID);
 
     // 회원 리스트
-    PageResponseDTO<MemberListDTO> getMemberList(PageRequestDTO pageRequestDTO);
+    PageResponseDTO<MemberListDTO> getMemberList(MemberPageRequestDTO memberPageRequestDTO);
 
     // 회원 탈퇴
     void withdrawalMember(String memberID);

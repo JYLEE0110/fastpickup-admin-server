@@ -12,6 +12,7 @@ import org.fktm.fastpickup.member.dto.MemberModifyDTO;
 import org.fktm.fastpickup.member.exception.enumcode.MemberExceptionCode;
 import org.fktm.fastpickup.member.mappers.MemberMapper;
 import org.fktm.fastpickup.member.mappers.MemberRoleMapper;
+import org.fktm.fastpickup.member.page.MemberPageRequestDTO;
 import org.fktm.fastpickup.member.service.MemberService;
 import org.fktm.fastpickup.util.page.PageRequestDTO;
 import org.fktm.fastpickup.util.page.PageResponseDTO;
@@ -91,22 +92,22 @@ public class MemberServiceImpl implements MemberService{
 
     // 회원 리스트 서비스
     @Override
-    public PageResponseDTO<MemberListDTO> getMemberList(PageRequestDTO pageRequestDTO) {
+    public PageResponseDTO<MemberListDTO> getMemberList(MemberPageRequestDTO memberPageRequestDTO ) {
 
         log.info("===== getMemberList Service =====");
 
         // 현재 페이지에 대한 회원 리스트를 가져온다.
-        List<MemberListDTO> memberList = memberMapper.getMemberList(pageRequestDTO);
+        List<MemberListDTO> memberList = memberMapper.getMemberList(memberPageRequestDTO);
 
         // 현재 페이지에 대한 총 회원 수(페이징 계산에 필요함)
-        Long memberTotal = memberMapper.getTotalMember(pageRequestDTO);
+        Long memberTotal = memberMapper.getTotalMember(memberPageRequestDTO);
 
         log.info("===== getMemberList Service =====");
 
         return PageResponseDTO.<MemberListDTO>withAll()
                             .list(memberList)
                             .total(memberTotal)
-                            .pageRequestDTO(pageRequestDTO)
+                            .pageRequestDTO(memberPageRequestDTO)
                             .build();
 
     }
