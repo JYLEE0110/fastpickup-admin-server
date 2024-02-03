@@ -8,10 +8,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Data
+@ToString
 public class MemberPageRequestDTO extends PageRequestDTO {
 
     private String withDrawalStatus;   //회원 탈퇴여부

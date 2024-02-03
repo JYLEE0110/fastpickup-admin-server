@@ -11,6 +11,7 @@ import org.fktm.fastpickup.member.dto.MemberRoleDTO;
 import org.fktm.fastpickup.member.dto.MemberModifyDTO;
 import org.fktm.fastpickup.member.mappers.MemberMapper;
 import org.fktm.fastpickup.member.mappers.MemberRoleMapper;
+import org.fktm.fastpickup.member.page.MemberPageRequestDTO;
 import org.fktm.fastpickup.util.page.PageRequestDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,11 +61,16 @@ public class MemberMapperTests {
     private MemberRoleDTO memberRoleDTO; 
     
     private PageRequestDTO pageRequestDTO;
+    private MemberPageRequestDTO memberPageRequestDTO;
 
     @BeforeEach
     public void init(){
 
         pageRequestDTO = PageRequestDTO.builder()
+                        .type(TEST_MEMBER_TYPE)
+                        .keyword(TEST_MEMBER_KEYWORD)
+                        .build();
+        pageRequestDTO = MemberPageRequestDTO.builder()
                         .type(TEST_MEMBER_TYPE)
                         .keyword(TEST_MEMBER_KEYWORD)
                         .build();
