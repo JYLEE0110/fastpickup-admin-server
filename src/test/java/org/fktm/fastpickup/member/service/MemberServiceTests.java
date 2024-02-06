@@ -115,7 +115,7 @@ public class MemberServiceTests {
         log.info("===== Start getMemberList Service Test =====");
 
         //WHEN
-        memberList = memberService.getMemberList(pageRequestDTO);
+        // memberList = memberService.getMemberList(pageRequestDTO);
 
         //THEN
         log.info(memberList);

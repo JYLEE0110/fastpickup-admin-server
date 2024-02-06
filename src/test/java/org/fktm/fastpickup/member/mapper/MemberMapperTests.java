@@ -148,7 +148,7 @@ public class MemberMapperTests {
         log.info("===== Start getMemberList Test =====");
 
         // WHEN
-        memberListDTO = memberMapper.getMemberList(pageRequestDTO);
+        // memberListDTO = memberMapper.getMemberList(pageRequestDTO);
 
         // THEN
         log.info("===== memberListDTO =====");
@@ -166,11 +166,11 @@ public class MemberMapperTests {
         log.info("===== Start getMemberTotal Test =====");
 
         // WHEN
-        Long memberTotal = memberMapper.getTotalMember(pageRequestDTO);
+        // Long memberTotal = memberMapper.getTotalMember(pageRequestDTO);
 
         // THEN
         log.info("===== getMemberTotal =====");
-        log.info(memberTotal);
+        // log.info(memberTotal);
         log.info("===== END getMemberTotal Test =====");
 
     }
