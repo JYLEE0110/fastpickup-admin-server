@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ProductMapper Xml -->
+<mapper namespace="org.fktm.fastpickup.shoppingcart.mappers.CartMapper">
+
+    <!-- 장바구니 생성 -->
+    <insert id = "addCart">
+        insert into tbl_shopping_cart(memberID) values(#{memberID})
+        <selectKey resultType="Long" keyProperty="cno" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <!-- 장바구니 생성 후 상품 추가 -->
+    <insert id ="addCartProduct">
+        insert into tbl_cart_product(cno, pno, quantity) values(#{cno}, #{pno}, #{quantity})
+    </insert>
+
+</mapper>
