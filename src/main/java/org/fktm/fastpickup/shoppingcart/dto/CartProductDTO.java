@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 @Builder
 @Data
-public class CartProuctDTO {
+public class CartProductDTO {
 
     private Long cno;   // 장바구니 번호
     private Long pno;   // 상품 번호

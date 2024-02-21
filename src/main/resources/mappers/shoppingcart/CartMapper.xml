@@ -8,15 +8,15 @@
 
     <!-- 장바구니 생성 -->
     <insert id = "addCart">
-        insert into tbl_shopping_cart(memberID) values(#{memberID})
-        <selectKey resultType="Long" keyProperty="cno" order="AFTER">
+        insert into tbl_shopping_cart(memberID) values(#{shoppingCartDTO.memberID})
+        <selectKey resultType="Long" keyProperty="shoppingCartDTO.cno" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
     </insert>
 
     <!-- 장바구니 생성 후 상품 추가 -->
     <insert id ="addCartProduct">
-        insert into tbl_cart_product(cno, pno, quantity) values(#{cno}, #{pno}, #{quantity})
+        insert into tbl_cart_product(cno, pno, quantity) values(#{cartProductDTO.cno}, #{cartProductDTO.pno}, #{cartProductDTO.quantity})
     </insert>
 
     <!-- 장바구니 리스트 -->

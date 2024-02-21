@@ -4,7 +4,8 @@ import java.util.List;
 
 import org.fktm.fastpickup.product.dto.ProductListDTO;
 import org.fktm.fastpickup.shoppingcart.dto.CartListDTO;
-import org.fktm.fastpickup.shoppingcart.dto.CartProuctDTO;
+import org.fktm.fastpickup.shoppingcart.dto.CartProductDTO;
+import org.fktm.fastpickup.shoppingcart.dto.CartRequestDTO;
 import org.fktm.fastpickup.shoppingcart.dto.ShoppingCartDTO;
 import org.fktm.fastpickup.shoppingcart.mappers.CartMapper;
 import org.fktm.fastpickup.shoppingcart.service.CartService;
@@ -24,18 +25,18 @@ public class CartServiceImpl implements CartService {
 
     // 장바구니 추가
     @Override
-    public void addCart(ShoppingCartDTO shoppingCartDTO, CartProuctDTO cartProductDTO) {
+    public void addCart(CartRequestDTO cartRequestDTO) {
 
         log.info("===== addCart Service =====");
 
         // 장바구니 생성
-        cartMapper.addCart(shoppingCartDTO);
-        Long cno = shoppingCartDTO.getCno();
+        cartMapper.addCart(cartRequestDTO);
+        Long cno = cartRequestDTO.getShoppingCartDTO().getCno();
 
-        cartProductDTO.setCno(cno);
+        cartRequestDTO.getCartProductDTO().setCno(cno);
 
         // 장바구니 생성 후 상품 추가
-        cartMapper.addCartProduct(cartProductDTO);
+        cartMapper.addCartProduct(cartRequestDTO);
 
     }
 

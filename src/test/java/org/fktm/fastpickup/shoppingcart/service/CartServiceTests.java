@@ -1,7 +1,8 @@
 package org.fktm.fastpickup.shoppingcart.service;
 
 import org.fktm.fastpickup.shoppingcart.dto.CartListDTO;
-import org.fktm.fastpickup.shoppingcart.dto.CartProuctDTO;
+import org.fktm.fastpickup.shoppingcart.dto.CartProductDTO;
+import org.fktm.fastpickup.shoppingcart.dto.CartRequestDTO;
 import org.fktm.fastpickup.shoppingcart.dto.ShoppingCartDTO;
 import org.fktm.fastpickup.util.page.PageRequestDTO;
 import org.fktm.fastpickup.util.page.PageResponseDTO;
@@ -27,9 +28,10 @@ public class CartServiceTests {
     private static final Long TEST_PNO = 31L;
     private static final int TEST_QUANTITY = 3;
 
-    private CartProuctDTO cartProuctDTO;
+    private CartProductDTO cartProductDTO;
     private ShoppingCartDTO shoppingCartDTO;
     private PageRequestDTO pageRequestDTO;
+    private CartRequestDTO cartRequestDTO;
 
     @BeforeEach
     public void init() {
@@ -38,10 +40,15 @@ public class CartServiceTests {
                 .memberID(TEST_MEMBER_ID)
                 .build();
 
-        cartProuctDTO = CartProuctDTO.builder()
+        cartProductDTO = CartProductDTO.builder()
                 // .cno(TEST_CNO)
                 .pno(TEST_PNO)
                 .quantity(TEST_QUANTITY)
+                .build();
+
+        cartRequestDTO = CartRequestDTO.builder()
+                .cartProductDTO(cartProductDTO)
+                .shoppingCartDTO(shoppingCartDTO)
                 .build();
 
         pageRequestDTO = PageRequestDTO.builder().build();
@@ -57,7 +64,7 @@ public class CartServiceTests {
         log.info("===== Start Create Cart Service Test=====");
 
         // WHEN
-        cartService.addCart(shoppingCartDTO, cartProuctDTO);
+        cartService.addCart(cartRequestDTO);
 
         // THEN
         // Assertions.assertEquals(result, 1,"장바구니 생성에 실패 하였습니다.");

@@ -31,7 +31,6 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 @RequestMapping("/api/product")
 @Log4j2
-@CrossOrigin
 public class ProductRestController {
 
     // DI 생성자(RequiredArgsConstructor로 의존성 주입
