@@ -17,5 +17,6 @@ public class CartListDTO {
     private Long pno;
     private String productName;
     private int productPrice;
-    private int quantity; 
+    private int quantity;
+    private String imgName; 
 }
