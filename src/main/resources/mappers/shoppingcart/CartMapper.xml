@@ -35,7 +35,8 @@
         from (select tsc.cno, tsc.memberID, tcp.pno, tp.productName, tp.productPrice, tcp.quantity
               from tbl_shopping_cart tsc left outer join tbl_cart_product tcp on tsc.cno = tcp.cno
 						   left outer join tbl_product tp on tp.pno = tcp.pno
-        where tsc.memberID = #{memberID} and tsc.isCompleted = false
+                           left outer join tbl_product_img tpi on tpi.pno = tp.pno
+        where tsc.memberID = #{memberID} and tsc.isCompleted = false and tpi.imgOrd = 0
         limit #{pr.countEnd}) as tbl_cart_product
     </select>
 
