@@ -23,5 +23,6 @@ public class ListOrderDTO {
     private String orderStatus;         // 주문상태
     private String productName;         // 주문상품 명
     private int quantity;               // 주문상품 총 수량
+    private String imgName;
 
 }

@@ -36,13 +36,15 @@
     <resultMap type="org.fktm.fastpickup.order.dto.ReadOrderProductDTO" id="orderProducts">
         <result property = "productName" column="productName"/>
         <result property = "quantity" column="quantity"/>
+        <result property = "imgName" column = "imgName"/>
     </resultMap>
 
     <select id = "readOrder" resultMap = "orderMap">
-        select tod.ono, tod.memberID, tod.orderDate, tod.orderStatus, tp.productName, top.quantity 
+        select tod.ono, tod.memberID, tod.orderDate, tod.orderStatus, tp.productName, top.quantity, concat(tpi.uuid,'_',tpi.imgName) as imgName
             from tbl_order tod 
 		        left outer join tbl_order_product top on tod.ono = top.ono
 		        left outer join tbl_product tp on top.pno = tp.pno
+            left outer join tbl_product_img tpi on tpi.pno = tp.pno
         where tod.ono = #{ono};
     </select>
 
@@ -57,13 +59,13 @@
     <select id ="getOrderList">
         select tod.ono, max(tod.memberID) as memberID, max(tod.orderDate) as orderDate,
                max(tod.orderStatus) as orderStatus, max(tp.productName) as productName,
-               sum(top.quantity) as quantity
+               sum(top.quantity) as quantity, max(concat(tpi.uuid,'_',tpi.imgName)) as imgName
         from tbl_order tod
                 left outer join tbl_order_product top on tod.ono = top.ono
                 left outer join tbl_product tp on top.pno =tp.pno
-        
+                left outer join tbl_product_img tpi on tpi.pno = tp.pno
+        where tpi.imgOrd = 0
         <if test="keyword != null and types != null">
-            <where>
               <trim prefix="and (" prefixOverrides="or" suffix=")">
                 <foreach collection="types" item="type" separator=" or ">
                   <if test='type == "s"'>
@@ -71,7 +73,6 @@
                   </if>
                 </foreach>
               </trim>
-            </where>
           </if>
 
         group by tod.ono
@@ -83,13 +84,13 @@
       select count(*)
       from(select tod.ono, max(tod.memberID) as memberID, max(tod.orderDate) as orderDate,
                max(tod.orderStatus) as orderStatus, max(tp.productName) as productName,
-               sum(top.quantity) as quantity
+               sum(top.quantity) as quantity, max(concat(tpi.uuid,'_',tpi.imgName)) as imgName
           from tbl_order tod
                 left outer join tbl_order_product top on tod.ono = top.ono
                 left outer join tbl_product tp on top.pno =tp.pno
-        
+                left outer join tbl_product_img tpi on tpi.pno = tp.pno
+        where tpi.imgOrd = 0
         <if test="keyword != null and types != null">
-            <where>
               <trim prefix="and (" prefixOverrides="or" suffix=")">
                 <foreach collection="types" item="type" separator=" or ">
                   <if test='type == "s"'>
@@ -97,7 +98,6 @@
                   </if>
                 </foreach>
               </trim>
-            </where>
           </if>
         group by tod.ono
         order by tod.ono desc

@@ -52,7 +52,6 @@
                              left outer join tbl_product_img tpi on tp.pno = tpi.pno
         where tp.isDeleted = false and tpi.imgOrd = 0
         
-
          <if test="keyword != null and types != null">
               <trim prefix="and (" prefixOverrides="or" suffix=")">
                 <foreach collection="types" item="type" separator=" or ">

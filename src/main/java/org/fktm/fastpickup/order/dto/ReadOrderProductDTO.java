@@ -15,5 +15,6 @@ public class ReadOrderProductDTO {
 
     private String productName;
     private int quantity;
+    private String imgName;
     
 }
