@@ -56,13 +56,23 @@ public class CartServiceImpl implements CartService {
                 .build();
     }
 
-    // 카트 아이템 삭제
+    // 장바구니 아이템 전체 삭제
     @Override
     public void removeCartItem(Long cno) {
 
         log.info("===== removeCart Service =====");
 
         cartMapper.removeItem(cno);
+
+    }
+
+    // 장바구니 아이템 전체 삭제
+    @Override
+    public void removeAllItem(String memberID) {
+
+        log.info("===== removeAllItem Service =====");
+
+        cartMapper.removeAllItem(memberID);
 
     }
 

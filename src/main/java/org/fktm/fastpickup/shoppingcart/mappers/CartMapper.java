@@ -24,4 +24,7 @@ public interface CartMapper {
 
     // 장바구니 삭제
     int removeItem(Long cno);
+
+    // 장바구니 전체 삭제
+    int removeAllItem(String memberID);
 }

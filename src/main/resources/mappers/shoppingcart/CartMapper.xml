@@ -40,10 +40,16 @@
         limit #{pr.countEnd}) as tbl_cart_product
     </select>
 
-    <!-- 카트에담긴 상품 삭제 -->
+    <!-- 장바구니 상품 삭제 -->
     <delete id ="removeItem">
         delete from tbl_shopping_cart 
         where cno = #{cno}
+    </delete>
+
+    <!-- 장바구니 전체 삭제 -->
+    <delete id ="removeAllItem">
+        delete from tbl_shopping_cart
+        where memberID = #{memberID}
     </delete>
 
 </mapper>

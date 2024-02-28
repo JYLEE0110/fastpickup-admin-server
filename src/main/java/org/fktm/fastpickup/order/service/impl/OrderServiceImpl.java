@@ -11,6 +11,7 @@ import org.fktm.fastpickup.order.dto.OrderProductDTO;
 import org.fktm.fastpickup.order.dto.ReadOrderDTO;
 import org.fktm.fastpickup.order.mappers.OrderMapper;
 import org.fktm.fastpickup.order.service.OrderService;
+import org.fktm.fastpickup.shoppingcart.mappers.CartMapper;
 import org.fktm.fastpickup.util.page.PageRequestDTO;
 import org.fktm.fastpickup.util.page.PageResponseDTO;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ import lombok.extern.log4j.Log4j2;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderMapper orderMapper;
+    private final CartMapper cartMapper;
 
     // 주문 생성 서비스
     @Override
@@ -46,6 +48,12 @@ public class OrderServiceImpl implements OrderService {
             return Map.of("pno", String.valueOf(pno), "quantity", String.valueOf(quantity), "ono", String.valueOf(ono));
         }).collect(Collectors.toList());
         orderMapper.createOrderProduct(orderProducts);
+
+        // 맴버 아이디 추출 후 
+        String memberID = createOrderDTO.getMemberID();
+
+        // 장바구니 비우기
+        cartMapper.removeAllItem(memberID);
 
     }
 

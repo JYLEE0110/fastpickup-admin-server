@@ -36,8 +36,7 @@ public class CartRestController {
     // 장바구니 상품 추가
     @PostMapping("/add")
     public ResponseEntity<Map<String, String>> createCart(
-        @RequestBody CartRequestDTO cartRequestDTO
-    ){
+            @RequestBody CartRequestDTO cartRequestDTO) {
 
         log.info("===== /api/cart/add | Post =====");
 
@@ -49,9 +48,8 @@ public class CartRestController {
     // 장바구니 리스트 목록
     @GetMapping("/list/{memberID}")
     public ResponseEntity<PageResponseDTO<CartListDTO>> getCartList(
-        @PathVariable("memberID") String memberID,
-        PageRequestDTO pageRequestDTO
-    ){
+            @PathVariable("memberID") String memberID,
+            PageRequestDTO pageRequestDTO) {
 
         log.info("===== /api/cart/list | GET  =====");
 
@@ -63,13 +61,24 @@ public class CartRestController {
     // 장바구니 삭제
     @DeleteMapping("/remove/{cno}")
     public ResponseEntity<Map<String, Long>> removeCartItem(
-        @PathVariable("cno") Long cno
-    ){
+            @PathVariable("cno") Long cno) {
         log.info("===== /api/cart/remove | DELETE  =====");
 
         cartService.removeCartItem(cno);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("SuccessRemoveCartItem",cno));
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("SuccessRemoveCartItem", cno));
+
+    }
+
+    // 장바구니 전체삭제
+    @DeleteMapping("/removeAll/{memberID}")
+    public ResponseEntity<Map<String, String>> removeAllItem(
+            @PathVariable("memberID") String memberID) {
+        log.info("===== /api/cart/removeAll | DELETE  =====");
+
+        cartService.removeAllItem(memberID);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("result", "SuccessRemoveAllItem"));
 
     }
 

@@ -20,4 +20,7 @@ public interface CartService {
     // 장바구니 삭제
     void removeCartItem(Long cno);
 
+    // 장바구니 전체 삭제
+    void removeAllItem(String memberID);
+
 }
