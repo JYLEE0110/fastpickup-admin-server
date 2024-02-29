@@ -109,4 +109,18 @@ public class MemberRestController {
 
     }
 
+    //탈퇴 회원 재활성화
+    @PutMapping("/reactive/{memberID}")
+    public ResponseEntity<Map<String, String>> reactiveMember(
+        @PathVariable("memberID") String memberID
+    ){
+        log.info("===== /api/member/reactive/ | PUT =====");
+
+        memberService.reactivateMember(memberID);
+
+        log.info("===== /api/member/reactive/ | PUT =====");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("Result", "Success Reactive Member"));
+    }
+
 }

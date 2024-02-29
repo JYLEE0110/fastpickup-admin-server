@@ -103,4 +103,11 @@
     where memberID = #{memberID}
   </update>
 
+  <!-- 탈퇴 회원 재활성화 -->
+  <update id = "reactivateMember">
+    update tbl_member
+    set withDrawalStatus = false
+    where memberID = #{memberID}
+  </update>
+
 </mapper>

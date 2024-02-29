@@ -26,8 +26,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         // 입력된 username으로 DB에 사용자 정보를 가져온다.
         MemberReadDTO member = memberMapper.readMember(username);
 
-        // 등록된 사용자가 아닐경우
-        if(member == null){
+        // 등록된 사용자, 이미 탈퇴한 회원 일 경우
+        if(member == null || member.isWithDrawalStatus() == true){
             throw new FastPickUpException(MemberExceptionCode.NOT_EXCIST_MEMBER);
         }
         

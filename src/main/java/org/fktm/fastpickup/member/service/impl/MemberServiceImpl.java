@@ -155,5 +155,16 @@ public class MemberServiceImpl implements MemberService{
         log.info("===== updateMember Service =====");
 
     }
+
+    // 탈퇴 회원 재활성화
+    @Override
+    public void reactivateMember(String memberID) {
+
+        log.info("===== reactivateMember Service =====");
+        
+        memberMapper.reactivateMember(memberID);
+        
+        log.info("===== reactivateMember Service =====");
+    }
     
 }

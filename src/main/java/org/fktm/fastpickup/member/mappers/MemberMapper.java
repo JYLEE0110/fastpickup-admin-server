@@ -27,4 +27,7 @@ public interface MemberMapper {
 
     int modifyMember(MemberModifyDTO memberUpdateDTO);
 
+    // 탈퇴 회원 활성화
+    int reactivateMember(String memberID);
+
 }

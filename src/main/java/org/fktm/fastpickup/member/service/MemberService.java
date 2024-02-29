@@ -27,5 +27,8 @@ public interface MemberService {
 
     // 회원 수정
     void modifyMember(MemberModifyDTO memberUpdateDTO);
+
+    // 탈퇴 회원 재활성화
+    void reactivateMember(String memberID);
     
 }
