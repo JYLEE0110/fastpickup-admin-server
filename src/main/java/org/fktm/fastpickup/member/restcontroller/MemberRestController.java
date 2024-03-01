@@ -66,8 +66,8 @@ public class MemberRestController {
     }
 
     // 회원 리스트
-    // @PreAuthorize("hasAnyRole('ROLE_USER')")
-    @PreAuthorize("permitAll()")
+    // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    // @PreAuthorize("permitAll()")
     @GetMapping("/list")
     public ResponseEntity<PageResponseDTO<MemberListDTO>> getMemberList(
             MemberPageRequestDTO memberPageRequestDTO) {
