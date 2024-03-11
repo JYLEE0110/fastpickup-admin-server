@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ProductMapper Xml -->
+<mapper namespace="org.fktm.fastpickup.review.mappers.ReviewImgMapper">
+
+    <!-- 리뷰 이미지 등록 매퍼 -->
+    <insert id ="registReviewImg">
+        insert into tbl_review_img(uuid, imgName, rno, imgOrd) values
+
+        <!-- list를 item인자 하나씩으로 받고 구분자는 "," -->
+        <foreach collection="list" item="item" separator=",">
+            ( #{item.uuid}, #{item.imgName}, #{item.rno}, #{item.imgOrd})
+        </foreach>
+    </insert>
+
+    <!-- 리뷰 이미지 삭제 매퍼 -->
+    <delete id = "removeReviewImg">
+        delete from tbl_review_img where rno = #{rno}
+    </delete>
+
+</mapper>

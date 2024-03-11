@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ProductMapper Xml -->
+<mapper namespace="org.fktm.fastpickup.review.mappers.ReviewMapper">
+
+       <!-- 리뷰 등록 -->
+    <insert id ="registReview">
+        insert into tbl_review(memberID, pno , reviewTitle, reviewContent) values(#{memberID}, #{pno}, #{reviewTitle}, #{reviewContent})
+        
+        <selectKey resultType="Long" keyProperty="rno" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+    <!-- 대댓글(리뷰) 그룹번호 업데이트 -->
+    <update id = "updateGno">
+        update tbl_review set gno = #{rno} where rno = #{rno}
+    </update>
+
+    <!-- 대댓글(리뷰 등록) -->
+    <insert id ="registChildReview">
+        insert into tbl_review(memberID, pno, gno, reviewTitle, reviewContent) values(#{memberID}, #{pno}, #{gno}, #{reviewTitle}, #{reviewContent})
+        
+        <selectKey resultType="Long" keyProperty="rno" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+</mapper>
