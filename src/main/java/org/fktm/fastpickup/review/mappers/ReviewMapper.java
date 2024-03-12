@@ -1,5 +1,6 @@
 package org.fktm.fastpickup.review.mappers;
 
+import org.fktm.fastpickup.review.dto.ReviewReadDTO;
 import org.fktm.fastpickup.review.dto.ReviewRegistDTO;
 
 public interface ReviewMapper {
@@ -11,5 +12,8 @@ public interface ReviewMapper {
 
     // 대댓글(리뷰) 등록
     int registChildReview(ReviewRegistDTO reviewRegistDTO);
+
+    // 리뷰 상세보기
+    ReviewReadDTO readReview(Long rno);
 
 }

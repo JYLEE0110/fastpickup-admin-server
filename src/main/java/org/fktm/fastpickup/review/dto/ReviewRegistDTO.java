@@ -5,13 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
 @ToString
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ReviewRegistDTO {
 
     private Long rno;                   // 리뷰 번호 pk

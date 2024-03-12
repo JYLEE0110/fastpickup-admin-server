@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import org.fktm.fastpickup.review.dto.ReviewReadDTO;
 import org.fktm.fastpickup.review.dto.ReviewRegistDTO;
 import org.fktm.fastpickup.review.mappers.ReviewImgMapper;
 import org.fktm.fastpickup.review.mappers.ReviewMapper;
@@ -27,6 +28,7 @@ public class ReviewMapperTests {
     @Autowired(required = false)
     private ReviewMapper reviewMapper;
 
+    private static final Long TEST_RNO = 9L;
     private static final Long TEST_PNO = 31L;
     private static final String TEST_MEMBERID = "admin";
     private static final Long TEST_GNO = 1L;
@@ -40,6 +42,7 @@ public class ReviewMapperTests {
     private static final String TEST_IMG_NAME2 = "postMan2.jpg";
 
     private ReviewRegistDTO reviewRegistDTO;
+    private ReviewReadDTO reviewReadDTO;
 
     // 이미지
     private List<String> imgsNameList = new ArrayList<>();
@@ -111,6 +114,23 @@ public class ReviewMapperTests {
             reviewImgMapper.registReviewImg(imgList);
 
         }
+
+    }
+
+    @DisplayName("리뷰 상세보기 매퍼 테스트")
+    // @Transactional
+    @Test
+    public void readReview() {
+
+        // GIVEN
+        log.info("===== Start Read Review Mapper Test=====");
+
+        // WEHN
+        reviewReadDTO = reviewMapper.readReview(TEST_RNO);
+        log.info(reviewReadDTO);
+
+        // THEN
+
 
     }
 }

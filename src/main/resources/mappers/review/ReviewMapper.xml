@@ -28,4 +28,28 @@
         </selectKey>
     </insert>
 
+    <!-- 댓글(리뷰) 상세보기 -->
+
+    <resultMap id="reviewMap" type="org.fktm.fastpickup.review.dto.ReviewReadDTO">
+        <id property="rno" column="rno"/>
+        <result property="pno" column="pno"/>
+        <result property="memberID" column="memberID"/>
+        <result property="productName" column="productName"/>
+        <result property="reviewTitle" column="reviewTitle"/>
+        <result property="reviewContent" column="reviewContent"/>
+        <result property="registDate" column="registDate"/>
+        <collection property="imgsName" resultMap="imgsNameMap"/>
+    </resultMap>
+
+    <resultMap type="string" id="imgsNameMap">
+        <result column="imgsName"/>
+    </resultMap>
+
+    <select id ="readReview" resultMap="reviewMap">
+        select tr.rno, tp.pno, tp.productName, tr.memberID, tr.reviewTitle, tr.reviewContent, tr.registDate, concat(tri.uuid,'_',tri.imgName) as imgsName
+        from tbl_review tr left outer join tbl_product tp on tr.pno = tp.pno
+                            left outer join tbl_review_img tri on tr.rno = tri.rno
+        where tr.rno = #{rno}
+    </select>
+
 </mapper>
