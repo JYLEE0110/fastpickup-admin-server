@@ -5,10 +5,15 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import org.fktm.fastpickup.product.dto.ProductListDTO;
+import org.fktm.fastpickup.review.dto.ReviewListDTO;
+import org.fktm.fastpickup.review.dto.ReviewReadDTO;
 import org.fktm.fastpickup.review.dto.ReviewRegistDTO;
 import org.fktm.fastpickup.review.mappers.ReviewImgMapper;
 import org.fktm.fastpickup.review.mappers.ReviewMapper;
 import org.fktm.fastpickup.review.service.ReviewService;
+import org.fktm.fastpickup.util.page.PageRequestDTO;
+import org.fktm.fastpickup.util.page.PageResponseDTO;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -24,6 +29,8 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void registReview(ReviewRegistDTO reviewRegistDTO) {
+
+        log.info("===== Start RegistReview Service =====");
 
         // gno 추출
         Long gno = reviewRegistDTO.getGno();
@@ -67,7 +74,36 @@ public class ReviewServiceImpl implements ReviewService {
             // 이미지 등록
             reviewImgMapper.registReviewImg(imgList);
 
+            log.info("===== End RegistReview Service =====");
+
         }
+
+    }
+
+    // 리뷰 상세보기 서비스
+    @Override
+    public ReviewReadDTO readReview(Long rno) {
+
+        log.info("===== Start ReadReview Service =====");
+
+        return reviewMapper.readReview(rno);
+
+    }
+
+    // 리뷰 리스트 서비스
+    @Override
+    public PageResponseDTO<ReviewListDTO> getReviewList(PageRequestDTO pageRequestDTO) {
+
+        log.info("===== Start ReviewList Service =====");
+
+        List<ReviewListDTO> list = reviewMapper.getReveiwList(pageRequestDTO);
+        Long total = reviewMapper.getTotal(pageRequestDTO);
+
+        return PageResponseDTO.<ReviewListDTO>withAll()
+                    .list(list)
+                    .total(total)
+                    .pageRequestDTO(pageRequestDTO)
+                    .build();
 
     }
 

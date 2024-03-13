@@ -6,10 +6,12 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import org.fktm.fastpickup.review.dto.ReviewListDTO;
 import org.fktm.fastpickup.review.dto.ReviewReadDTO;
 import org.fktm.fastpickup.review.dto.ReviewRegistDTO;
 import org.fktm.fastpickup.review.mappers.ReviewImgMapper;
 import org.fktm.fastpickup.review.mappers.ReviewMapper;
+import org.fktm.fastpickup.util.page.PageRequestDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,6 +45,7 @@ public class ReviewMapperTests {
 
     private ReviewRegistDTO reviewRegistDTO;
     private ReviewReadDTO reviewReadDTO;
+    private PageRequestDTO pageRequestDTO;
 
     // 이미지
     private List<String> imgsNameList = new ArrayList<>();
@@ -62,6 +65,7 @@ public class ReviewMapperTests {
                 .imgsName(imgsNameList)
                 .build();
 
+        pageRequestDTO = PageRequestDTO.builder().build();
     }
 
     @DisplayName("리뷰 등록 매퍼 테스트")
@@ -130,7 +134,19 @@ public class ReviewMapperTests {
         log.info(reviewReadDTO);
 
         // THEN
+    }
 
+    @DisplayName("리뷰 리스트 매퍼 테스트")
+    // @Transactional
+    @Test
+    public void getReviewList() {
+
+        // GIVEN
+        log.info("===== Start ReviewList Mapper Test=====");
+
+        // WEHN
+        List<ReviewListDTO> list = reviewMapper.getReveiwList(pageRequestDTO);
+        log.info(list);
 
     }
 }
