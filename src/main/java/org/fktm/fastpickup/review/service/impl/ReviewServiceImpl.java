@@ -92,12 +92,12 @@ public class ReviewServiceImpl implements ReviewService {
 
     // 리뷰 리스트 서비스
     @Override
-    public PageResponseDTO<ReviewListDTO> getReviewList(PageRequestDTO pageRequestDTO) {
+    public PageResponseDTO<ReviewListDTO> getReviewList(PageRequestDTO pageRequestDTO, String memberID) {
 
         log.info("===== Start ReviewList Service =====");
 
-        List<ReviewListDTO> list = reviewMapper.getReveiwList(pageRequestDTO);
-        Long total = reviewMapper.getTotal(pageRequestDTO);
+        List<ReviewListDTO> list = reviewMapper.getReviewList(pageRequestDTO, memberID);
+        Long total = reviewMapper.getTotal(pageRequestDTO, memberID);
 
         return PageResponseDTO.<ReviewListDTO>withAll()
                     .list(list)

@@ -1,5 +1,6 @@
 package org.fktm.fastpickup.review.service;
 
+import org.apache.ibatis.annotations.Param;
 import org.fktm.fastpickup.review.dto.ReviewListDTO;
 import org.fktm.fastpickup.review.dto.ReviewReadDTO;
 import org.fktm.fastpickup.review.dto.ReviewRegistDTO;
@@ -17,6 +18,6 @@ public interface ReviewService {
     ReviewReadDTO readReview(Long rno);
 
     // 리뷰 리스트
-    PageResponseDTO<ReviewListDTO> getReviewList(PageRequestDTO pageRequestDTO);
+    PageResponseDTO<ReviewListDTO> getReviewList(PageRequestDTO pageRequestDTO, String memberID);
     
 }

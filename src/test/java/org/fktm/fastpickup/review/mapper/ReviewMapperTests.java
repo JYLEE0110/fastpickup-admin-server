@@ -32,7 +32,7 @@ public class ReviewMapperTests {
 
     private static final Long TEST_RNO = 9L;
     private static final Long TEST_PNO = 31L;
-    private static final String TEST_MEMBERID = "admin";
+    private static final String TEST_MEMBERID = "wndyd0110@naver.com";
     private static final Long TEST_GNO = 1L;
     private static final String TEST_REVIEW_TITLE = "정말 맛있어요";
     private static final String TEST_REVIEW_CONTENT = "진짜 맛있어요 강추!!! 좋은 음식 감사합니다 사장님~~";
@@ -145,7 +145,7 @@ public class ReviewMapperTests {
         log.info("===== Start ReviewList Mapper Test=====");
 
         // WEHN
-        List<ReviewListDTO> list = reviewMapper.getReveiwList(pageRequestDTO);
+        List<ReviewListDTO> list = reviewMapper.getReviewList(pageRequestDTO,TEST_MEMBERID);
         log.info(list);
 
     }

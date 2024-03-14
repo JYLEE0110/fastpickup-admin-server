@@ -2,6 +2,7 @@ package org.fktm.fastpickup.review.mappers;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.fktm.fastpickup.review.dto.ReviewListDTO;
 import org.fktm.fastpickup.review.dto.ReviewReadDTO;
 import org.fktm.fastpickup.review.dto.ReviewRegistDTO;
@@ -21,6 +22,6 @@ public interface ReviewMapper {
     ReviewReadDTO readReview(Long rno);
 
     // 리뷰 리스트
-    List<ReviewListDTO> getReveiwList(PageRequestDTO pageRequestDTO);
-    Long getTotal(PageRequestDTO pageRequestDTO);
+    List<ReviewListDTO> getReviewList(@Param("pr")PageRequestDTO pageRequestDTO, @Param("memberID") String memberID);
+    Long getTotal(@Param("pr")PageRequestDTO pageRequestDTO, @Param("memberID") String memberID);
 }

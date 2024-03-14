@@ -57,12 +57,15 @@ public class ReviewRestController {
     }
 
     // 리뷰 리스트
-    @GetMapping("/list")
-    public ResponseEntity<PageResponseDTO<ReviewListDTO>> getReviewList(PageRequestDTO pageRequestDTO){
+    @GetMapping("/list/{memberID}")
+    public ResponseEntity<PageResponseDTO<ReviewListDTO>> getReviewList(
+        @PathVariable("memberID")String memberID,
+        PageRequestDTO pageRequestDTO 
+        ){
 
         log.info("===== /api/review/list | Get =====");
 
-        PageResponseDTO<ReviewListDTO> responseDTO= reviewService.getReviewList(pageRequestDTO);
+        PageResponseDTO<ReviewListDTO> responseDTO= reviewService.getReviewList(pageRequestDTO, memberID);
 
         return ResponseEntity.status((HttpStatus.CREATED)).body(responseDTO);
 
