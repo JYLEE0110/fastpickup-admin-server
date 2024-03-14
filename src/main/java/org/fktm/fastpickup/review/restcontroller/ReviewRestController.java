@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.fktm.fastpickup.product.dto.ProductRegistDTO;
 import org.fktm.fastpickup.review.dto.ReviewListDTO;
+import org.fktm.fastpickup.review.dto.ReviewModifyDTO;
 import org.fktm.fastpickup.review.dto.ReviewReadDTO;
 import org.fktm.fastpickup.review.dto.ReviewRegistDTO;
 import org.fktm.fastpickup.review.service.ReviewService;
@@ -83,5 +84,16 @@ public class ReviewRestController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("result","success RemoveReview"));
     }
-    
+
+    // 리뷰 수정
+    @PutMapping("/modify")
+    public ResponseEntity<Map<String,String>> modifyReview(
+        @RequestBody @Valid ReviewModifyDTO reviewModifyDTO
+    ){
+        log.info("===== /api/modify/review | Put =====");
+
+        reviewService.modifyReview(reviewModifyDTO);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("result","SUCEESS MODIFY REVIEW"));
+    }
 }

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.fktm.fastpickup.product.dto.ProductListDTO;
 import org.fktm.fastpickup.review.dto.ReviewListDTO;
+import org.fktm.fastpickup.review.dto.ReviewModifyDTO;
 import org.fktm.fastpickup.review.dto.ReviewReadDTO;
 import org.fktm.fastpickup.review.dto.ReviewRegistDTO;
 import org.fktm.fastpickup.review.mappers.ReviewImgMapper;
@@ -100,10 +101,10 @@ public class ReviewServiceImpl implements ReviewService {
         Long total = reviewMapper.getTotal(pageRequestDTO, memberID);
 
         return PageResponseDTO.<ReviewListDTO>withAll()
-                    .list(list)
-                    .total(total)
-                    .pageRequestDTO(pageRequestDTO)
-                    .build();
+                .list(list)
+                .total(total)
+                .pageRequestDTO(pageRequestDTO)
+                .build();
 
     }
 
@@ -115,6 +116,41 @@ public class ReviewServiceImpl implements ReviewService {
 
         reviewMapper.removeReview(rno);
         reviewImgMapper.removeReviewImg(rno);
+
+    }
+
+    @Override
+    public void modifyReview(ReviewModifyDTO reviewModifyDTO) {
+
+        log.info("===== Start ModifyReview Service =====");
+
+        reviewMapper.modifyReview(reviewModifyDTO);
+
+        // rno 추출
+        Long rno = reviewModifyDTO.getRno();
+        // 기존 이미지 삭제
+        reviewImgMapper.removeReviewImg(rno);
+
+        List<String> imgsName = reviewModifyDTO.getImgsName();
+
+        if (imgsName != null && !imgsName.isEmpty()) {
+
+            AtomicInteger index = new AtomicInteger();
+
+            // List형식(이미지가 여러개)으로 imgName, UUID, pno, ord등 을 Map 형식(key : value)로 받아온다.
+            List<Map<String, String>> imgList = imgsName.stream().map(str -> {
+                String uuid = str.substring(0, 36);
+                String imgName = str.substring(37);
+
+                return Map.of("uuid", uuid, "imgName", imgName, "rno", "" + rno, "imgOrd",
+                        "" + index.getAndIncrement());
+            }).collect(Collectors.toList());
+            log.info(imgList);
+
+            // 이미지 등록
+            reviewImgMapper.registReviewImg(imgList);
+
+        }
 
     }
 

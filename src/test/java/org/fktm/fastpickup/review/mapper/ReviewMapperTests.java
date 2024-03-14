@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import org.fktm.fastpickup.review.dto.ReviewListDTO;
+import org.fktm.fastpickup.review.dto.ReviewModifyDTO;
 import org.fktm.fastpickup.review.dto.ReviewReadDTO;
 import org.fktm.fastpickup.review.dto.ReviewRegistDTO;
 import org.fktm.fastpickup.review.mappers.ReviewImgMapper;
@@ -30,7 +31,7 @@ public class ReviewMapperTests {
     @Autowired(required = false)
     private ReviewMapper reviewMapper;
 
-    private static final Long TEST_RNO = 12L;
+    private static final Long TEST_RNO = 13L;
     private static final Long TEST_PNO = 31L;
     private static final String TEST_MEMBERID = "wndyd0110@naver.com";
     private static final Long TEST_GNO = 0L;
@@ -40,21 +41,32 @@ public class ReviewMapperTests {
     private static final String TEST_IMG_UUID = "32c48e7d-e85a-4704-b47a-942e240ef675";
     private static final String TEST_IMG_UUID2 = "33c48e7d-e85a-4704-b47a-942e240ef675";
 
+    private static final String TEST_MODIFY_TITLE = "수정된 제목";
+    private static final String TEST_MODIFY_CONTENT = "수정된 내용";
+
+    private static final String TEST_MODIFY_IMG_UUID = "Modify7d-e85a-4704-b47a-942e240ef675";
+    private static final String TEST_MODIFY_IMG_UUID2 = "Modify8d-e85a-4704-b47a-942e240ef675";
+
     private static final String TEST_IMG_NAME = "postMan.jpg";
     private static final String TEST_IMG_NAME2 = "postMan2.jpg";
 
     private ReviewRegistDTO reviewRegistDTO;
     private ReviewReadDTO reviewReadDTO;
+    private ReviewModifyDTO reviewModifyDTO;
     private PageRequestDTO pageRequestDTO;
 
     // 이미지
     private List<String> imgsNameList = new ArrayList<>();
+    private List<String> modifyImgsNameList = new ArrayList<>();
 
     @BeforeEach
     public void init() {
 
         imgsNameList.add(TEST_IMG_UUID + "_" + TEST_IMG_NAME);
         imgsNameList.add(TEST_IMG_UUID2 + "_" + TEST_IMG_NAME2);
+
+        modifyImgsNameList.add(TEST_MODIFY_IMG_UUID + "_" + TEST_IMG_NAME);
+        modifyImgsNameList.add(TEST_MODIFY_IMG_UUID2 + "_" + TEST_IMG_NAME2);
 
         reviewRegistDTO = ReviewRegistDTO.builder()
                 .memberID(TEST_MEMBERID)
@@ -63,6 +75,13 @@ public class ReviewMapperTests {
                 .reviewTitle(TEST_REVIEW_TITLE)
                 .reviewContent(TEST_REVIEW_CONTENT)
                 .imgsName(imgsNameList)
+                .build();
+
+        reviewModifyDTO = ReviewModifyDTO.builder()
+                .rno(TEST_RNO)
+                .reviewTitle(TEST_MODIFY_TITLE)
+                .reviewContent(TEST_MODIFY_CONTENT)
+                .imgsName(modifyImgsNameList)
                 .build();
 
         pageRequestDTO = PageRequestDTO.builder().build();
@@ -145,7 +164,7 @@ public class ReviewMapperTests {
         log.info("===== Start ReviewList Mapper Test=====");
 
         // WEHN
-        List<ReviewListDTO> list = reviewMapper.getReviewList(pageRequestDTO, "admin");
+        List<ReviewListDTO> list = reviewMapper.getReviewList(pageRequestDTO, TEST_MEMBERID);
         log.info(list);
 
     }
@@ -160,6 +179,45 @@ public class ReviewMapperTests {
 
         // WHEN
         reviewMapper.removeReview(TEST_RNO);
+
+    }
+
+    @DisplayName("리뷰 수정 매퍼 테스트")
+    // @Transactional
+    @Test
+    public void ModifyReview() {
+
+        // GIVEN
+        log.info("===== Start ModifyReview Mapper Test=====");
+
+        // WHEN
+        reviewMapper.modifyReview(reviewModifyDTO);
+
+        // rno 추출
+        Long rno = reviewModifyDTO.getRno();
+        // 기존 이미지 삭제
+        reviewImgMapper.removeReviewImg(rno);
+
+        List<String> imgsName = reviewModifyDTO.getImgsName();
+
+        if (imgsName != null && !imgsName.isEmpty()) {
+
+            AtomicInteger index = new AtomicInteger();
+
+            // List형식(이미지가 여러개)으로 imgName, UUID, pno, ord등 을 Map 형식(key : value)로 받아온다.
+            List<Map<String, String>> imgList = imgsName.stream().map(str -> {
+                String uuid = str.substring(0, 36);
+                String imgName = str.substring(37);
+
+                return Map.of("uuid", uuid, "imgName", imgName, "rno", "" + rno, "imgOrd",
+                        "" + index.getAndIncrement());
+            }).collect(Collectors.toList());
+            log.info(imgList);
+
+            // 이미지 등록
+            reviewImgMapper.registReviewImg(imgList);
+
+        }
 
     }
 

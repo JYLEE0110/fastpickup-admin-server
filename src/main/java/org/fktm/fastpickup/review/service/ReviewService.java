@@ -2,6 +2,7 @@ package org.fktm.fastpickup.review.service;
 
 import org.apache.ibatis.annotations.Param;
 import org.fktm.fastpickup.review.dto.ReviewListDTO;
+import org.fktm.fastpickup.review.dto.ReviewModifyDTO;
 import org.fktm.fastpickup.review.dto.ReviewReadDTO;
 import org.fktm.fastpickup.review.dto.ReviewRegistDTO;
 import org.fktm.fastpickup.util.page.PageRequestDTO;
@@ -22,5 +23,8 @@ public interface ReviewService {
 
     // 리뷰 삭제
     void removeReview(Long rno);
+
+    // 리뷰 수정
+    void modifyReview(ReviewModifyDTO reviewModifyDTO);
     
 }
