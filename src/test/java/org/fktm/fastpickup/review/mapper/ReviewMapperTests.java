@@ -30,15 +30,15 @@ public class ReviewMapperTests {
     @Autowired(required = false)
     private ReviewMapper reviewMapper;
 
-    private static final Long TEST_RNO = 9L;
+    private static final Long TEST_RNO = 12L;
     private static final Long TEST_PNO = 31L;
     private static final String TEST_MEMBERID = "wndyd0110@naver.com";
-    private static final Long TEST_GNO = 1L;
+    private static final Long TEST_GNO = 0L;
     private static final String TEST_REVIEW_TITLE = "정말 맛있어요";
     private static final String TEST_REVIEW_CONTENT = "진짜 맛있어요 강추!!! 좋은 음식 감사합니다 사장님~~";
 
-    private static final String TEST_IMG_UUID = "52c48e7d-e85a-4704-b47a-942e240ef675";
-    private static final String TEST_IMG_UUID2 = "53c48e7d-e85a-4704-b47a-942e240ef675";
+    private static final String TEST_IMG_UUID = "32c48e7d-e85a-4704-b47a-942e240ef675";
+    private static final String TEST_IMG_UUID2 = "33c48e7d-e85a-4704-b47a-942e240ef675";
 
     private static final String TEST_IMG_NAME = "postMan.jpg";
     private static final String TEST_IMG_NAME2 = "postMan2.jpg";
@@ -145,8 +145,22 @@ public class ReviewMapperTests {
         log.info("===== Start ReviewList Mapper Test=====");
 
         // WEHN
-        List<ReviewListDTO> list = reviewMapper.getReviewList(pageRequestDTO,TEST_MEMBERID);
+        List<ReviewListDTO> list = reviewMapper.getReviewList(pageRequestDTO, "admin");
         log.info(list);
 
     }
+
+    @DisplayName("리뷰 삭제 매퍼 테스트")
+    // @Transactional
+    @Test
+    public void RemoveReview() {
+
+        // GIVEN
+        log.info("===== Start RemoveReview Mapper Test=====");
+
+        // WHEN
+        reviewMapper.removeReview(TEST_RNO);
+
+    }
+
 }

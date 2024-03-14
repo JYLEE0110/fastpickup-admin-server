@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -69,6 +70,18 @@ public class ReviewRestController {
 
         return ResponseEntity.status((HttpStatus.CREATED)).body(responseDTO);
 
+    }
+
+    // 리뷰 삭제
+    @PutMapping("/remove/{rno}")
+    public ResponseEntity<Map<String,String>> removeReview(
+        @PathVariable("rno") Long rno
+    ){
+        log.info("===== /api/reviwe/remove/{rno} | Get =====");
+
+        reviewService.removeReview(rno);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("result","success RemoveReview"));
     }
     
 }

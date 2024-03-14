@@ -55,13 +55,13 @@
 
     <!-- 댓글(리뷰) 리스트 -->
     <select id = "getReviewList">
-        select tr.rno, tp.pno, tp.productName, tr.memberID, tr.reviewTitle, tr.reviewContent, tr.registDate, concat(tri.uuid,'_',tri.imgName) as imgName
+        select tr.rno, tr.gno , tr.isDeleted, tp.pno, tp.productName, tr.memberID, tr.reviewTitle, tr.reviewContent, tr.registDate, concat(tri.uuid,'_',tri.imgName) as imgName
         from tbl_review tr left outer join tbl_product tp on tr.pno = tp.pno
                             left outer join tbl_review_img tri on tr.rno = tri.rno
-        where (tr.isDeleted = 0 or tri.imgOrd is null)
+        where (tri.imgOrd is null or tri.imgOrd = 0)
 
         <if test="memberID != 'admin'">
-          and tr.memberID = #{memberID}
+          and tr.memberID = #{memberID} and tr.isDeleted = 0
         </if>
 
         order by tr.gno asc, tr.rno asc
@@ -70,13 +70,13 @@
     <!-- 댓글(리뷰) 페이징을 위한 total -->
     <select id ="getTotal">
         select count(*)
-        from(select tr.rno, tp.pno, tp.productName, tr.memberID, tr.reviewTitle, tr.reviewContent, tr.registDate, concat(tri.uuid,'_',tri.imgName) as imgName
+        from(select tr.rno, tr.gno, tr.isDeleted, tp.pno, tp.productName, tr.memberID, tr.reviewTitle, tr.reviewContent, tr.registDate, concat(tri.uuid,'_',tri.imgName) as imgName
             from tbl_review tr left outer join tbl_product tp on tr.pno = tp.pno
                 left outer join tbl_review_img tri on tr.rno = tri.rno
-            where (tr.isDeleted = 0 or tri.imgOrd is null or tri.imgOrd = 0)
+            where (tri.imgOrd is null or tri.imgOrd = 0)
 
             <if test="memberID != 'admin'">
-                and tr.memberID = #{memberID}
+                and tr.memberID = #{memberID} and tr.isDeleted = 0
             </if>
 
             order by tr.gno asc, tr.rno asc
@@ -84,5 +84,19 @@
             )review
             
     </select>
+
+    <!-- 리뷰 삭제 -->
+    <update id ="removeReview">
+        update tbl_review 
+        set isDeleted = true
+        where rno = #{rno}
+    </update>
+
+    <!-- 리뷰 수정 -->
+    <update id ="modifyReview">
+        update tbl_review
+        set reviewTitle = #{reviewTitle}, reviewContent = #{reviewContent}
+        where rno = #{rno}
+    </update>
 
 </mapper>

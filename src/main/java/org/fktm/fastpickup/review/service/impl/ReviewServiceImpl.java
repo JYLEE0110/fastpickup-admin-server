@@ -107,4 +107,15 @@ public class ReviewServiceImpl implements ReviewService {
 
     }
 
+    /* 리뷰 삭제 */
+    @Override
+    public void removeReview(Long rno) {
+
+        log.info("===== Start RemoveReview Service =====");
+
+        reviewMapper.removeReview(rno);
+        reviewImgMapper.removeReviewImg(rno);
+
+    }
+
 }

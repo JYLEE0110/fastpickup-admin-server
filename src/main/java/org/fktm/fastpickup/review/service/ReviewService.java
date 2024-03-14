@@ -19,5 +19,8 @@ public interface ReviewService {
 
     // 리뷰 리스트
     PageResponseDTO<ReviewListDTO> getReviewList(PageRequestDTO pageRequestDTO, String memberID);
+
+    // 리뷰 삭제
+    void removeReview(Long rno);
     
 }
