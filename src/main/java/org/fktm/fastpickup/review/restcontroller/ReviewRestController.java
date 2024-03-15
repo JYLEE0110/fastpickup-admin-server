@@ -58,20 +58,34 @@ public class ReviewRestController {
         return ResponseEntity.status(HttpStatus.CREATED).body(reviewReadDTO);
     }
 
-    // 리뷰 리스트
-    @GetMapping("/list/{memberID}")
+    // 마이페이지 리뷰 리스트
+    @GetMapping("/list/mypage/{memberID}")
     public ResponseEntity<PageResponseDTO<ReviewListDTO>> getReviewList(
         @PathVariable("memberID")String memberID,
         PageRequestDTO pageRequestDTO 
         ){
 
-        log.info("===== /api/review/list | Get =====");
+        log.info("===== /api/review/list/mypage | Get =====");
 
         PageResponseDTO<ReviewListDTO> responseDTO= reviewService.getReviewList(pageRequestDTO, memberID);
 
         return ResponseEntity.status((HttpStatus.CREATED)).body(responseDTO);
 
     }
+        // 상품상세페이지 리뷰 리스트
+        @GetMapping("/list/product/{pno}")
+        public ResponseEntity<PageResponseDTO<ReviewListDTO>> getProductReviewList(
+            @PathVariable("pno")Long pno,
+            PageRequestDTO pageRequestDTO 
+            ){
+    
+            log.info("===== /api/review/list/product | Get =====");
+    
+            PageResponseDTO<ReviewListDTO> responseDTO= reviewService.getProductReviewList(pageRequestDTO, pno);
+    
+            return ResponseEntity.status((HttpStatus.CREATED)).body(responseDTO);
+    
+        }
 
     // 리뷰 삭제
     @PutMapping("/remove/{rno}")

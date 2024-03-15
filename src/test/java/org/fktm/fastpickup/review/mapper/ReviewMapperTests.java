@@ -32,14 +32,14 @@ public class ReviewMapperTests {
     private ReviewMapper reviewMapper;
 
     private static final Long TEST_RNO = 13L;
-    private static final Long TEST_PNO = 31L;
+    private static final Long TEST_PNO = 32L;
     private static final String TEST_MEMBERID = "wndyd0110@naver.com";
     private static final Long TEST_GNO = 0L;
     private static final String TEST_REVIEW_TITLE = "정말 맛있어요";
     private static final String TEST_REVIEW_CONTENT = "진짜 맛있어요 강추!!! 좋은 음식 감사합니다 사장님~~";
 
-    private static final String TEST_IMG_UUID = "32c48e7d-e85a-4704-b47a-942e240ef675";
-    private static final String TEST_IMG_UUID2 = "33c48e7d-e85a-4704-b47a-942e240ef675";
+    private static final String TEST_IMG_UUID = "49c48e7d-e85a-4704-b47a-942e240ef675";
+    private static final String TEST_IMG_UUID2 = "48c48e7d-e85a-4704-b47a-942e240ef675";
 
     private static final String TEST_MODIFY_TITLE = "수정된 제목";
     private static final String TEST_MODIFY_CONTENT = "수정된 내용";
@@ -155,7 +155,7 @@ public class ReviewMapperTests {
         // THEN
     }
 
-    @DisplayName("리뷰 리스트 매퍼 테스트")
+    @DisplayName("마이페이지 리뷰 리스트 매퍼 테스트")
     // @Transactional
     @Test
     public void getReviewList() {
@@ -165,6 +165,20 @@ public class ReviewMapperTests {
 
         // WEHN
         List<ReviewListDTO> list = reviewMapper.getReviewList(pageRequestDTO, TEST_MEMBERID);
+        log.info(list);
+
+    }
+
+    @DisplayName("상품상세페이지 리뷰 리스트 매퍼 테스트")
+    // @Transactional
+    @Test
+    public void getProductReviewList() {
+
+        // GIVEN
+        log.info("===== Start ProductReviewList Mapper Test=====");
+
+        // WEHN
+        List<ReviewListDTO> list = reviewMapper.getProductReviewList(pageRequestDTO, TEST_PNO);
         log.info(list);
 
     }

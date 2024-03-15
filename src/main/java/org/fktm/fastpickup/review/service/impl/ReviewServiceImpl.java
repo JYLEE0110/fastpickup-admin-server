@@ -91,7 +91,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     }
 
-    // 리뷰 리스트 서비스
+    // 마이페이지 리뷰 리스트 서비스
     @Override
     public PageResponseDTO<ReviewListDTO> getReviewList(PageRequestDTO pageRequestDTO, String memberID) {
 
@@ -106,6 +106,21 @@ public class ReviewServiceImpl implements ReviewService {
                 .pageRequestDTO(pageRequestDTO)
                 .build();
 
+    }
+    // 상품상세페이지 리뷰 리스트 서비스
+    @Override
+    public PageResponseDTO<ReviewListDTO> getProductReviewList(PageRequestDTO pageRequestDTO, Long pno) {
+        
+        log.info("===== Start ProductReviewList Service =====");
+
+        List<ReviewListDTO> list = reviewMapper.getProductReviewList(pageRequestDTO, pno);
+        Long total = reviewMapper.getProductReviewTotal(pageRequestDTO, pno);
+
+        return PageResponseDTO.<ReviewListDTO>withAll()
+                .list(list)
+                .total(total)
+                .pageRequestDTO(pageRequestDTO)
+                .build();
     }
 
     /* 리뷰 삭제 */
@@ -153,5 +168,7 @@ public class ReviewServiceImpl implements ReviewService {
         }
 
     }
+
+
 
 }

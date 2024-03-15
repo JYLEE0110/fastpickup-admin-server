@@ -18,8 +18,11 @@ public interface ReviewService {
     // 리뷰 상세보기
     ReviewReadDTO readReview(Long rno);
 
-    // 리뷰 리스트
+    // 마이페이지 리뷰 리스트
     PageResponseDTO<ReviewListDTO> getReviewList(PageRequestDTO pageRequestDTO, String memberID);
+    // 상품상세페이지 리뷰 리스트
+    PageResponseDTO<ReviewListDTO> getProductReviewList(PageRequestDTO pageRequestDTO, Long pno);
+
 
     // 리뷰 삭제
     void removeReview(Long rno);

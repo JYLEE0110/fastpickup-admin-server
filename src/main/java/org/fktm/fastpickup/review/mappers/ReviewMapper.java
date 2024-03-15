@@ -22,9 +22,13 @@ public interface ReviewMapper {
     // 리뷰 상세보기
     ReviewReadDTO readReview(Long rno);
 
-    // 리뷰 리스트
+    // 리뷰 리스트(마이페이지)
     List<ReviewListDTO> getReviewList(@Param("pr")PageRequestDTO pageRequestDTO, @Param("memberID") String memberID);
     Long getTotal(@Param("pr")PageRequestDTO pageRequestDTO, @Param("memberID") String memberID);
+
+    // 리뷰 리스트(상품페이지)
+    List<ReviewListDTO> getProductReviewList(@Param("pr")PageRequestDTO pageRequestDTO, @Param("pno") Long pno);
+    Long getProductReviewTotal(@Param("pr")PageRequestDTO pageRequestDTO, @Param("pno") Long memberID);
 
     // 리뷰 삭제
     int removeReview(Long rno);
