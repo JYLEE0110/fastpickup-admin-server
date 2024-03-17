@@ -72,7 +72,7 @@ public class ReviewRestController {
         return ResponseEntity.status((HttpStatus.CREATED)).body(responseDTO);
 
     }
-        // 상품상세페이지 리뷰 리스트
+        // 상품상세 페이지 리뷰 리스트
         @GetMapping("/list/product/{pno}")
         public ResponseEntity<PageResponseDTO<ReviewListDTO>> getProductReviewList(
             @PathVariable("pno")Long pno,

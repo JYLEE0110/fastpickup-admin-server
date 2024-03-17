@@ -14,6 +14,7 @@ import lombok.ToString;
 public class ReadOrderProductDTO {
 
     private String productName;
+    private Long pno;
     private int quantity;
     private String imgName;
     

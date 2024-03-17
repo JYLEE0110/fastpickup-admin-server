@@ -35,12 +35,13 @@
 
     <resultMap type="org.fktm.fastpickup.order.dto.ReadOrderProductDTO" id="orderProducts">
         <result property = "productName" column="productName"/>
+        <result property = "pno" column="pno"/>
         <result property = "quantity" column="quantity"/>
         <result property = "imgName" column = "imgName"/>
     </resultMap>
 
     <select id = "readOrder" resultMap = "orderMap">
-        select tod.ono, tod.memberID, tod.orderDate, tod.orderStatus, tp.productName, top.quantity, concat(tpi.uuid,'_',tpi.imgName) as imgName
+        select tod.ono, tp.pno, tod.memberID, tod.orderDate, tod.orderStatus, tp.productName, top.quantity, concat(tpi.uuid,'_',tpi.imgName) as imgName
             from tbl_order tod 
 		        left outer join tbl_order_product top on tod.ono = top.ono
 		        left outer join tbl_product tp on top.pno = tp.pno
