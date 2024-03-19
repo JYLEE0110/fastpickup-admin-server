@@ -33,6 +33,7 @@
         <collection property="orderProduct" resultMap="orderProducts"/>
     </resultMap>
 
+
     <resultMap type="org.fktm.fastpickup.order.dto.ReadOrderProductDTO" id="orderProducts">
         <result property = "productName" column="productName"/>
         <result property = "pno" column="pno"/>
