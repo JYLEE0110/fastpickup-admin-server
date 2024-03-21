@@ -24,7 +24,7 @@ public class PageRequestDTO {
 
     // page번호 음수값 제외처리
     public void setPage(int page) {
-        if (page < 0) {
+        if (page <= 0) {
             this.page = 1;
         } else {
             this.page = page;

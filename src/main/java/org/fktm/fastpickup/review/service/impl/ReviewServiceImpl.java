@@ -37,7 +37,7 @@ public class ReviewServiceImpl implements ReviewService {
         Long gno = reviewRegistDTO.getGno();
 
         // gno가 0일 시 댓글(리뷰)
-        if (gno == 0) {
+        if (gno == 0 ) {
 
             reviewMapper.registReview(reviewRegistDTO);
 
