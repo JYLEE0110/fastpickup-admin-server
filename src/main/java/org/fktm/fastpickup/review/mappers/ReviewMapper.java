@@ -21,6 +21,8 @@ public interface ReviewMapper {
 
     // 리뷰 상세보기
     ReviewReadDTO readReview(Long rno);
+    // 리뷰 답글 상세보기
+    ReviewReadDTO readReply(Long gno);
 
     // 리뷰 리스트(마이페이지)
     List<ReviewListDTO> getReviewList(@Param("pr")PageRequestDTO pageRequestDTO, @Param("memberID") String memberID);

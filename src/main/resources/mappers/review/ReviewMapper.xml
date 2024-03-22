@@ -53,18 +53,43 @@
     </select>
     <!-- 댓글(리뷰) 상세보기 -->
 
+    
+    <!-- 리뷰답글 상세보기 -->
+    <!-- <resultMap id="replyMap" type="org.fktm.fastpickup.review.dto.ReviewReadDTO">
+        <id property="rno" column="rno"/>
+        <result property="pno" column="pno"/>
+        <result property="memberID" column="memberID"/>
+        <result property="productName" column="productName"/>
+        <result property="reviewTitle" column="reviewTitle"/>
+        <result property="reviewContent" column="reviewContent"/>
+        <result property="registDate" column="registDate"/>
+        <collection property="imgsName" resultMap="imgsNameMap"/>
+    </resultMap>
+
+    <resultMap type="string" id="imgsNameMap">
+        <result column="imgsName"/>
+    </resultMap> -->
+
+    <select id ="readReply" resultMap="reviewMap">
+        select tr.rno, tp.pno, tp.productName, tr.memberID, tr.reviewTitle, tr.reviewContent, tr.registDate, concat(tri.uuid,'_',tri.imgName) as imgsName
+        from tbl_review tr left outer join tbl_product tp on tr.pno = tp.pno
+                            left outer join tbl_review_img tri on tr.rno = tri.rno
+        where tr.gno = #{gno} and tr.rno != tr.gno;
+    </select>
+    <!-- 리뷰답글 상세보기 -->
+
     <!-- 댓글(마이페이지 리뷰) 리스트 -->
     <select id = "getReviewList">
         select tr.rno, tr.gno , tr.isDeleted, tp.pno, tp.productName, tr.memberID, tr.reviewTitle, tr.reviewContent, tr.registDate, concat(tri.uuid,'_',tri.imgName) as imgName
         from tbl_review tr left outer join tbl_product tp on tr.pno = tp.pno
                             left outer join tbl_review_img tri on tr.rno = tri.rno
-        where (tri.imgOrd is null or tri.imgOrd = 0)
+        where (tri.imgOrd is null or tri.imgOrd = 0) and tr.rno = tr.gno
 
         <if test="memberID != 'admin'">
           and tr.memberID = #{memberID} and tr.isDeleted = 0
         </if>
 
-        order by tr.gno asc, tr.rno asc
+        order by tr.rno desc
         limit #{pr.skip}, #{pr.size}
     </select>
     <!-- 댓글(리뷰) 페이징을 위한 total -->
@@ -73,13 +98,13 @@
         from(select tr.rno, tr.gno, tr.isDeleted, tp.pno, tp.productName, tr.memberID, tr.reviewTitle, tr.reviewContent, tr.registDate, concat(tri.uuid,'_',tri.imgName) as imgName
             from tbl_review tr left outer join tbl_product tp on tr.pno = tp.pno
                 left outer join tbl_review_img tri on tr.rno = tri.rno
-            where (tri.imgOrd is null or tri.imgOrd = 0)
+            where (tri.imgOrd is null or tri.imgOrd = 0) and tr.rno = tr.gno
 
             <if test="memberID != 'admin'">
                 and tr.memberID = #{memberID} and tr.isDeleted = 0
             </if>
 
-            order by tr.gno asc, tr.rno asc
+            order by tr.rno desc
             limit #{pr.countEnd}
             )review
             

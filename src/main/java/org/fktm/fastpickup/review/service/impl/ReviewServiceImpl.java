@@ -169,6 +169,15 @@ public class ReviewServiceImpl implements ReviewService {
 
     }
 
+    @Override
+    public ReviewReadDTO readReply(Long gno) {
+
+        log.info("===== Start ReadReply Service =====");
+
+        return reviewMapper.readReply(gno);
+
+    }
+
 
 
 }

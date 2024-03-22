@@ -35,7 +35,7 @@ public class ReviewRestController {
 
     // 리뷰 작성
     @PostMapping("/regist")
-        public ResponseEntity<Map<String, String>> registReview(
+    public ResponseEntity<Map<String, String>> registReview(
             @Valid @RequestBody ReviewRegistDTO reviewRegistDTO) {
 
         log.info("===== /api/review/regist | Post =====");
@@ -48,8 +48,7 @@ public class ReviewRestController {
     // 리뷰 상세
     @GetMapping("/read/{rno}")
     public ResponseEntity<ReviewReadDTO> readReview(
-        @PathVariable("rno") Long rno
-    ){
+            @PathVariable("rno") Long rno) {
 
         log.info("===== /api/review/read | Get =====");
 
@@ -58,56 +57,65 @@ public class ReviewRestController {
         return ResponseEntity.status(HttpStatus.CREATED).body(reviewReadDTO);
     }
 
+    // 리뷰 답글 상세
+    @GetMapping("/reply/read/{gno}")
+    public ResponseEntity<ReviewReadDTO> readReply(
+            @PathVariable("gno") Long gno) {
+
+        log.info("===== /api/review/read | Get =====");
+
+        ReviewReadDTO reviewReadDTO = reviewService.readReply(gno);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(reviewReadDTO);
+    }
+
     // 마이페이지 리뷰 리스트
     @GetMapping("/list/mypage/{memberID}")
     public ResponseEntity<PageResponseDTO<ReviewListDTO>> getReviewList(
-        @PathVariable("memberID")String memberID,
-        PageRequestDTO pageRequestDTO 
-        ){
+            @PathVariable("memberID") String memberID,
+            PageRequestDTO pageRequestDTO) {
 
         log.info("===== /api/review/list/mypage | Get =====");
 
-        PageResponseDTO<ReviewListDTO> responseDTO= reviewService.getReviewList(pageRequestDTO, memberID);
+        PageResponseDTO<ReviewListDTO> responseDTO = reviewService.getReviewList(pageRequestDTO, memberID);
 
         return ResponseEntity.status((HttpStatus.CREATED)).body(responseDTO);
 
     }
-        // 상품상세 페이지 리뷰 리스트
-        @GetMapping("/list/product/{pno}")
-        public ResponseEntity<PageResponseDTO<ReviewListDTO>> getProductReviewList(
-            @PathVariable("pno")Long pno,
-            PageRequestDTO pageRequestDTO 
-            ){
-    
-            log.info("===== /api/review/list/product | Get =====");
-    
-            PageResponseDTO<ReviewListDTO> responseDTO= reviewService.getProductReviewList(pageRequestDTO, pno);
-    
-            return ResponseEntity.status((HttpStatus.CREATED)).body(responseDTO);
-    
-        }
+
+    // 상품상세 페이지 리뷰 리스트
+    @GetMapping("/list/product/{pno}")
+    public ResponseEntity<PageResponseDTO<ReviewListDTO>> getProductReviewList(
+            @PathVariable("pno") Long pno,
+            PageRequestDTO pageRequestDTO) {
+
+        log.info("===== /api/review/list/product | Get =====");
+
+        PageResponseDTO<ReviewListDTO> responseDTO = reviewService.getProductReviewList(pageRequestDTO, pno);
+
+        return ResponseEntity.status((HttpStatus.CREATED)).body(responseDTO);
+
+    }
 
     // 리뷰 삭제
     @PutMapping("/remove/{rno}")
-    public ResponseEntity<Map<String,String>> removeReview(
-        @PathVariable("rno") Long rno
-    ){
+    public ResponseEntity<Map<String, String>> removeReview(
+            @PathVariable("rno") Long rno) {
         log.info("===== /api/reviwe/remove/{rno} | Get =====");
 
         reviewService.removeReview(rno);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("result","success RemoveReview"));
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("result", "success RemoveReview"));
     }
 
     // 리뷰 수정
     @PutMapping("/modify")
-    public ResponseEntity<Map<String,String>> modifyReview(
-        @RequestBody @Valid ReviewModifyDTO reviewModifyDTO
-    ){
+    public ResponseEntity<Map<String, String>> modifyReview(
+            @RequestBody @Valid ReviewModifyDTO reviewModifyDTO) {
         log.info("===== /api/modify/review | Put =====");
 
         reviewService.modifyReview(reviewModifyDTO);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("result","SUCEESS MODIFY REVIEW"));
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("result", "SUCEESS MODIFY REVIEW"));
     }
 }
