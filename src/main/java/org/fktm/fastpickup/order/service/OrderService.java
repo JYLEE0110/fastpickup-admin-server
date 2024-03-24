@@ -24,6 +24,6 @@ public interface OrderService {
     void modifyOrderStatus(ModifyOrderStatusDTO modifyOrderStatusDTO);
 
     // 주문 리스트
-    PageResponseDTO<ListOrderDTO> getOrderList(PageRequestDTO pageRequestDTO);
+    PageResponseDTO<ListOrderDTO> getOrderList(PageRequestDTO pageRequestDTO, String memberID);
 
 }

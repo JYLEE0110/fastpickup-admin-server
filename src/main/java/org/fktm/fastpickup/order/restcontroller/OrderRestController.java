@@ -45,7 +45,7 @@ public class OrderRestController {
 
     // 주문 상세 보기
     @GetMapping("/read/{ono}")
-    @PreAuthorize("permitAll")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     public ResponseEntity<ReadOrderDTO> readOrder(
             @PathVariable("ono") Long ono) {
 
@@ -72,14 +72,15 @@ public class OrderRestController {
     }
 
     // 주문 목록
-    @GetMapping("/list")
-    @PreAuthorize("permitAll")
+    @GetMapping("/list/{memberID}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     public ResponseEntity<PageResponseDTO<ListOrderDTO>> getOrderList(
-        PageRequestDTO pageRequestDTO
+        PageRequestDTO pageRequestDTO,
+        @PathVariable("memberID") String memberID
     ){
         log.info("/api/orderList | GET");
 
-        PageResponseDTO<ListOrderDTO> list = orderService.getOrderList(pageRequestDTO);
+        PageResponseDTO<ListOrderDTO> list = orderService.getOrderList(pageRequestDTO, memberID);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(list);
     }

@@ -25,8 +25,8 @@ public interface OrderMapper {
     int modifyOrderStatus(ModifyOrderStatusDTO modifyOrderStatusDTO );
 
     // 주문 리스트
-    List<ListOrderDTO> getOrderList(PageRequestDTO pageRequestDTO);
+    List<ListOrderDTO> getOrderList(@Param("pr")PageRequestDTO pageRequestDTO, @Param("memberID")String memberID);
     // 현재 페이지에 대한 주문목록 총 개수 
-    Long getOrderTotal(PageRequestDTO pageRequestDTO);
+    Long getOrderTotal(@Param("pr")PageRequestDTO pageRequestDTO, @Param("memberID")String memberID);
 
 }

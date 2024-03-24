@@ -12,6 +12,7 @@ import org.fktm.fastpickup.util.page.PageRequestDTO;
 import org.fktm.fastpickup.util.page.PageResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +36,7 @@ public class ReviewRestController {
 
     // 리뷰 작성
     @PostMapping("/regist")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     public ResponseEntity<Map<String, String>> registReview(
             @Valid @RequestBody ReviewRegistDTO reviewRegistDTO) {
 
@@ -47,6 +49,7 @@ public class ReviewRestController {
 
     // 리뷰 상세
     @GetMapping("/read/{rno}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     public ResponseEntity<ReviewReadDTO> readReview(
             @PathVariable("rno") Long rno) {
 
@@ -59,6 +62,7 @@ public class ReviewRestController {
 
     // 리뷰 답글 상세
     @GetMapping("/reply/read/{gno}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     public ResponseEntity<ReviewReadDTO> readReply(
             @PathVariable("gno") Long gno) {
 
@@ -71,6 +75,7 @@ public class ReviewRestController {
 
     // 마이페이지 리뷰 리스트
     @GetMapping("/list/mypage/{memberID}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     public ResponseEntity<PageResponseDTO<ReviewListDTO>> getReviewList(
             @PathVariable("memberID") String memberID,
             PageRequestDTO pageRequestDTO) {
@@ -99,6 +104,7 @@ public class ReviewRestController {
 
     // 리뷰 삭제
     @PutMapping("/remove/{rno}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     public ResponseEntity<Map<String, String>> removeReview(
             @PathVariable("rno") Long rno) {
         log.info("===== /api/reviwe/remove/{rno} | Get =====");
@@ -110,6 +116,7 @@ public class ReviewRestController {
 
     // 리뷰 수정
     @PutMapping("/modify")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     public ResponseEntity<Map<String, String>> modifyReview(
             @RequestBody @Valid ReviewModifyDTO reviewModifyDTO) {
         log.info("===== /api/modify/review | Put =====");

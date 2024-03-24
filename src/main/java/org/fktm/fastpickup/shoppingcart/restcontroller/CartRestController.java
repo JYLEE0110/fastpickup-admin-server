@@ -14,6 +14,7 @@ import org.fktm.fastpickup.util.page.PageResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,7 @@ public class CartRestController {
     private final CartService cartService;
 
     // 장바구니 상품 추가
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/add")
     public ResponseEntity<Map<String, String>> createCart(
             @RequestBody CartRequestDTO cartRequestDTO) {
@@ -46,6 +48,7 @@ public class CartRestController {
     }
 
     // 장바구니 리스트 목록
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/list/{memberID}")
     public ResponseEntity<PageResponseDTO<CartListDTO>> getCartList(
             @PathVariable("memberID") String memberID,
@@ -59,6 +62,7 @@ public class CartRestController {
     }
 
     // 장바구니 삭제
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @DeleteMapping("/remove/{cno}")
     public ResponseEntity<Map<String, Long>> removeCartItem(
             @PathVariable("cno") Long cno) {
@@ -71,6 +75,7 @@ public class CartRestController {
     }
 
     // 장바구니 전체삭제
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @DeleteMapping("/removeAll/{memberID}")
     public ResponseEntity<Map<String, String>> removeAllItem(
             @PathVariable("memberID") String memberID) {

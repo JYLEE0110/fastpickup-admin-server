@@ -37,7 +37,7 @@ public class ProductRestController {
     private final ProductService productService;
 
     // 상품 등록
-    @PreAuthorize("permitAll")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/regist")
     // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Map<Long, String>> registProduct(
@@ -77,8 +77,7 @@ public class ProductRestController {
 
     // 상품 삭제
     @PutMapping("/remove/{pno}")
-    // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PreAuthorize("permitAll")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Map<String,String>> removeProduct(
         @PathVariable("pno") Long pno
     ){
@@ -92,8 +91,7 @@ public class ProductRestController {
 
     // 상품 수정
     @PutMapping("/modify")
-    @PreAuthorize("permitAll")
-    // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Map<String, String>> modifyProduct(
         @Valid @RequestBody ProductModifyDTO productModifyDTO
     ){

@@ -79,12 +79,12 @@ public class OrderServiceImpl implements OrderService {
 
     // 주문목록
     @Override
-    public PageResponseDTO<ListOrderDTO> getOrderList(PageRequestDTO pageRequestDTO) {
+    public PageResponseDTO<ListOrderDTO> getOrderList(PageRequestDTO pageRequestDTO, String memberID) {
 
         log.info("=== getOrderList Service ===");
 
-        List<ListOrderDTO> orderList = orderMapper.getOrderList(pageRequestDTO);
-        Long totalOrderList = orderMapper.getOrderTotal(pageRequestDTO);
+        List<ListOrderDTO> orderList = orderMapper.getOrderList(pageRequestDTO, memberID);
+        Long totalOrderList = orderMapper.getOrderTotal(pageRequestDTO, memberID);
 
         return PageResponseDTO.<ListOrderDTO> withAll()
                         .list(orderList)

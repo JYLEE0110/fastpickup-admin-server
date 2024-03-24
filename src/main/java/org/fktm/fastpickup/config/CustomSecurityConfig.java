@@ -66,9 +66,9 @@ public class CustomSecurityConfig {
                 .exceptionHandling(config ->
                         config.accessDeniedHandler(new CustomAccessDeniedHandler()))
                 // jwt 사용
-                // .sessionManagement(config -> 
-                //         config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // .addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement(config -> 
+                        config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class)
                 .getOrBuild();
 
     }

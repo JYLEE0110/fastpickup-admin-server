@@ -67,19 +67,13 @@
                 left outer join tbl_product tp on top.pno =tp.pno
                 left outer join tbl_product_img tpi on tpi.pno = tp.pno
         where tpi.imgOrd = 0
-        <if test="keyword != null and types != null">
-              <trim prefix="and (" prefixOverrides="or" suffix=")">
-                <foreach collection="types" item="type" separator=" or ">
-                  <if test='type == "s"'>
-                    tod.orderStatus like concat('%', #{keyword}, '%')
-                  </if>
-                </foreach>
-              </trim>
-          </if>
+        <if test="memberID != 'admin'">
+          and tod.memberID = #{memberID}
+        </if>
 
         group by tod.ono
         order by tod.ono desc
-        limit #{skip}, #{size}
+        limit #{pr.skip}, #{pr.size}
     </select>
     <!-- 현재 페이지에서 주문 목록 총 개수 -->
     <select id ="getOrderTotal">
@@ -92,18 +86,12 @@
                 left outer join tbl_product tp on top.pno =tp.pno
                 left outer join tbl_product_img tpi on tpi.pno = tp.pno
         where tpi.imgOrd = 0
-        <if test="keyword != null and types != null">
-              <trim prefix="and (" prefixOverrides="or" suffix=")">
-                <foreach collection="types" item="type" separator=" or ">
-                  <if test='type == "s"'>
-                    tod.orderStatus like concat('%', #{keyword}, '%')
-                  </if>
-                </foreach>
-              </trim>
-          </if>
+     <if test="memberID != 'admin'">
+          and tod.memberID = #{memberID}
+     </if>
         group by tod.ono
         order by tod.ono desc
-        limit #{countEnd}
+        limit #{pr.countEnd}
       ) as tbl_order
     </select>
 
