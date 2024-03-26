@@ -66,7 +66,7 @@ public class MemberRestController {
     }
 
     // 회원 리스트
-    // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     // @PreAuthorize("permitAll()")
     @GetMapping("/list")
     public ResponseEntity<PageResponseDTO<MemberListDTO>> getMemberList(
@@ -83,7 +83,7 @@ public class MemberRestController {
 
     // 회원 삭제
     @PutMapping("/remove/{memberID}")
-    // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     public ResponseEntity<Map<String, String>> removeProduct(
             @PathVariable("memberID") String memberID) {
         log.info("===== /api/member/remove/" + memberID + "| PUT =====");
@@ -96,7 +96,7 @@ public class MemberRestController {
 
     // 회원 수정
     @PutMapping("/modify")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     public ResponseEntity<Map<String, String>> modifyMember(
             @Valid @RequestBody MemberModifyDTO memberModifyDTO) {
         log.info("===== /api/member/modify/ | PUT =====");
@@ -111,6 +111,7 @@ public class MemberRestController {
 
     //탈퇴 회원 재활성화
     @PutMapping("/reactive/{memberID}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Map<String, String>> reactiveMember(
         @PathVariable("memberID") String memberID
     ){

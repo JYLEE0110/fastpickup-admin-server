@@ -37,8 +37,14 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         if(path.equals("/api/member/login")){
             return true;
         }
+        if(path.equals("/api/member/regist")){
+            return true;
+        }
 
         if(path.equals("/api/product/list")){
+            return true;
+        }
+        if(path.startsWith("/api/category/")){
             return true;
         }
         if(path.startsWith("/api/product/read/")){
@@ -46,10 +52,6 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         }
         
         if(path.startsWith("/api/review/list/product/")){
-            return true;
-        }
-
-        if(path.equals("/api/order/create")){
             return true;
         }
 

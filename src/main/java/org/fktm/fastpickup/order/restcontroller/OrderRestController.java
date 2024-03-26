@@ -32,7 +32,7 @@ public class OrderRestController {
 
     // 주문 생성
     @PostMapping("/create")
-    @PreAuthorize("permitAll")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     public ResponseEntity<Map<String, String>> createOrder(
             @RequestBody CreateOrderDTO createOrderDTO) {
 
@@ -59,7 +59,7 @@ public class OrderRestController {
 
     // 주문 상태 변경
     @PostMapping("/modify/status")
-    @PreAuthorize("permitAll")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Map<String,String>> modifyOrderStatus(
         @RequestBody ModifyOrderStatusDTO modifyOrderStatusDTO
     ){

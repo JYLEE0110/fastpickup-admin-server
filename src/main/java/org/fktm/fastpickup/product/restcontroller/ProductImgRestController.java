@@ -35,6 +35,7 @@ public class ProductImgRestController {
     @Value("${org.fktm.upload.product.path}")
     private String uploadPath;
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/upload")
     public List<ImgFileUploadDTO> upload(@RequestParam("file") MultipartFile[] files) {
         // 파일 없을 경우
@@ -98,6 +99,7 @@ public class ProductImgRestController {
     }
 
     // file remove
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping("remove/{fileName}")
     public Map<String, String> removeFile(
             @PathVariable("fileName") String fileName) {
