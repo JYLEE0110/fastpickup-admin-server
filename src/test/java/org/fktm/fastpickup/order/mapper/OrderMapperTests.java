@@ -150,7 +150,7 @@ public class OrderMapperTests {
         log.info("===== Start getOrderList Test =====");
 
         // WHEN
-        orderListDTO = orderMapper.getOrderList(pageRequestDTO);
+        orderListDTO = orderMapper.getOrderList(pageRequestDTO, TEST_MEMBER_ID);
         log.info(orderListDTO);
 
         // THEN
@@ -167,7 +167,7 @@ public class OrderMapperTests {
         log.info("===== Start getOrderListTotal Test =====");
 
         // WHEN
-        Long total = orderMapper.getOrderTotal(pageRequestDTO);
+        Long total = orderMapper.getOrderTotal(pageRequestDTO, TEST_MEMBER_ID);
         log.info(total);
 
         // THEN

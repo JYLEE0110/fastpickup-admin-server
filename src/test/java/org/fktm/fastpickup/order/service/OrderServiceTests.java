@@ -134,7 +134,7 @@ public class OrderServiceTests {
         log.info("===== Start getOrderListService Test =====");
 
         // WHEN
-        PageResponseDTO<ListOrderDTO> list=  orderService.getOrderList(pageRequestDTO);
+        PageResponseDTO<ListOrderDTO> list=  orderService.getOrderList(pageRequestDTO, TEST_MEMBER_ID);
         log.info(list);
 
         // THEN
