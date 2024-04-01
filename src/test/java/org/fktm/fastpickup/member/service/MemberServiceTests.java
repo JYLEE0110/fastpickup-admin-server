@@ -12,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -73,7 +74,7 @@ public class MemberServiceTests {
 
     @DisplayName("회원가입 서비스 테스트")
     @Test
-    // @Transactional
+    @Transactional
     public void registMember(){
 
         //Given
@@ -89,7 +90,7 @@ public class MemberServiceTests {
 
     @DisplayName("회원상세 서비스 테스트")
     @Test
-    // @Transactional
+    @Transactional
     public void readMember(){
 
         //Given
@@ -108,7 +109,7 @@ public class MemberServiceTests {
 
     @DisplayName("회원리스트 서비스 테스트")
     @Test
-    // @Transactional
+    @Transactional
     public void getMemberList(){
 
         //Given
@@ -126,7 +127,7 @@ public class MemberServiceTests {
 
     @DisplayName("회원탈퇴 서비스 테스트")
     @Test
-    // @Transactional
+    @Transactional
     public void withdrawalMember(){
 
         //Given
@@ -144,7 +145,7 @@ public class MemberServiceTests {
 
     @DisplayName("회원 수정 서비스 테스트")
     @Test
-    // @Transactional
+    @Transactional
     public void updateMember(){
 
         //Given

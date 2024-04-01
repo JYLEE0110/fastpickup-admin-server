@@ -18,6 +18,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -88,7 +89,7 @@ public class ReviewMapperTests {
     }
 
     @DisplayName("리뷰 등록 매퍼 테스트")
-    // @Transactional
+    @Transactional
     @Test
     public void registProduct() {
 
@@ -141,7 +142,7 @@ public class ReviewMapperTests {
     }
 
     @DisplayName("리뷰 상세보기 매퍼 테스트")
-    // @Transactional
+    @Transactional
     @Test
     public void readReview() {
 
@@ -156,7 +157,7 @@ public class ReviewMapperTests {
     }
 
     @DisplayName("마이페이지 리뷰 리스트 매퍼 테스트")
-    // @Transactional
+    @Transactional
     @Test
     public void getReviewList() {
 
@@ -170,7 +171,7 @@ public class ReviewMapperTests {
     }
 
     @DisplayName("상품상세페이지 리뷰 리스트 매퍼 테스트")
-    // @Transactional
+    @Transactional
     @Test
     public void getProductReviewList() {
 
@@ -184,7 +185,7 @@ public class ReviewMapperTests {
     }
 
     @DisplayName("리뷰 삭제 매퍼 테스트")
-    // @Transactional
+    @Transactional
     @Test
     public void RemoveReview() {
 
@@ -197,7 +198,7 @@ public class ReviewMapperTests {
     }
 
     @DisplayName("리뷰 수정 매퍼 테스트")
-    // @Transactional
+    @Transactional
     @Test
     public void ModifyReview() {
 

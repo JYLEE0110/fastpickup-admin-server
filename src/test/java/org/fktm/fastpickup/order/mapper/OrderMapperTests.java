@@ -79,7 +79,7 @@ public class OrderMapperTests {
 
     @DisplayName("주문 생성 매퍼 테스트")
     @Test
-    // @Transactional
+    @Transactional
     public void createOrder() {
 
         // GIVEN
@@ -124,7 +124,7 @@ public class OrderMapperTests {
 
     @DisplayName("주문 상태변경 매퍼 테스트")
     @Test
-    // @Transactional
+    @Transactional
     public void modifyOrderStatus() {
 
         // GIVEN
@@ -143,7 +143,7 @@ public class OrderMapperTests {
 
     @DisplayName("주문 목록 매퍼 테스트")
     @Test
-    // @Transactional
+    @Transactional
     public void getOrderList() {
 
         // GIVEN
@@ -160,7 +160,7 @@ public class OrderMapperTests {
 
     @DisplayName("주문 목록 총 개수 매퍼 테스트")
     @Test
-    // @Transactional
+    @Transactional
     public void getOrderListTotal() {
 
         // GIVEN

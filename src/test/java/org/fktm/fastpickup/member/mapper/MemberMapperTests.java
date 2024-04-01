@@ -94,7 +94,7 @@ public class MemberMapperTests {
 
     @DisplayName("회원가입 매퍼 테스트")
     @Test
-    // @Transactional
+    @Transactional
     public void registMember(){
 
         // GIVEN
@@ -177,7 +177,7 @@ public class MemberMapperTests {
 
     @DisplayName("회원 탈퇴 매퍼 테스트")
     @Test
-    // @Transactional
+    @Transactional
     public void withdrawMember(){
 
         // GIVEN
@@ -192,7 +192,7 @@ public class MemberMapperTests {
 
     @DisplayName("회원 수정 매퍼 테스트")
     @Test
-    // @Transactional
+    @Transactional
     public void updateMapper(){
 
         // GIVEN

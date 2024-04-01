@@ -1,0 +1,80 @@
+spring:
+    profiles:
+        active: local
+        group:
+            local: local, common, secret
+            blue: blue, common, secret
+            green: green, common, secret
+
+server:
+    env: blue
+
+---
+
+spring:
+    config:
+        activate:
+            on-profile: local
+
+server:
+    port: 8080
+    serverAddress: localhost
+
+serverName: local_server
+
+---
+
+spring:
+    config:
+        activate:
+            on-profile: blue
+
+server:
+    port: 8080
+    serverAddress: 13.209.200.159
+
+serverName: blue_server
+
+---
+
+spring:
+    config:
+        activate:
+            on-profile: green
+
+server:
+    port: 8081
+    serverAddress: 13.209.200.159
+
+serverName: green_server
+
+---
+
+spring:
+
+  servlet:
+    multipart:
+      enabled: true
+      location: C:\\webserver\\nginx-1.25.1\\nginx-1.25.1\\html
+      max-request-size: 30MB
+      max-file-size: 10MB
+
+mybatis:
+  mapper-locations: classpath:/mappers/**/*.xml
+
+logging:
+  level:
+    org:
+      mybatis: debug
+      fktm: debug
+      springframework: info
+      fktm.fastpickup: debug
+      springframework.security: trace
+
+org:
+  fktm:
+    upload:
+      product:
+        path: C:\\webserver\\nginx-1.25.1\\nginx-1.25.1\\html\\product
+      review:
+        path: C:\\webserver\\nginx-1.25.1\\nginx-1.25.1\\html\\reviewd

@@ -75,7 +75,7 @@ public class OrderServiceTests {
 
     @DisplayName("주문생성 서비스 테스트")
     @Test
-    // @Transactional
+    @Transactional
     public void createOrderService() {
 
         // GIVEN
@@ -91,7 +91,7 @@ public class OrderServiceTests {
 
     @DisplayName("주문상세 서비스 테스트")
     @Test
-    // @Transactional
+    @Transactional
     public void readOrderService() {
 
         // GIVEN
@@ -110,7 +110,7 @@ public class OrderServiceTests {
 
     @DisplayName("주문 상태변경 서비스 테스트")
     @Test
-    // @Transactional
+    @Transactional
     public void modifyOrderStatusService() {
 
         // GIVEN
@@ -127,7 +127,7 @@ public class OrderServiceTests {
 
     @DisplayName("주문 리스트 서비스 테스트")
     @Test
-    // @Transactional
+    @Transactional
     public void getOrderListService() {
 
         // GIVEN

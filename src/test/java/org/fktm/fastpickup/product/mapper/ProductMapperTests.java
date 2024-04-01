@@ -95,7 +95,7 @@ public class ProductMapperTests {
     }
 
     @DisplayName("상품 등록 매퍼 테스트")
-    // @Transactional
+    @Transactional
     @Test
     public void registProduct(){
 

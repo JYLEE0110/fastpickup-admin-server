@@ -57,7 +57,7 @@ public class CartServiceTests {
 
     @Test
     @DisplayName("장바구니 추가 생성 서비스 테스트")
-    // @Transactional
+    @Transactional
     public void createCart() {
 
         // GIVEN
@@ -73,7 +73,7 @@ public class CartServiceTests {
 
     @Test
     @DisplayName("장바구니 리스트 서비스 테스트")
-    // @Transactional
+    @Transactional
     public void getCartList() {
 
         // GIVEN
@@ -90,7 +90,7 @@ public class CartServiceTests {
 
     @Test
     @DisplayName("장바구니 아이템 삭제 서비스 테스트")
-    // @Transactional
+    @Transactional
     public void removeCartItem() {
 
         // GIVEN

@@ -57,7 +57,7 @@ public class CartMapperTests {
     }
 
     @DisplayName("장바구니 생성 매퍼 테스트")
-    // @Transactional
+    @Transactional
     @Test
     public void createCart() {
 
@@ -73,7 +73,7 @@ public class CartMapperTests {
     }
 
     @DisplayName("장바구니 상품 생성 매퍼 테스트")
-    // @Transactional
+    @Transactional
     @Test
     public void createCartProduct() {
 
@@ -88,7 +88,7 @@ public class CartMapperTests {
     }
 
     @DisplayName("장바구니 리스트 매퍼 테스트")
-    // @Transactional
+    @Transactional
     @Test
     public void getCartList() {
 
@@ -104,7 +104,7 @@ public class CartMapperTests {
     }
 
     @DisplayName("장바구니 리스트 페이징을 위한 총 개수 매퍼 테스트")
-    // @Transactional
+    @Transactional
     @Test
     public void getCartListTotal() {
         // GIVEN
@@ -119,7 +119,7 @@ public class CartMapperTests {
     }
 
     @DisplayName("장바구니 삭제 매퍼 테스트")
-    // @Transactional
+    @Transactional
     @Test
     public void removeItem() {
 
