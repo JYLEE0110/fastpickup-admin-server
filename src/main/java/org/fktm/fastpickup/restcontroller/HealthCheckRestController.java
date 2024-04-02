@@ -24,7 +24,7 @@ public class HealthCheckRestController {
     public ResponseEntity<?> healthCheck(){
 
         Map<String,String> responseData = new HashMap<>();
-        responseData.put("serverEnv", env);
+        responseData.put("serverEnvTest", env);
         responseData.put("serverPort", serverPort);
         responseData.put("serverAddress", serverAddress);
         responseData.put("serverName", serverName);
