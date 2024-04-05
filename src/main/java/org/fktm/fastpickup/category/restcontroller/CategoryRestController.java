@@ -32,7 +32,7 @@ public class CategoryRestController {
     public ResponseEntity<Map<String, String>> registCategory(
             @RequestBody CategoryDTO categoryDTO) {
 
-        log.info("===== /category/regist POST =====");
+        log.info("===== /category/regist POST ===+==");
 
         categoryService.registCategory(categoryDTO);
 
