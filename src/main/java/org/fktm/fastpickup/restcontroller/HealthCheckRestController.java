@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class HealthCheckRestController {
     
+    
     @Value("${server.env}")
     private String env;
     @Value("${server.port}")
