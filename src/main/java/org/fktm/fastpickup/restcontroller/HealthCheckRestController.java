@@ -38,7 +38,7 @@ public class HealthCheckRestController {
     @GetMapping("/env")
     public ResponseEntity<?> getEnv(){
 
-        return ResponseEntity.ok(" 김동현 개병신 버러지 ");
+        return ResponseEntity.ok(env);
 
     }
 
