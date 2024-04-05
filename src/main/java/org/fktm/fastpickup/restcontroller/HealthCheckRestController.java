@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class HealthCheckRestController {
     
-    
+
     @Value("${server.env}")
     private String env;
     @Value("${server.port}")
@@ -39,7 +39,7 @@ public class HealthCheckRestController {
     @GetMapping("/env")
     public ResponseEntity<?> getEnv(){
 
-        return ResponseEntity.ok(env);
+        return ResponseEntity.ok("blue");
 
     }
 
