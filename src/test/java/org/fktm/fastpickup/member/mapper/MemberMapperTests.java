@@ -39,7 +39,7 @@ public class MemberMapperTests {
     PasswordEncoder passwordEncoder;
 
     private static final String TEST_MEMBER_ID = "admin";
-    private static final String TEST_MEMBER_PW = "1234";
+    private static final String TEST_MEMBER_PW = "1234!";
     private static final String TEST_MEMBER_NAME = "이주용";
     private static final String TEST_MEMBER_ADDR = "경기도 성남시 분당구 청구블루빌";
     private static final String TEST_MEMBER_PHONE_NUM = "010-5420-xxxx";
@@ -85,7 +85,7 @@ public class MemberMapperTests {
         
         memberModifyDTO = MemberModifyDTO.builder()
                         .memberID(TEST_MEMBER_ID)
-                        .memberPW(passwordEncoder.encode(TEST_UPDATE_MEMBER_PW))
+                        .memberPW(passwordEncoder.encode(TEST_MEMBER_PW))
                         .memberAddr(TEST_UPDATE_MEMBER_ADDR)
                         .memberPhoneNum(TEST_UPDATE_MEMBER_PHONE_NUM)
                         .build();
