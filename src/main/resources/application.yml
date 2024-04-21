@@ -51,7 +51,6 @@ serverName: green_server
 ---
 
 spring:
-
   servlet:
     multipart:
       enabled: true
