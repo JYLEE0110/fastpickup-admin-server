@@ -39,7 +39,7 @@ public class HealthCheckRestController {
     @GetMapping("/env")
     public ResponseEntity<?> getEnv(){
 
-        return ResponseEntity.ok("green");
+        return ResponseEntity.ok("blue");
 
     }
 
