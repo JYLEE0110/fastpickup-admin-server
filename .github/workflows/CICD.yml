@@ -72,12 +72,12 @@ jobs:
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/fastpickup_server:latest
             sudo docker-compose -f docker-compose-${{env.TARGET_UPSTREAM}}.yml up -d
       
-      # - name: Check deploy server URL
-      #   uses: jtalk/url-health-check-action@v3
-      #   with:
-      #     url: http://${{ secrets.FASTPICKUP_SERVER_IP }}:${{env.STOPPED_PORT}}/api/env
-      #     max-attempts: 5
-      #     retry-delay: 10s
+      - name: Check deploy server URL
+        uses: jtalk/url-health-check-action@v3
+        with:
+          url: http://${{ secrets.FASTPICKUP_SERVER_IP }}:${{env.STOPPED_PORT}}/api/env
+          max-attempts: 5
+          retry-delay: 10s
 
       - name: Change nginx upstream
         uses: appleboy/ssh-action@master
