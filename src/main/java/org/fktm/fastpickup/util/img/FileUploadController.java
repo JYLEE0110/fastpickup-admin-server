@@ -16,7 +16,6 @@ import java.util.Map;
 @Log4j2
 public class FileUploadController {
 
-
     private final CustomFileUtil fileUtil;
 
     @PostMapping("/upload")
