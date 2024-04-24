@@ -54,7 +54,7 @@ spring:
   servlet:
     multipart:
       enabled: true
-      # location: C:\\webserver\\nginx-1.25.1\\nginx-1.25.1\\html
+      location: C:\\webserver\\nginx-1.25.1\\nginx-1.25.1\\html
       max-request-size: 30MB
       max-file-size: 10MB
 
@@ -74,10 +74,10 @@ org:
   fktm:
     upload:
       path: upload
-      # product:
-      #   path: C:\\webserver\\nginx-1.25.1\\nginx-1.25.1\\html\\product
-      # review:
-      #   path: C:\\webserver\\nginx-1.25.1\\nginx-1.25.1\\html\\reviewd
+      product:
+        path: C:\\webserver\\nginx-1.25.1\\nginx-1.25.1\\html\\product
+      review:
+        path: C:\\webserver\\nginx-1.25.1\\nginx-1.25.1\\html\\reviewd
 
 # cloud:
 #   aws:
