@@ -79,11 +79,11 @@ org:
       review:
         path: C:\\webserver\\nginx-1.25.1\\nginx-1.25.1\\html\\reviewd
 
-# cloud:
-#   aws:
-#     s3:
-#       bucket: fastpickup-bucket
-#     region:
-#       static: ap-northeast-2
-#     stack:
-#       auto: false
+cloud:
+  aws:
+    s3:
+      bucket: fastpickup-bucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
