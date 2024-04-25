@@ -21,7 +21,7 @@ public class FileUploadController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/upload")
-    public List<ImgFileUploadDTO> uploadFiles (@RequestParam("files") List<MultipartFile> files ) {
+    public List<ImgFileUploadDTO> uploadFiles (@RequestParam("file") List<MultipartFile> files ) {
 
         List<ImgFileUploadDTO> fileList = fileUtil.saveFiles(files);
 
