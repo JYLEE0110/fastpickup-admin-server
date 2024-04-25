@@ -40,7 +40,7 @@ public class CustomFileUtil {
   public void init() {
     File tempFolder = new File(uploadPath);
 
-    if(tempFolder.exists() == false) {
+    if (tempFolder.exists() == false) {
       tempFolder.mkdir();
     }
 
@@ -50,10 +50,9 @@ public class CustomFileUtil {
     log.info(uploadPath);
   }
 
+  public List<ImgFileUploadDTO> saveFiles(List<MultipartFile> files) throws RuntimeException {
 
-  public List<ImgFileUploadDTO> saveFiles(List<MultipartFile> files)throws RuntimeException{
-
-    if(files == null || files.size() == 0){
+    if (files == null || files.size() == 0) {
       return null;
     }
 
@@ -80,26 +79,26 @@ public class CustomFileUtil {
         uploadTargetPaths.add(savePath);
 
         result = ImgFileUploadDTO.builder()
-        .uuid(uuidStr)
-        .imgName(fileName)
-        .build();
+            .uuid(uuidStr)
+            .imgName(fileName)
+            .build();
 
         String contentType = multipartFile.getContentType();
 
-        if(contentType != null && contentType.startsWith("image")){ //이미지 확인
+        if (contentType != null && contentType.startsWith("image")) { // 이미지 확인
 
-          Path thumbnailPath = Paths.get(uploadPath, "s_"+savedName);
+          Path thumbnailPath = Paths.get(uploadPath, "s_" + savedName);
 
           Thumbnails.of(savePath.toFile())
-                  .size(80,80)
-                  .toFile(thumbnailPath.toFile());
+              .size(80, 80)
+              .toFile(thumbnailPath.toFile());
 
           uploadTargetPaths.add(thumbnailPath);
         }
 
         fileList.add(result);
 
-        //s3 upload
+        // s3 upload
         s3Util.uploadFiles(uploadTargetPaths, true);
 
       } catch (Exception e) {
@@ -107,25 +106,25 @@ public class CustomFileUtil {
         e.printStackTrace();
         throw new RuntimeException(e.getMessage());
       }
-    }//end for
+    } // end for
     return fileList;
   }
 
-  public ResponseEntity<Resource>  getFile(String fileName) {
+  public ResponseEntity<Resource> getFile(String fileName) {
 
-    Resource resource = new FileSystemResource(uploadPath+ File.separator + fileName);
+    Resource resource = new FileSystemResource(uploadPath + File.separator + fileName);
 
-    if(!resource.exists() ) {
+    if (!resource.exists()) {
 
-      resource = new FileSystemResource(uploadPath+ File.separator + "default.jpeg");
+      resource = new FileSystemResource(uploadPath + File.separator + "default.jpeg");
 
     }
 
     HttpHeaders headers = new HttpHeaders();
 
-    try{
-      headers.add("Content-Type", Files.probeContentType( resource.getFile().toPath() ));
-    } catch(Exception e){
+    try {
+      headers.add("Content-Type", Files.probeContentType(resource.getFile().toPath()));
+    } catch (Exception e) {
       return ResponseEntity.internalServerError().build();
     }
     return ResponseEntity.ok().headers(headers).body(resource);
@@ -134,20 +133,47 @@ public class CustomFileUtil {
 
   public void deleteFiles(String fileName) {
 
-    if(fileName == null){
+    if (fileName == null) {
       return;
     }
 
     List<Path> deleteTargetPaths = new ArrayList<>();
 
-
     try {
-      //썸네일이 있는지 확인하고 삭제
+      // 썸네일이 있는지 확인하고 삭제
       String thumbnailFileName = "s_" + fileName;
       Path thumbnailPath = Paths.get(uploadPath, thumbnailFileName);
       Path filePath = Paths.get(uploadPath, fileName);
 
-     
+      Files.deleteIfExists(filePath);
+      Files.deleteIfExists(thumbnailPath);
+
+      deleteTargetPaths.add(filePath);
+      deleteTargetPaths.add(thumbnailPath);
+
+      s3Util.deleteFiles(deleteTargetPaths);
+
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage());
+    }
+
+  }
+
+  public void deleteAllFiles(List<String> files) {
+
+    for (String fileName : files) {
+      if (fileName == null) {
+        return;
+      }
+
+      List<Path> deleteTargetPaths = new ArrayList<>();
+
+      try {
+        // 썸네일이 있는지 확인하고 삭제
+        String thumbnailFileName = "s_" + fileName;
+        Path thumbnailPath = Paths.get(uploadPath, thumbnailFileName);
+        Path filePath = Paths.get(uploadPath, fileName);
+
         Files.deleteIfExists(filePath);
         Files.deleteIfExists(thumbnailPath);
 
@@ -159,7 +185,8 @@ public class CustomFileUtil {
       } catch (IOException e) {
         throw new RuntimeException(e.getMessage());
       }
-    
+
+    }
   }
 
 }

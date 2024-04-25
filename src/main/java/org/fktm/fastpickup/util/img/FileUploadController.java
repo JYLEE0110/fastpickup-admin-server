@@ -21,7 +21,7 @@ public class FileUploadController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/upload")
-    public List<ImgFileUploadDTO> uploadFiles (@RequestParam("file") List<MultipartFile> files ) {
+    public List<ImgFileUploadDTO> uploadFiles(@RequestParam("file") List<MultipartFile> files) {
 
         List<ImgFileUploadDTO> fileList = fileUtil.saveFiles(files);
 
@@ -34,21 +34,32 @@ public class FileUploadController {
     }
 
     @GetMapping("/view/{fileName}")
-    public ResponseEntity<Resource> viewFileGET(@PathVariable String fileName){
+    public ResponseEntity<Resource> viewFileGET(@PathVariable String fileName) {
 
         return fileUtil.getFile(fileName);
 
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    @DeleteMapping("remove/{fileName}")
+    @DeleteMapping("/remove/{fileName}")
     public Map<String, String> removeFile(
             @PathVariable("fileName") String fileName) {
 
-                fileUtil.deleteFiles(fileName);
+        fileUtil.deleteFiles(fileName);
 
-                return Map.of("result","success");
+        return Map.of("result", "success");
 
-            }
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @DeleteMapping("/remove/all")
+    public Map<String, String> removeAllFile(
+        @RequestBody List<String> fileNames) {
+
+        fileUtil.deleteAllFiles(fileNames);
+
+        return Map.of("result", "success");
+
+    }
+
 }
-
