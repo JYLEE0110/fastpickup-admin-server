@@ -54,7 +54,9 @@ public class FileUploadController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @DeleteMapping("/remove/all")
     public Map<String, String> removeAllFile(
-        @RequestBody List<String> fileNames) {
+            @RequestBody FileNamesDTO fileNamesDTO) {
+
+        List<String> fileNames = fileNamesDTO.getImgsName();
 
         fileUtil.deleteAllFiles(fileNames);
 
