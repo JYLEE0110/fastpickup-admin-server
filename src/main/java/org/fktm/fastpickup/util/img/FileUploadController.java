@@ -56,9 +56,7 @@ public class FileUploadController {
     public Map<String, String> removeAllFile(
             @RequestBody FileNamesDTO fileNamesDTO) {
 
-        List<String> fileNames = fileNamesDTO.getImgsName();
-
-        fileUtil.deleteAllFiles(fileNames);
+        fileUtil.deleteAllFiles(fileNamesDTO);
 
         return Map.of("result", "success");
 

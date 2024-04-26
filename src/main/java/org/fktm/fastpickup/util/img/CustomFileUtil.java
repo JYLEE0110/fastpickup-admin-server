@@ -159,9 +159,11 @@ public class CustomFileUtil {
 
   }
 
-  public void deleteAllFiles(List<String> files) {
+  public void deleteAllFiles(FileNamesDTO files) {
 
-    for (String fileName : files) {
+    List<String> fileNames = files.getImgsName();
+
+    for (String fileName : fileNames) {
       if (fileName == null) {
         return;
       }
