@@ -83,6 +83,9 @@
                   <if test='type == "p"'>
                     tp.productName like concat('%', #{keyword}, '%')
                   </if>
+                  <if test='type == "c"'>
+                    tc.categoryName like concat('%', #{keyword}, '%')
+                  </if>
                 </foreach>
               </trim>
           </if>
