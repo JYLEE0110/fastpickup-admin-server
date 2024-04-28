@@ -34,7 +34,7 @@ public class PageRequestDTO {
     // size 음수값, 과도한 값 제외처리
     public void setSize(int size) {
         if (size < 0 || size > 100) {
-            this.size = 10;
+            this.size = 12;
         } else {
             this.size = size;
         }
