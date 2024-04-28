@@ -17,7 +17,7 @@ public class PageRequestDTO {
     private int page = 1;
 
     @Builder.Default
-    private int size = 10;
+    private int size = 9;
 
     private String type; // 검색type
     private String keyword; // 검색어
