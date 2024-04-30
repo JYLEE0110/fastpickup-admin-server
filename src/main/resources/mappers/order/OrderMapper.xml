@@ -47,7 +47,7 @@
 		        left outer join tbl_order_product top on tod.ono = top.ono
 		        left outer join tbl_product tp on top.pno = tp.pno
             left outer join tbl_product_img tpi on tpi.pno = tp.pno
-        where tod.ono = #{ono};
+        where tod.ono = #{ono} and tpi.imgOrd = 0
     </select>
 
     <!-- 주문상태 변경 -->
